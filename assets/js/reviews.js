@@ -308,16 +308,34 @@ const MODA_REVIEWS = [
     return list;
   }
 
-  /* -- Start: toon handmatige reviews, probeer Google te laden -- */
-  const manual = prepManual(MODA_REVIEWS);
-  render(manual);
+  /* -- Reviews uit content/reviews.json (aan te passen via /admin) -- */
+  async function fetchManualJson() {
+    const res = await fetch("content/reviews.json", { cache: "no-store" });
+    if (!res.ok) throw new Error(`reviews.json HTTP ${res.status}`);
+    const data = await res.json();
+    const raw = Array.isArray(data.reviews) ? data.reviews : [];
+    const list = prepManual(raw);
+    if (!list.length) throw new Error("Geen bruikbare reviews in reviews.json");
+    return list;
+  }
 
-  const widgetId = (MODA_CONFIG_REVIEWS.FEATURABLE_WIDGET_ID || "").trim();
-  if (!widgetId) return;
+  /* -- Start: toon meteen de ingebouwde reviews (nooit een lege sectie),
+        vervang daarna door reviews.json (indien aanwezig) en tenslotte
+        door de live Google-reviews van Featurable (indien ingesteld). -- */
+  render(prepManual(MODA_REVIEWS));
 
-  fetchFeaturable(widgetId)
+  fetchManualJson()
     .then(render)
     .catch((err) => {
-      console.warn("[Moda] Google-reviews konden niet geladen worden, handmatige reviews blijven staan:", err);
+      console.warn("[Moda] content/reviews.json niet geladen, ingebouwde reviews blijven staan:", err);
+    })
+    .finally(() => {
+      const widgetId = (MODA_CONFIG_REVIEWS.FEATURABLE_WIDGET_ID || "").trim();
+      if (!widgetId) return;
+      fetchFeaturable(widgetId)
+        .then(render)
+        .catch((err) => {
+          console.warn("[Moda] Google-reviews konden niet geladen worden, handmatige reviews blijven staan:", err);
+        });
     });
 })();

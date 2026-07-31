@@ -35,8 +35,31 @@ const MODA_CALC = {
 
 /* =========================================================
    Vanaf hier hoef je niets meer aan te passen.
+   ---------------------------------------------------------
+   De prijzen hierboven zijn de terugval. Staan er prijzen in
+   content/prices.json (aangepast via /admin), dan worden die
+   gebruikt. Lukt dat niet, dan blijft de config hierboven gelden.
    ========================================================= */
-(function () {
+(function bootCalc() {
+  fetch("content/prices.json", { cache: "no-store" })
+    .then(function (r) { if (!r.ok) throw new Error("prices " + r.status); return r.json(); })
+    .then(applyPrices)
+    .catch(function (e) { console.warn("[Moda] content/prices.json niet geladen, vaste prijzen blijven gelden:", e); })
+    .then(initCalc);
+
+  function applyPrices(p) {
+    if (typeof p.basisprijs_personen === "number") MODA_CALC.basePersons = p.basisprijs_personen;
+    if (typeof p.supplement_per_extra_persoon === "number") MODA_CALC.extraPersonFee = p.supplement_per_extra_persoon;
+    if (typeof p.supplement_per_tussenstop === "number") MODA_CALC.stopFee = p.supplement_per_tussenstop;
+    if (typeof p.km_straal === "number") MODA_CALC.radiusKm = p.km_straal;
+    if (Array.isArray(p.luchthavens) && p.luchthavens.length) {
+      MODA_CALC.airports = p.luchthavens
+        .filter(function (a) { return a && a.value && a.label && typeof a.price === "number"; });
+    }
+  }
+})();
+
+function initCalc() {
   const form     = document.getElementById("calcForm");
   const select   = document.getElementById("calc-airport");
   const address  = document.getElementById("calc-address");
@@ -359,4 +382,4 @@ const MODA_CALC = {
       showError();
     }
   });
-})();
+}

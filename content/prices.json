@@ -1,0 +1,15 @@
+{
+  "basisprijs_personen": 2,
+  "supplement_per_extra_persoon": 5,
+  "supplement_per_tussenstop": 10,
+  "km_straal": 20,
+  "luchthavens": [
+    { "value": "zaventem", "label": "Brussels Airport — Zaventem", "price": 100 },
+    { "value": "luik", "label": "Luik (Liège)", "price": 100 },
+    { "value": "antwerpen", "label": "Antwerpen", "price": 100 },
+    { "value": "eindhoven", "label": "Eindhoven", "price": 100 },
+    { "value": "charleroi", "label": "Brussels South — Charleroi", "price": 160 },
+    { "value": "dusseldorf", "label": "Düsseldorf", "price": 160 },
+    { "value": "amsterdam", "label": "Amsterdam — Schiphol", "price": 240 }
+  ]
+}

@@ -18,13 +18,35 @@ Wil je hem live zetten? Zie **Online zetten** hieronder.
 ```
 Moda-Transport/
 ├── index.html              ← alle tekst & secties van de site
+├── content/                ← 👈 gegevens die de klant zelf aanpast (via /admin)
+│   ├── settings.json       ← telefoon, e-mail, WhatsApp, adres
+│   ├── prices.json         ← luchthavens & prijzen
+│   └── reviews.json        ← klantenreviews
+├── admin/                  ← de beheerpagina (Decap CMS)
 ├── assets/
 │   ├── css/style.css       ← vormgeving, kleuren & animaties
 │   ├── js/main.js          ← menu, animaties, formulier
-│   ├── js/reviews.js       ← 👈 HIER pas je de reviews aan
+│   ├── js/content.js       ← laadt de gegevens uit content/ in de site
+│   ├── js/reviews.js       ← reviews (leest content/reviews.json)
+│   ├── js/calculator.js    ← prijscalculator (leest content/prices.json)
 │   └── images/             ← logo + foto's
+├── SETUP-ADMIN.md          ← 👈 hoe je de admin-login instelt
 └── README.md
 ```
+
+## 🔧 De klant past zelf aan (beheerpagina)
+
+Er is een **beheerpagina** op `/admin` waar de klant met nette invulschermen
+zélf **contactgegevens, prijzen en reviews** kan aanpassen — zonder code. Klikt
+de klant op *Publiceren*, dan gaat de wijziging via GitHub automatisch live op
+Netlify.
+
+De schermen staan klaar; je stelt eenmalig de login in. **Volledige uitleg staat
+in [`SETUP-ADMIN.md`](SETUP-ADMIN.md).**
+
+> Wil je liever zélf beheerder blijven? Dan hoef je de admin-login niet in te
+> stellen — je past de bestanden in `content/` gewoon rechtstreeks aan. De site
+> valt altijd terug op vaste waarden, dus er breekt niets.
 
 ## ✏️ Zelf aanpassen (het belangrijkste)
 
@@ -32,12 +54,13 @@ Alles is bewust simpel gehouden. De meest voorkomende aanpassingen:
 
 | Wat wil je aanpassen?              | Waar?                                   |
 |------------------------------------|-----------------------------------------|
+| **Telefoon, e-mail, WhatsApp, adres** | via `/admin` óf `content/settings.json` |
+| **Prijzen / luchthavens / km-straal** | via `/admin` óf `content/prices.json`   |
+| **Reviews (handmatig)**            | via `/admin` óf `content/reviews.json`  |
+| Google-reviews (automatisch)       | `assets/js/reviews.js` → vul `FEATURABLE_WIDGET_ID` in |
 | Teksten, titels, diensten          | `index.html`                            |
-| **Google-reviews (automatisch)**   | `assets/js/reviews.js` → vul `FEATURABLE_WIDGET_ID` in |
-| **Prijzen / luchthavens / km-straal** | `assets/js/calculator.js` (config bovenaan) |
-| Telefoon, e-mail, WhatsApp         | zoek in `index.html` naar de placeholders (zie hieronder) |
 | Kleuren                            | `assets/css/style.css` bovenaan bij `:root` |
-| Foto's                             | vervang bestanden in `assets/images/`   |
+| Foto's                             | vervang bestanden in `assets/images/` (of via `/admin`) |
 
 ### ⚠️ Nog invullen vóór livegang
 

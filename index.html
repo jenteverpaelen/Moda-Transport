@@ -116,7 +116,7 @@
              (landcode zonder +, bv. 32470123456). Zelfde nummer ook bij
              de zwevende knop onderaan deze pagina. -->
         <a href="https://wa.me/32000000000?text=Hallo%2C%20ik%20heb%20een%20vraag%20over%20luchthavenvervoer%20met%20Moda%20Transport"
-           class="btn btn--wa btn--lg" target="_blank" rel="noopener">
+           class="btn btn--wa btn--lg" target="_blank" rel="noopener" data-content="whatsapp">
           <svg class="btn__wa" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><use href="#wa-icon"/></svg>
           Chat via WhatsApp
         </a>
@@ -400,9 +400,9 @@
           Liever direct boeken? Bel of mail ons gerust.
         </p>
         <ul class="booking__contactlist">
-          <li><span>📞</span> <a href="tel:+3211243003">011 24 30 03</a></li>
-          <li><span>✉️</span> <a href="mailto:info@moda-sneltransport.be">info@moda-sneltransport.be</a></li>
-          <li><span>📍</span> <a href="https://www.google.com/maps/search/?api=1&amp;query=Beringersteenweg+14+3550+Heusden-Zolder" target="_blank" rel="noopener">Beringersteenweg 14, 3550 Heusden-Zolder</a></li>
+          <li><span>📞</span> <a href="tel:+3211243003" data-content="phone">011 24 30 03</a></li>
+          <li><span>✉️</span> <a href="mailto:info@moda-sneltransport.be" data-content="email">info@moda-sneltransport.be</a></li>
+          <li><span>📍</span> <a href="https://www.google.com/maps/search/?api=1&amp;query=Beringersteenweg+14+3550+Heusden-Zolder" target="_blank" rel="noopener" data-content="address">Beringersteenweg 14, 3550 Heusden-Zolder</a></li>
         </ul>
       </div>
 
@@ -463,9 +463,9 @@
       <div class="footer__col">
         <h4>Contact</h4>
         <ul>
-          <li><a href="tel:+3211243003">011 24 30 03</a></li>
-          <li><a href="mailto:info@moda-sneltransport.be">info@moda-sneltransport.be</a></li>
-          <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Beringersteenweg+14+3550+Heusden-Zolder" target="_blank" rel="noopener">Beringersteenweg 14, 3550 Heusden-Zolder</a></li>
+          <li><a href="tel:+3211243003" data-content="phone">011 24 30 03</a></li>
+          <li><a href="mailto:info@moda-sneltransport.be" data-content="email">info@moda-sneltransport.be</a></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Beringersteenweg+14+3550+Heusden-Zolder" target="_blank" rel="noopener" data-content="address">Beringersteenweg 14, 3550 Heusden-Zolder</a></li>
         </ul>
       </div>
 
@@ -498,10 +498,11 @@
   <!-- Zwevende WhatsApp-knop (linksonder, volgt mee) — zelfde nummer als de
        hero-knop: vervang 32000000000 door je echte gsm-nummer. -->
   <a href="https://wa.me/32000000000?text=Hallo%2C%20ik%20heb%20een%20vraag%20over%20luchthavenvervoer%20met%20Moda%20Transport"
-     class="floating-wa" target="_blank" rel="noopener" aria-label="Chat via WhatsApp">
+     class="floating-wa" target="_blank" rel="noopener" aria-label="Chat via WhatsApp" data-content="whatsapp">
     <svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><use href="#wa-icon"/></svg>
   </a>
 
+  <script src="assets/js/content.js"></script>
   <script src="assets/js/reviews.js"></script>
   <script src="assets/js/calculator.js"></script>
   <script src="assets/js/main.js"></script>

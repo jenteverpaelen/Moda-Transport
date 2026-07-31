@@ -1,0 +1,103 @@
+# =========================================================
+# Moda — Beheer (Decap CMS)
+# ---------------------------------------------------------
+# Dit bestand bepaalt WELKE dingen de klant kan aanpassen en
+# HOE de invulschermen eruitzien. De inloglaag stel je één keer
+# in — zie SETUP-ADMIN.md.
+# =========================================================
+
+backend:
+  # ── OPTIE A (eenvoudigst): Netlify Identity ─────────────
+  # Werkt zodra je in Netlify "Identity" en "Git Gateway" aanzet.
+  name: git-gateway
+  branch: main   # ⚠️ Zet dit op de branch waarvan je site LIVE staat.
+
+  # ── OPTIE B (toekomstvast): inloggen met GitHub ─────────
+  # Gebruik dit als je Netlify-account geen Identity meer aanbiedt.
+  # Haal dan de 3 regels hierboven weg en zet deze aan:
+  #
+  # name: github
+  # repo: jenteverpaelen/moda-transport
+  # branch: main
+  # base_url: https://JOUW-OAUTH-WORKER.workers.dev   # zie SETUP-ADMIN.md
+
+# Laat de klant lokaal testen zonder inloggen (enkel actief op localhost).
+local_backend: true
+
+# Taal van het beheerscherm
+locale: nl
+
+# Foto's die de klant kan vervangen/uploaden
+media_folder: assets/images
+public_folder: assets/images
+
+# Toon een nette commit-boodschap bij elke aanpassing
+site_url: https://moda-transport.netlify.app
+display_url: https://moda-transport.netlify.app
+
+collections:
+  # ─────────────── 1. Contactgegevens ───────────────
+  - name: instellingen
+    label: "Contactgegevens"
+    delete: false
+    editor:
+      preview: false
+    files:
+      - name: settings
+        label: "Contact & WhatsApp"
+        file: content/settings.json
+        fields:
+          - { name: bedrijfsnaam, label: "Bedrijfsnaam", widget: string }
+          - { name: telefoon_weergave, label: "Telefoon (zoals getoond)", widget: string, hint: "Bv. 011 24 30 03" }
+          - { name: telefoon_link, label: "Telefoon (belnummer)", widget: string, hint: "Internationaal, met + en zonder spaties. Bv. +3211243003" }
+          - { name: email, label: "E-mailadres", widget: string }
+          - { name: whatsapp_nummer, label: "WhatsApp-nummer", widget: string, hint: "Landcode zonder + en zonder spaties. Bv. 32470123456" }
+          - { name: whatsapp_bericht, label: "WhatsApp-startbericht", widget: text, hint: "De tekst die al klaarstaat als iemand op WhatsApp klikt." }
+          - { name: adres, label: "Adres van de zaak", widget: string, hint: "Straat + nummer, postcode en gemeente." }
+
+  # ─────────────── 2. Prijzen ───────────────
+  - name: prijzen
+    label: "Prijzen"
+    delete: false
+    editor:
+      preview: false
+    files:
+      - name: prices
+        label: "Luchthavens & tarieven"
+        file: content/prices.json
+        fields:
+          - { name: basisprijs_personen, label: "Basisprijs geldt t.e.m. … personen", widget: number, value_type: int, min: 1 }
+          - { name: supplement_per_extra_persoon, label: "Supplement per extra persoon (€)", widget: number, value_type: int, min: 0 }
+          - { name: supplement_per_tussenstop, label: "Supplement per tussenstop (€)", widget: number, value_type: int, min: 0 }
+          - { name: km_straal, label: "Vaste prijs binnen … km", widget: number, value_type: int, min: 1 }
+          - name: luchthavens
+            label: "Luchthavens"
+            label_singular: "Luchthaven"
+            widget: list
+            summary: "{{fields.label}} — €{{fields.price}}"
+            fields:
+              - { name: value, label: "Interne code (kleine letters, geen spaties)", widget: string, hint: "Bv. zaventem, charleroi. Wijzig dit liefst niet bij bestaande." }
+              - { name: label, label: "Naam luchthaven (zoals getoond)", widget: string }
+              - { name: price, label: "Basisprijs enkele rit (€)", widget: number, value_type: int, min: 0 }
+
+  # ─────────────── 3. Reviews ───────────────
+  - name: reviews
+    label: "Reviews"
+    delete: false
+    editor:
+      preview: false
+    files:
+      - name: reviews
+        label: "Klantenreviews"
+        file: content/reviews.json
+        fields:
+          - name: reviews
+            label: "Reviews"
+            label_singular: "Review"
+            widget: list
+            summary: "{{fields.name}} ({{fields.stars}}★) — {{fields.date}}"
+            fields:
+              - { name: name, label: "Naam klant", widget: string }
+              - { name: stars, label: "Sterren", widget: number, value_type: int, min: 1, max: 5, default: 5 }
+              - { name: date, label: "Datum", widget: date, format: "YYYY-MM-DD", hint: "Bepaalt de volgorde (nieuwste eerst)." }
+              - { name: text, label: "Reviewtekst", widget: text }
