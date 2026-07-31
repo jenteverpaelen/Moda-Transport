@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Moda">
+  <!-- Buitenste ring (donker) -->
+  <circle cx="60" cy="60" r="49" fill="none" stroke="#141418" stroke-width="12"
+          stroke-linecap="round" stroke-dasharray="232 76" transform="rotate(128 60 60)"/>
+  <!-- Binnenste ring (rood accent) -->
+  <circle cx="60" cy="60" r="34" fill="none" stroke="#e11d2a" stroke-width="11"
+          stroke-linecap="round" stroke-dasharray="150 64" transform="rotate(-40 60 60)"/>
+  <!-- Vette M in het midden -->
+  <text x="60" y="61" text-anchor="middle" dominant-baseline="central"
+        font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="46" fill="#141418">M</text>
+</svg>

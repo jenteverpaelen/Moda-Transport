@@ -14,7 +14,8 @@
   <meta property="og:type" content="website" />
   <meta property="og:image" content="assets/images/fleet.jpeg" />
 
-  <link rel="icon" href="assets/images/logo.png" />
+  <link rel="icon" type="image/svg+xml" href="assets/images/logo-moda.svg" />
+  <link rel="icon" type="image/png" href="assets/images/logo.png" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -25,11 +26,24 @@
 </head>
 <body>
 
+  <!-- Herbruikbaar Moda-logo (SVG). De ring + M volgen de omgevingskleur
+       (wit op donker, zwart op licht); de binnenring blijft altijd rood. -->
+  <svg width="0" height="0" class="svg-sprite" aria-hidden="true" focusable="false" style="position:absolute">
+    <symbol id="moda-logo" viewBox="0 0 120 120">
+      <circle cx="60" cy="60" r="49" fill="none" stroke="currentColor" stroke-width="12"
+              stroke-linecap="round" stroke-dasharray="232 76" transform="rotate(128 60 60)"/>
+      <circle cx="60" cy="60" r="34" fill="none" stroke="#e11d2a" stroke-width="11"
+              stroke-linecap="round" stroke-dasharray="150 64" transform="rotate(-40 60 60)"/>
+      <text x="60" y="61" text-anchor="middle" dominant-baseline="central"
+            font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="46" fill="currentColor">M</text>
+    </symbol>
+  </svg>
+
   <!-- ===================== NAVIGATIE ===================== -->
   <header class="nav" id="nav">
     <div class="container nav__inner">
       <a href="#home" class="nav__brand" aria-label="Moda Travel — home">
-        <img src="assets/images/logo.png" alt="Moda Travel logo" class="nav__logo" />
+        <svg class="nav__logo" viewBox="0 0 120 120" role="img" aria-label="Moda Travel"><use href="#moda-logo"/></svg>
       </a>
 
       <nav class="nav__links" id="navLinks" aria-label="Hoofdmenu">
@@ -417,7 +431,7 @@
   <footer class="footer" id="contact">
     <div class="container footer__grid">
       <div class="footer__brand">
-        <img src="assets/images/logo.png" alt="Moda Travel logo" class="footer__logo" />
+        <svg class="footer__logo" viewBox="0 0 120 120" role="img" aria-label="Moda Travel"><use href="#moda-logo"/></svg>
         <p class="footer__slogan">“Reizen zonder zorgen”</p>
         <p class="footer__desc">Exclusief luchthavenvervoer met een persoonlijke, professionele service.</p>
       </div>
