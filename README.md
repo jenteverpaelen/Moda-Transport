@@ -41,11 +41,14 @@ Alles is bewust simpel gehouden. De meest voorkomende aanpassingen:
 
 ### ⚠️ Nog invullen vóór livegang
 
-Op deze plaatsen staan **voorbeeldgegevens** die je moet vervangen door de echte:
+Contactgegevens zijn ingevuld: telefoon **011 24 30 03**, e-mail
+**info@moda-sneltransport.be** en adres **Beringersteenweg 14, 3550 Heusden-Zolder**
+(in `index.html` en in `assets/js/calculator.js` / `assets/js/main.js`).
 
-- **Telefoonnummer** → zoek `+3200000000` en `+32 000 00 00 00` (in `index.html` én `assets/js/calculator.js`)
-- **E-mailadres** → zoek `info@modatravel.be` (in `index.html` én `assets/js/main.js`)
-- **WhatsApp** → zoek `wa.me/3200000000`
+Nog te doen vóór livegang:
+
+- **WhatsApp** (optioneel) → er is nu geen WhatsApp-knop. Heb je een WhatsApp-gsm-nummer,
+  laat het weten dan voegen we de knop terug toe.
 - **Google-reviews link** → zoek `google.com/search?q=Moda+Transport` en zet de link naar je
   echte Google Business-pagina
 - **Google-reviews** → er staan al **echte reviews** ingevuld in `assets/js/reviews.js`. Wil je

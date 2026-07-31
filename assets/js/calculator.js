@@ -29,8 +29,8 @@ const MODA_CALC = {
   ],
 
   // Contactgegevens die in de resultaten getoond worden
-  phone:       "+3200000000",
-  phoneNice:   "+32 000 00 00 00",
+  phone:       "+3211243003",
+  phoneNice:   "011 24 30 03",
 };
 
 /* =========================================================

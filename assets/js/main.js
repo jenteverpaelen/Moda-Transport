@@ -130,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
       `Opmerkingen: ${data.notes || "-"}\n`
     );
 
-    window.location.href = `mailto:info@modatravel.be?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:info@moda-sneltransport.be?subject=${subject}&body=${body}`;
 
     note.textContent = "Bedankt! Uw e-mailprogramma opent met de aanvraag — verstuur die en wij nemen snel contact op.";
     note.className = "booking__note is-ok";
