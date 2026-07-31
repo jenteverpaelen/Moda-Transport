@@ -1,5 +1,5 @@
 /* =========================================================
-   MODA TRAVEL — Prijscalculator
+   MODA TRAVEL — Prijscalculator + adres-autocomplete
    ---------------------------------------------------------
    👉 HIER PAS JE DE PRIJZEN & INSTELLINGEN AAN.
    Alle bedragen staan in het CONFIG-blok hieronder.
@@ -39,9 +39,14 @@ const MODA_CALC = {
   const form    = document.getElementById("calcForm");
   const select  = document.getElementById("calc-airport");
   const address = document.getElementById("calc-address");
+  const acList  = document.getElementById("calc-ac-list");
   const paxIn   = document.getElementById("calc-pax");
   const result  = document.getElementById("calcResult");
   if (!form || !select || !result) return;
+
+  // Coördinaten van het gekozen adres (uit de suggestielijst).
+  // Blijft null zolang de bezoeker zelf typt zonder te kiezen.
+  let selectedCoords = null;
 
   /* -- Vul de luchthaven-dropdown uit de config -- */
   MODA_CALC.airports.forEach(a => {
@@ -61,7 +66,112 @@ const MODA_CALC = {
     return 2 * R * Math.asin(Math.sqrt(h));
   }
 
-  /* -- Adres omzetten naar coördinaten via OpenStreetMap (gratis) -- */
+  /* ===================== ADRES-AUTOCOMPLETE ===================== */
+
+  // Maak een leesbare regel uit een Photon-resultaat
+  function formatSuggestion(p) {
+    const street = p.name || p.street || "";
+    const line1  = [street, p.housenumber].filter(Boolean).join(" ") || (p.city || "");
+    const line2  = [p.postcode, p.city].filter(Boolean).join(" ");
+    return { line1, line2, full: [line1, line2].filter(Boolean).join(", ") };
+  }
+
+  // Zoek adressen via Photon (gratis, gemaakt voor type-ahead, OpenStreetMap)
+  async function searchAddresses(query) {
+    const c = MODA_CALC.company;
+    const url = "https://photon.komoot.io/api/?limit=6&lang=default" +
+                "&lat=" + c.lat + "&lon=" + c.lon + "&location_bias_scale=0.5" +
+                "&q=" + encodeURIComponent(query);
+    const res = await fetch(url);
+    if (!res.ok) throw new Error("network");
+    const data = await res.json();
+    return (data.features || [])
+      .filter(f => (f.properties.countrycode || "").toUpperCase() === "BE")
+      .map(f => {
+        const s = formatSuggestion(f.properties);
+        return { ...s, lat: f.geometry.coordinates[1], lon: f.geometry.coordinates[0] };
+      })
+      .filter(s => s.full)
+      // dubbele labels eruit
+      .filter((s, i, arr) => arr.findIndex(x => x.full === s.full) === i);
+  }
+
+  let activeIndex = -1;
+  let suggestions = [];
+
+  function closeList() {
+    acList.hidden = true;
+    acList.innerHTML = "";
+    activeIndex = -1;
+    suggestions = [];
+    address.setAttribute("aria-expanded", "false");
+  }
+
+  function renderList(items) {
+    suggestions = items;
+    activeIndex = -1;
+    if (!items.length) { closeList(); return; }
+    acList.innerHTML = items.map((s, i) => `
+      <li class="autocomplete__item" role="option" data-i="${i}">
+        <span class="autocomplete__line1">${s.line1}</span>
+        <span class="autocomplete__line2">${s.line2}</span>
+      </li>`).join("");
+    acList.hidden = false;
+    address.setAttribute("aria-expanded", "true");
+  }
+
+  function pick(i) {
+    const s = suggestions[i];
+    if (!s) return;
+    address.value = s.full;
+    selectedCoords = { lat: s.lat, lon: s.lon };
+    closeList();
+  }
+
+  function setActive(i) {
+    const items = acList.querySelectorAll(".autocomplete__item");
+    items.forEach(el => el.classList.remove("is-active"));
+    if (i >= 0 && items[i]) { items[i].classList.add("is-active"); items[i].scrollIntoView({ block: "nearest" }); }
+    activeIndex = i;
+  }
+
+  // Debounce: pas zoeken na een korte pauze in het typen
+  let debounce;
+  address.addEventListener("input", () => {
+    selectedCoords = null;               // bezoeker typt → keuze vervalt
+    const q = address.value.trim();
+    clearTimeout(debounce);
+    if (q.length < 3) { closeList(); return; }
+    debounce = setTimeout(async () => {
+      try {
+        const items = await searchAddresses(q);
+        // enkel tonen als de tekst nog dezelfde is
+        if (address.value.trim() === q) renderList(items);
+      } catch (e) { closeList(); }
+    }, 280);
+  });
+
+  address.addEventListener("keydown", (e) => {
+    if (acList.hidden) return;
+    if (e.key === "ArrowDown") { e.preventDefault(); setActive(Math.min(activeIndex + 1, suggestions.length - 1)); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); setActive(Math.max(activeIndex - 1, 0)); }
+    else if (e.key === "Enter") {
+      if (activeIndex >= 0) { e.preventDefault(); pick(activeIndex); }
+    }
+    else if (e.key === "Escape") { closeList(); }
+  });
+
+  acList.addEventListener("mousedown", (e) => {
+    const item = e.target.closest(".autocomplete__item");
+    if (item) { e.preventDefault(); pick(parseInt(item.dataset.i, 10)); }
+  });
+
+  // Sluit de lijst bij klik buiten het veld
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".autocomplete")) closeList();
+  });
+
+  /* -- Fallback-geocoder (Nominatim) als er niet uit de lijst gekozen is -- */
   async function geocode(query) {
     const url = "https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=be&q=" +
                 encodeURIComponent(query);
@@ -78,7 +188,7 @@ const MODA_CALC = {
     }
   }
 
-  /* -- Render-helpers -- */
+  /* ===================== RESULTAAT-WEERGAVE ===================== */
   const euro = n => "€" + n.toLocaleString("nl-BE");
 
   function showLoading() {
@@ -108,8 +218,7 @@ const MODA_CALC = {
       <div class="calc__state calc__state--warn">
         <span class="calc__emoji">🤔</span>
         <h3>Adres niet gevonden</h3>
-        <p>We konden dit adres niet automatisch controleren. Controleer de spelling
-           (straat, nummer, postcode, gemeente) of neem gerust even contact op.</p>
+        <p>Kies je adres uit de suggestielijst terwijl je typt, of neem gerust even contact op.</p>
         <div class="calc__actions">
           <a href="tel:${MODA_CALC.phone}" class="btn btn--primary">📞 Bel ${MODA_CALC.phoneNice}</a>
         </div>
@@ -136,7 +245,6 @@ const MODA_CALC = {
         <button type="button" class="btn btn--primary btn--lg btn--block" id="calcToBooking">Reserveer deze rit →</button>
       </div>`;
 
-    // Prefill het reserveerformulier met deze rit
     const toBooking = document.getElementById("calcToBooking");
     toBooking.addEventListener("click", () => {
       const set = (id, val) => { const el = document.getElementById(id); if (el) el.value = val; };
@@ -147,17 +255,17 @@ const MODA_CALC = {
     });
   }
 
-  /* -- Berekening bij verzenden -- */
+  /* ===================== BEREKENING ===================== */
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-
+    closeList();
     if (!form.checkValidity()) { form.reportValidity(); return; }
 
     const airport = MODA_CALC.airports.find(a => a.value === select.value);
     if (!airport) { form.reportValidity(); return; }
 
-    const pax  = Math.min(Math.max(parseInt(paxIn.value, 10) || 1, 1), 8);
-    const base = airport.price;
+    const pax   = Math.min(Math.max(parseInt(paxIn.value, 10) || 1, 1), 8);
+    const base  = airport.price;
     const extra = Math.max(0, pax - MODA_CALC.basePersons) * MODA_CALC.extraPersonFee;
     const price = base + extra;
     const addressText = address.value.trim();
@@ -165,7 +273,8 @@ const MODA_CALC = {
     showLoading();
 
     try {
-      const coords = await geocode(addressText);
+      // Voorkeur: coördinaten van het gekozen adres. Anders geocoden.
+      const coords = selectedCoords || await geocode(addressText);
       if (!coords) { showError(); return; }
 
       const km = distanceKm(MODA_CALC.company, coords);

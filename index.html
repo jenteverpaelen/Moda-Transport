@@ -302,9 +302,14 @@
 
           <div class="field">
             <label for="calc-address">Ophaaladres</label>
-            <input type="text" id="calc-address" name="address"
-                   placeholder="Straat + nr, postcode, gemeente" autocomplete="off" required />
-            <span class="field__hint">Enkel binnen 20 km van Heusden-Zolder. Buiten dit gebied? Vraag gerust een prijs op maat aan.</span>
+            <div class="autocomplete">
+              <input type="text" id="calc-address" name="address"
+                     placeholder="Begin te typen, bv. Paalseweg 30…" autocomplete="off"
+                     role="combobox" aria-autocomplete="list" aria-expanded="false"
+                     aria-controls="calc-ac-list" required />
+              <ul class="autocomplete__list" id="calc-ac-list" role="listbox" hidden></ul>
+            </div>
+            <span class="field__hint">Kies een adres uit de lijst. Enkel binnen 20 km van Heusden-Zolder — buiten dit gebied? Vraag gerust een prijs op maat aan.</span>
           </div>
 
           <div class="field">

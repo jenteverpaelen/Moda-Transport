@@ -59,10 +59,11 @@ Alle prijzen en instellingen staan bovenaan in `assets/js/calculator.js`:
 - **Supplement per extra persoon** (standaard +€5)
 - **Km-straal** waarbinnen een vaste prijs geldt (standaard 20 km rond Heusden-Zolder)
 
-Het adres wordt gratis omgezet naar coördinaten via OpenStreetMap (Nominatim). Ligt het
-adres verder dan de ingestelde straal, dan krijgt de bezoeker géén vaste prijs maar een
-uitnodiging om een prijs op maat aan te vragen. Verhuist het bedrijf? Pas dan de
-`company`-coördinaten in `calculator.js` aan.
+Terwijl de bezoeker typt, verschijnen echte adressuggesties (straat, postcode, gemeente)
+via **Photon** — gratis en gebaseerd op OpenStreetMap. Klikt de bezoeker een adres aan,
+dan zijn de coördinaten meteen gekend. Het adres wordt getoetst aan de km-straal; ligt het
+verder, dan krijgt de bezoeker géén vaste prijs maar een uitnodiging om een prijs op maat
+aan te vragen. Verhuist het bedrijf? Pas dan de `company`-coördinaten in `calculator.js` aan.
 
 ## 📨 Boekingsformulier
 
