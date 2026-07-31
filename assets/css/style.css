@@ -226,7 +226,9 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.12; font-weight: 
 .review__avatar {
   width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center;
   font-family: var(--font-head); font-weight: 700; color: #fff; font-size: 1rem; flex-shrink: 0;
+  overflow: hidden;
 }
+.review__avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .review__name { font-weight: 600; font-size: .96rem; }
 .review__meta { color: var(--muted); font-size: .82rem; }
 .review__google { margin-left: auto; opacity: .5; font-size: .78rem; }

@@ -33,7 +33,7 @@ Alles is bewust simpel gehouden. De meest voorkomende aanpassingen:
 | Wat wil je aanpassen?              | Waar?                                   |
 |------------------------------------|-----------------------------------------|
 | Teksten, titels, diensten          | `index.html`                            |
-| **Reviews toevoegen/wijzigen**     | `assets/js/reviews.js` (bovenaan)       |
+| **Google-reviews (automatisch)**   | `assets/js/reviews.js` → vul `FEATURABLE_WIDGET_ID` in |
 | **Prijzen / luchthavens / km-straal** | `assets/js/calculator.js` (config bovenaan) |
 | Telefoon, e-mail, WhatsApp         | zoek in `index.html` naar de placeholders (zie hieronder) |
 | Kleuren                            | `assets/css/style.css` bovenaan bij `:root` |
@@ -48,7 +48,8 @@ Op deze plaatsen staan **voorbeeldgegevens** die je moet vervangen door de echte
 - **WhatsApp** → zoek `wa.me/3200000000`
 - **Google-reviews link** → zoek `google.com/search?q=Moda+Transport` en zet de link naar je
   echte Google Business-pagina
-- **Reviews zelf** → vul de echte beoordelingen in via `assets/js/reviews.js`
+- **Google-reviews automatisch** → koppel Featurable (zie hieronder). Tot dat gebeurt, toont
+  de site automatisch de voorbeeldreviews in `assets/js/reviews.js`.
 
 ## 💶 Prijscalculator
 
@@ -64,6 +65,26 @@ via **Photon** — gratis en gebaseerd op OpenStreetMap. Klikt de bezoeker een a
 dan zijn de coördinaten meteen gekend. Het adres wordt getoetst aan de km-straal; ligt het
 verder, dan krijgt de bezoeker géén vaste prijs maar een uitnodiging om een prijs op maat
 aan te vragen. Verhuist het bedrijf? Pas dan de `company`-coördinaten in `calculator.js` aan.
+
+## ⭐ Google-reviews (automatisch)
+
+De reviews worden **automatisch van Google gehaald** — je hoeft ze niet meer met de hand bij
+te houden. Dat loopt via een gratis dienst genaamd **Featurable**, die dagelijks met je
+Google-profiel synct. Zo stel je het één keer in:
+
+1. Maak een gratis account op **featurable.com**.
+2. Koppel het Google-profiel **"Moda Transport"**.
+3. Maak een widget aan en kopieer het **Widget ID** (de code in de link, bv. `1a2b3c4d-…`).
+4. Open `assets/js/reviews.js` en plak dat ID bij `FEATURABLE_WIDGET_ID: ""`.
+
+Dat is alles. Nieuwe Google-reviews verschijnen vanaf dan vanzelf op de site (met profielfoto,
+sterren en datum). Bovenaan `reviews.js` kun je nog instellen hoeveel reviews je toont
+(`maxReviews`), vanaf hoeveel sterren (`minStars`) en of je enkel reviews mét tekst toont
+(`onlyWithText`).
+
+> Zolang er nog geen Widget ID is ingevuld — of als de verbinding met Featurable even
+> uitvalt — toont de site automatisch de voorbeeldreviews die onderaan in `reviews.js`
+> staan, zodat de reviewsectie er nooit leeg uitziet.
 
 ## 📨 Boekingsformulier
 
