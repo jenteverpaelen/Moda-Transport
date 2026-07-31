@@ -88,12 +88,25 @@ const MODA_CALC = {
     return (data.features || [])
       .filter(f => (f.properties.countrycode || "").toUpperCase() === "BE")
       .map(f => {
-        const s = formatSuggestion(f.properties);
-        return { ...s, lat: f.geometry.coordinates[1], lon: f.geometry.coordinates[0] };
+        const p = f.properties;
+        const s = formatSuggestion(p);
+        return {
+          ...s,
+          street: p.name || p.street || "",
+          housenumber: p.housenumber || "",
+          lat: f.geometry.coordinates[1],
+          lon: f.geometry.coordinates[0],
+        };
       })
       .filter(s => s.full)
       // dubbele labels eruit
       .filter((s, i, arr) => arr.findIndex(x => x.full === s.full) === i);
+  }
+
+  // Haal een huisnummer (incl. toevoeging zoals 30A of 'bus 3') uit vrije tekst
+  function extractHouseNumber(text) {
+    const m = text.match(/\b(\d+\s?[a-zA-Z]?(?:\s?bus\s?\w+)?)\b/i);
+    return m ? m[1].trim() : "";
   }
 
   let activeIndex = -1;
@@ -123,7 +136,13 @@ const MODA_CALC = {
   function pick(i) {
     const s = suggestions[i];
     if (!s) return;
-    address.value = s.full;
+    let full = s.full;
+    // Straat-suggestie zonder huisnummer? Behoud het nummer dat de bezoeker typte.
+    if (!s.housenumber && s.street) {
+      const nr = extractHouseNumber(address.value);
+      if (nr) full = [`${s.street} ${nr}`, s.line2].filter(Boolean).join(", ");
+    }
+    address.value = full;
     selectedCoords = { lat: s.lat, lon: s.lon };
     closeList();
   }
@@ -186,6 +205,21 @@ const MODA_CALC = {
     } finally {
       clearTimeout(timer);
     }
+  }
+
+  // Probeer meerdere varianten: exact adres → zonder toevoeging (30A→30) → zonder huisnummer.
+  // Voldoende nauwkeurig voor de 20 km-controle, ook bij bus-/appartementsnummers.
+  async function geocodeRobust(text) {
+    const variants = [];
+    const add = v => { v = (v || "").trim().replace(/\s{2,}/g, " ").replace(/^,|,$/g, "").trim(); if (v && !variants.includes(v)) variants.push(v); };
+    add(text);
+    add(text.replace(/(\d+)\s?[a-zA-Z]\b/, "$1"));          // 30A → 30
+    add(text.replace(/\b\d+\s?[a-zA-Z]?\b\s*,?\s*/, ""));   // huisnummer weglaten
+    for (const q of variants) {
+      const coords = await geocode(q);
+      if (coords) return coords;
+    }
+    return null;
   }
 
   /* ===================== RESULTAAT-WEERGAVE ===================== */
@@ -273,8 +307,8 @@ const MODA_CALC = {
     showLoading();
 
     try {
-      // Voorkeur: coördinaten van het gekozen adres. Anders geocoden.
-      const coords = selectedCoords || await geocode(addressText);
+      // Voorkeur: coördinaten van het gekozen adres. Anders slim geocoden.
+      const coords = selectedCoords || await geocodeRobust(addressText);
       if (!coords) { showError(); return; }
 
       const km = distanceKm(MODA_CALC.company, coords);
