@@ -29,14 +29,27 @@
   <!-- Herbruikbaar Moda-logo (SVG). De ring + M volgen de omgevingskleur
        (wit op donker, zwart op licht); de binnenring blijft altijd rood. -->
   <svg width="0" height="0" class="svg-sprite" aria-hidden="true" focusable="false" style="position:absolute">
+    <!-- Enkel het embleem (vierkant) — voor favicon / compact gebruik -->
     <symbol id="moda-logo" viewBox="0 0 120 120">
-      <!-- Zwarte sikkel (linksonder) — volgt omgevingskleur -->
       <path d="M 17.73 33.29 A 50 50 0 1 0 86.71 102.27 A 50 50 0 0 1 17.73 33.29 Z" fill="currentColor"/>
-      <!-- Rode sikkel (rechtsboven) -->
       <path d="M 102.27 86.71 A 50 50 0 1 0 33.29 17.73 A 50 50 0 0 1 102.27 86.71 Z" fill="#e11d2a"/>
-      <!-- Vette M in het midden -->
-      <text x="60" y="61" text-anchor="middle" dominant-baseline="central"
-            font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="46" fill="currentColor">M</text>
+      <rect x="40" y="40" width="40" height="40" rx="9" fill="none" stroke="currentColor" stroke-width="3"/>
+      <text x="60" y="62" text-anchor="middle" dominant-baseline="central"
+            font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="30" fill="currentColor">M</text>
+    </symbol>
+
+    <!-- Volledig MODA TRANSPORT-logo (embleem + woordmerk + rode balk) -->
+    <symbol id="moda-lockup" viewBox="0 0 470 175">
+      <g transform="translate(15,25)">
+        <path d="M 17.73 33.29 A 50 50 0 1 0 86.71 102.27 A 50 50 0 0 1 17.73 33.29 Z" fill="currentColor"/>
+        <path d="M 102.27 86.71 A 50 50 0 1 0 33.29 17.73 A 50 50 0 0 1 102.27 86.71 Z" fill="#e11d2a"/>
+        <rect x="40" y="40" width="40" height="40" rx="9" fill="none" stroke="currentColor" stroke-width="3"/>
+        <text x="60" y="62" text-anchor="middle" dominant-baseline="central"
+              font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="30" fill="currentColor">M</text>
+      </g>
+      <text x="165" y="86" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="92" letter-spacing="-2" fill="currentColor">MODA</text>
+      <rect x="167" y="112" width="288" height="46" fill="#f01722"/>
+      <text x="311" y="137" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="30" letter-spacing="6" fill="#ffffff">TRANSPORT</text>
     </symbol>
   </svg>
 
@@ -44,7 +57,7 @@
   <header class="nav" id="nav">
     <div class="container nav__inner">
       <a href="#home" class="nav__brand" aria-label="Moda Travel — home">
-        <svg class="nav__logo" viewBox="0 0 120 120" role="img" aria-label="Moda Travel"><use href="#moda-logo"/></svg>
+        <svg class="nav__logo" viewBox="0 0 470 175" role="img" aria-label="Moda Transport"><use href="#moda-lockup"/></svg>
       </a>
 
       <nav class="nav__links" id="navLinks" aria-label="Hoofdmenu">
@@ -432,7 +445,7 @@
   <footer class="footer" id="contact">
     <div class="container footer__grid">
       <div class="footer__brand">
-        <svg class="footer__logo" viewBox="0 0 120 120" role="img" aria-label="Moda Travel"><use href="#moda-logo"/></svg>
+        <svg class="footer__logo" viewBox="0 0 470 175" role="img" aria-label="Moda Transport"><use href="#moda-lockup"/></svg>
         <p class="footer__slogan">“Reizen zonder zorgen”</p>
         <p class="footer__desc">Exclusief luchthavenvervoer met een persoonlijke, professionele service.</p>
       </div>
