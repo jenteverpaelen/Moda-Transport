@@ -147,7 +147,7 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.12; font-weight: 
 .stats { background: var(--charcoal); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .stats__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; padding: 46px 22px; }
 .stat { text-align: center; }
-.stat__num { display: block; font-family: var(--font-head); font-weight: 800; font-size: clamp(1.9rem, 4vw, 2.9rem); color: #fff; }
+.stat__num { display: flex; align-items: center; justify-content: center; min-height: clamp(2.4rem, 5vw, 3.4rem); font-family: var(--font-head); font-weight: 800; font-size: clamp(1.9rem, 4vw, 2.9rem); color: #fff; line-height: 1; }
 .stat__num--stars { color: var(--gold); font-size: clamp(1.3rem, 2.8vw, 1.9rem); letter-spacing: 3px; }
 .stat__label { color: var(--muted); font-size: .92rem; }
 
