@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ---------- 4. Tellers (stats) ---------- */
-  const counters = document.querySelectorAll(".stat__num");
+  const counters = document.querySelectorAll(".stat__num[data-count]");
   const runCounter = (el) => {
     const target = parseInt(el.dataset.count, 10);
     const suffix = el.dataset.suffix || "";
