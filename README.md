@@ -34,6 +34,7 @@ Alles is bewust simpel gehouden. De meest voorkomende aanpassingen:
 |------------------------------------|-----------------------------------------|
 | Teksten, titels, diensten          | `index.html`                            |
 | **Reviews toevoegen/wijzigen**     | `assets/js/reviews.js` (bovenaan)       |
+| **Prijzen / luchthavens / km-straal** | `assets/js/calculator.js` (config bovenaan) |
 | Telefoon, e-mail, WhatsApp         | zoek in `index.html` naar de placeholders (zie hieronder) |
 | Kleuren                            | `assets/css/style.css` bovenaan bij `:root` |
 | Foto's                             | vervang bestanden in `assets/images/`   |
@@ -42,12 +43,26 @@ Alles is bewust simpel gehouden. De meest voorkomende aanpassingen:
 
 Op deze plaatsen staan **voorbeeldgegevens** die je moet vervangen door de echte:
 
-- **Telefoonnummer** → zoek `+3200000000` en `+32 000 00 00 00` (in `index.html`)
+- **Telefoonnummer** → zoek `+3200000000` en `+32 000 00 00 00` (in `index.html` én `assets/js/calculator.js`)
 - **E-mailadres** → zoek `info@modatravel.be` (in `index.html` én `assets/js/main.js`)
 - **WhatsApp** → zoek `wa.me/3200000000`
 - **Google-reviews link** → zoek `google.com/search?q=Moda+Transport` en zet de link naar je
   echte Google Business-pagina
 - **Reviews zelf** → vul de echte beoordelingen in via `assets/js/reviews.js`
+
+## 💶 Prijscalculator
+
+De bezoeker kiest een luchthaven, vult een ophaaladres in en het aantal personen.
+Alle prijzen en instellingen staan bovenaan in `assets/js/calculator.js`:
+
+- **Basisprijs per luchthaven** (geldt t.e.m. 2 personen)
+- **Supplement per extra persoon** (standaard +€5)
+- **Km-straal** waarbinnen een vaste prijs geldt (standaard 20 km rond Heusden-Zolder)
+
+Het adres wordt gratis omgezet naar coördinaten via OpenStreetMap (Nominatim). Ligt het
+adres verder dan de ingestelde straal, dan krijgt de bezoeker géén vaste prijs maar een
+uitnodiging om een prijs op maat aan te vragen. Verhuist het bedrijf? Pas dan de
+`company`-coördinaten in `calculator.js` aan.
 
 ## 📨 Boekingsformulier
 

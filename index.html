@@ -34,7 +34,7 @@
 
       <nav class="nav__links" id="navLinks" aria-label="Hoofdmenu">
         <a href="#diensten">Diensten</a>
-        <a href="#waarom">Waarom Moda</a>
+        <a href="#prijs">Prijs berekenen</a>
         <a href="#vloot">Onze vloot</a>
         <a href="#reviews">Reviews</a>
         <a href="#contact">Contact</a>
@@ -278,6 +278,54 @@
     </div>
   </section>
 
+  <!-- ===================== PRIJS BEREKENEN ===================== -->
+  <section class="section" id="prijs">
+    <div class="container">
+      <div class="section__head reveal">
+        <p class="section__eyebrow">Bereken je prijs</p>
+        <h2 class="section__title">Meteen je <span class="text-accent">vaste prijs</span></h2>
+        <p class="section__lead">
+          Kies je luchthaven, vul je ophaaladres in en het aantal personen.
+          Je ziet direct een richtprijs voor een enkele rit — vaste prijs, geen verrassingen.
+        </p>
+      </div>
+
+      <div class="calc reveal">
+        <form class="calc__form" id="calcForm" novalidate>
+          <div class="field">
+            <label for="calc-airport">Naar welke luchthaven?</label>
+            <select id="calc-airport" name="airport" required>
+              <option value="" disabled selected>Kies een luchthaven…</option>
+              <!-- opties worden ingevuld via assets/js/calculator.js -->
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="calc-address">Ophaaladres</label>
+            <input type="text" id="calc-address" name="address"
+                   placeholder="Straat + nr, postcode, gemeente" autocomplete="off" required />
+            <span class="field__hint">Enkel binnen 20 km van Heusden-Zolder. Buiten dit gebied? Vraag gerust een prijs op maat aan.</span>
+          </div>
+
+          <div class="field">
+            <label for="calc-pax">Aantal personen</label>
+            <input type="number" id="calc-pax" name="pax" min="1" max="8" value="2" required />
+            <span class="field__hint">Prijs geldt voor 2 personen. Elke extra persoon: +€5.</span>
+          </div>
+
+          <button type="submit" class="btn btn--primary btn--lg btn--block">Bereken mijn prijs</button>
+        </form>
+
+        <div class="calc__result" id="calcResult" aria-live="polite">
+          <div class="calc__placeholder">
+            <span class="calc__euro">€</span>
+            <p>Vul je gegevens in en ontdek meteen je richtprijs.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== RESERVEER / OFFERTE ===================== -->
   <section class="section section--alt" id="reserveer">
     <div class="container booking">
@@ -388,6 +436,7 @@
   <a href="tel:+3200000000" class="floating-call" aria-label="Bel Moda Travel">📞</a>
 
   <script src="assets/js/reviews.js"></script>
+  <script src="assets/js/calculator.js"></script>
   <script src="assets/js/main.js"></script>
 </body>
 </html>

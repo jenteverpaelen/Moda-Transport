@@ -232,6 +232,54 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.12; font-weight: 
 .review__google { margin-left: auto; opacity: .5; font-size: .78rem; }
 .reviews__cta { text-align: center; margin-top: 40px; }
 
+/* -------------------- Prijscalculator -------------------- */
+.calc { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: stretch; max-width: 960px; margin: 0 auto; }
+.calc__form { background: var(--charcoal-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 30px; }
+.calc__form .field:last-of-type { margin-bottom: 22px; }
+.calc__form select,
+.calc__form input {
+  width: 100%; padding: 13px 15px; background: var(--black); color: #fff;
+  border: 1px solid var(--line); border-radius: var(--radius-sm); font-family: var(--font-body); font-size: .98rem;
+  transition: border-color .25s, box-shadow .25s;
+}
+.calc__form select:focus,
+.calc__form input:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 3px rgba(225,29,42,.15); }
+.field__hint { display: block; margin-top: 7px; font-size: .8rem; color: var(--muted); }
+
+.calc__result {
+  background: linear-gradient(160deg, #17171d, #101014); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 30px; display: flex; align-items: center; justify-content: center;
+  min-height: 320px; text-align: center; overflow: hidden;
+}
+.calc__placeholder { color: var(--muted); }
+.calc__euro { display: block; font-family: var(--font-head); font-weight: 800; font-size: 3rem; color: rgba(255,255,255,.14); margin-bottom: 12px; }
+
+.calc__state { width: 100%; animation: calc-in .5s var(--ease); }
+@keyframes calc-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.calc__state h3 { font-size: 1.2rem; margin: 12px 0 8px; }
+.calc__state p { color: var(--muted); font-size: .95rem; }
+
+.calc__spinner {
+  display: inline-block; width: 40px; height: 40px; margin-bottom: 14px;
+  border: 3px solid var(--line); border-top-color: var(--red); border-radius: 50%; animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.calc__emoji { font-size: 2.4rem; }
+
+.calc__badge {
+  display: inline-block; font-family: var(--font-head); font-weight: 600; font-size: .72rem;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--gold);
+  border: 1px solid rgba(201,162,75,.4); border-radius: 100px; padding: 6px 14px; margin-bottom: 14px;
+}
+.calc__price { font-family: var(--font-head); font-weight: 800; font-size: clamp(3rem, 9vw, 4.4rem); color: #fff; line-height: 1; }
+.calc__route { color: var(--off); font-weight: 500; margin: 10px 0 20px; font-size: .98rem; }
+
+.calc__breakdown { text-align: left; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 6px 0; margin-bottom: 16px; }
+.calc__row { display: flex; justify-content: space-between; gap: 16px; padding: 9px 0; color: var(--muted); font-size: .95rem; }
+.calc__row--total { color: #fff; font-family: var(--font-head); font-weight: 700; font-size: 1.05rem; border-top: 1px dashed var(--line); margin-top: 2px; }
+.calc__fineprint { font-size: .8rem; color: var(--muted); margin-bottom: 18px; }
+.calc__actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 18px; }
+
 /* -------------------- Reserveer / formulier -------------------- */
 .booking { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 56px; align-items: start; }
 .booking__intro .section__eyebrow, .booking__intro .section__title, .booking__intro .section__lead { text-align: left; }
@@ -321,6 +369,8 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.12; font-weight: 
   .reviews { grid-template-columns: 1fr; }
   .footer__grid { grid-template-columns: 1fr; gap: 30px; }
   .field-row { grid-template-columns: 1fr; gap: 0; }
+  .calc { grid-template-columns: 1fr; }
+  .calc__result { min-height: 240px; }
   .hero__actions .btn { flex: 1 1 auto; }
   .floating-call { display: grid; }
   .footer__bottom { justify-content: center; text-align: center; }
