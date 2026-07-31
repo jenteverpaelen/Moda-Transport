@@ -47,8 +47,10 @@ Contactgegevens zijn ingevuld: telefoon **011 24 30 03**, e-mail
 
 Nog te doen vóór livegang:
 
-- **WhatsApp** (optioneel) → er is nu geen WhatsApp-knop. Heb je een WhatsApp-gsm-nummer,
-  laat het weten dan voegen we de knop terug toe.
+- **WhatsApp-nummer** → er is een WhatsApp-knop in de hero én een zwevende knop linksonder.
+  Zoek in `index.html` naar `32000000000` (staat 2×) en vervang door je echte gsm-nummer
+  in internationaal formaat zonder `+` (bv. `32470123456`). Zolang dat placeholder-nummer
+  erin staat, opent WhatsApp maar zonder geldig gesprek.
 - **Google-reviews link** → zoek `google.com/search?q=Moda+Transport` en zet de link naar je
   echte Google Business-pagina
 - **Google-reviews** → er staan al **echte reviews** ingevuld in `assets/js/reviews.js`. Wil je

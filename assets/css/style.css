@@ -122,6 +122,11 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.12; font-weight: 
 
 .btn__icon { font-size: 1.05em; }
 
+/* WhatsApp-knop */
+.btn--wa { background: #25d366; color: #fff; box-shadow: 0 12px 28px rgba(37,211,102,0.32); }
+.btn--wa:hover { background: #1fb457; transform: translateY(-3px); box-shadow: 0 18px 36px rgba(37,211,102,0.42); }
+.btn__wa { fill: currentColor; flex-shrink: 0; }
+
 /* -------------------- Navigatie -------------------- */
 .nav {
   position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
@@ -480,6 +485,22 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.12; font-weight: 
   0%   { box-shadow: 0 10px 28px rgba(225,29,42,.45), 0 0 0 0 rgba(225,29,42,.5); }
   70%  { box-shadow: 0 10px 28px rgba(225,29,42,.45), 0 0 0 16px rgba(225,29,42,0); }
   100% { box-shadow: 0 10px 28px rgba(225,29,42,.45), 0 0 0 0 rgba(225,29,42,0); }
+}
+
+/* -------------------- Zwevende WhatsApp-knop (linksonder) -------------------- */
+.floating-wa {
+  position: fixed; left: 18px; bottom: 18px; z-index: 90;
+  width: 58px; height: 58px; border-radius: 50%; background: #25d366;
+  display: grid; place-items: center; color: #fff;
+  box-shadow: 0 10px 28px rgba(37,211,102,.45); animation: pulse-wa 2.4s infinite;
+  transition: transform .25s var(--ease);
+}
+.floating-wa:hover { transform: scale(1.08); }
+.floating-wa svg { fill: currentColor; }
+@keyframes pulse-wa {
+  0%   { box-shadow: 0 10px 28px rgba(37,211,102,.45), 0 0 0 0 rgba(37,211,102,.5); }
+  70%  { box-shadow: 0 10px 28px rgba(37,211,102,.45), 0 0 0 16px rgba(37,211,102,0); }
+  100% { box-shadow: 0 10px 28px rgba(37,211,102,.45), 0 0 0 0 rgba(37,211,102,0); }
 }
 
 /* -------------------- Reveal-animaties -------------------- */
