@@ -23,6 +23,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="assets/css/style.css" />
+
+  <!-- Netlify Identity: laat de uitnodigingslink werken en het
+       wachtwoord-instelvenster verschijnen. Nodig voor de beheerpagina
+       (/admin) met "Optie A". Zie SETUP-ADMIN.md. -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
 
@@ -506,5 +511,19 @@
   <script src="assets/js/reviews.js"></script>
   <script src="assets/js/calculator.js"></script>
   <script src="assets/js/main.js"></script>
+
+  <!-- Na inloggen (of na het instellen van je wachtwoord via de
+       uitnodigingslink) automatisch naar de beheerpagina gaan. -->
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", function (user) {
+        if (!user) {
+          window.netlifyIdentity.on("login", function () {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  </script>
 </body>
 </html>
