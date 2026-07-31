@@ -343,6 +343,24 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.12; font-weight: 
 .calc__form input:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 3px rgba(225,29,42,.15); }
 .field__hint { display: block; margin-top: 7px; font-size: .8rem; color: var(--muted); }
 
+/* Segment-keuze (type rit) */
+.calc__segment {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;
+  background: var(--input-bg); border: 1px solid var(--line);
+  border-radius: var(--radius-sm); padding: 5px;
+}
+.calc__segment input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; margin: 0; padding: 0; }
+.calc__segment label {
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  margin: 0; padding: 11px 8px; border-radius: calc(var(--radius-sm) - 3px);
+  font-family: var(--font-body); font-size: .9rem; font-weight: 500; line-height: 1.15;
+  color: var(--muted); cursor: pointer; transition: background .2s, color .2s, box-shadow .2s;
+}
+.calc__segment label:hover { color: var(--text-strong); }
+.calc__segment input:checked + label { background: var(--red); color: #fff; font-weight: 600; box-shadow: 0 6px 16px rgba(225,29,42,.28); }
+.calc__segment input:focus-visible + label { outline: 2px solid var(--red); outline-offset: 2px; }
+@media (max-width: 560px) { .calc__segment { grid-template-columns: 1fr; } }
+
 /* Adres-autocomplete */
 .autocomplete { position: relative; }
 .autocomplete__list {

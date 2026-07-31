@@ -16,6 +16,7 @@ const MODA_CALC = {
   basePersons:     2,
   extraPersonFee:  5,    // euro per extra persoon
   stopFee:         10,   // euro per extra tussenstop
+  roundTripDiscount: 0,  // korting (%) op een heen-én-terugrit (0 = geen korting)
 
   // Luchthavens + vaste basisprijs (enkele rit, 2 personen)
   airports: [
@@ -51,6 +52,7 @@ const MODA_CALC = {
     if (typeof p.basisprijs_personen === "number") MODA_CALC.basePersons = p.basisprijs_personen;
     if (typeof p.supplement_per_extra_persoon === "number") MODA_CALC.extraPersonFee = p.supplement_per_extra_persoon;
     if (typeof p.supplement_per_tussenstop === "number") MODA_CALC.stopFee = p.supplement_per_tussenstop;
+    if (typeof p.heenterug_korting_procent === "number") MODA_CALC.roundTripDiscount = p.heenterug_korting_procent;
     if (typeof p.km_straal === "number") MODA_CALC.radiusKm = p.km_straal;
     if (Array.isArray(p.luchthavens) && p.luchthavens.length) {
       MODA_CALC.airports = p.luchthavens
@@ -77,6 +79,26 @@ function initCalc() {
     opt.textContent = a.label;
     select.appendChild(opt);
   });
+
+  /* -- Type rit: naar / van / heen-en-terug -- */
+  const airportLabel = document.getElementById("calc-airport-label");
+  const addressLabel = document.getElementById("calc-address-label");
+  const TRIP_LABELS = {
+    naar:   { airport: "Naar welke luchthaven?", address: "Ophaaladres" },
+    van:    { airport: "Van welke luchthaven?",  address: "Afzetadres (waar zetten we u af?)" },
+    retour: { airport: "Welke luchthaven?",       address: "Uw adres (ophalen én terugbrengen)" }
+  };
+  function getTripType() {
+    const r = form.querySelector("input[name='triptype']:checked");
+    return r ? r.value : "naar";
+  }
+  function syncTripLabels() {
+    const t = TRIP_LABELS[getTripType()] || TRIP_LABELS.naar;
+    if (airportLabel) airportLabel.textContent = t.airport;
+    if (addressLabel) addressLabel.textContent = t.address;
+  }
+  form.querySelectorAll("input[name='triptype']").forEach(r => r.addEventListener("change", syncTripLabels));
+  syncTripLabels();
 
   /* -- Afstand tussen twee coördinaten (Haversine, in km) -- */
   function distanceKm(a, b) {
@@ -307,37 +329,60 @@ function initCalc() {
       </div>`;
   }
   function showPrice(d) {
-    const { airport, price, base, extra, stopsFee, stopCount, pax, addressText, stopTexts, km } = d;
-    const extraLine = extra > 0
-      ? `<div class="calc__row"><span>Supplement (${pax - MODA_CALC.basePersons} extra pers.)</span><span>+ ${euro(extra)}</span></div>` : "";
-    const stopLine = stopCount > 0
-      ? `<div class="calc__row"><span>Tussenstop${stopCount > 1 ? "pen" : ""} (${stopCount})</span><span>+ ${euro(stopsFee)}</span></div>` : "";
+    const { airport, price, perRide, rides, discountPct, discount, stopsFee, stopCount,
+            pax, addressText, stopTexts, km, triptype } = d;
+
+    // Route-tekst en badge volgens de richting
+    let routeText, badge;
+    if (triptype === "van") {
+      routeText = `${airport.label} → ${addressText}`;
+      badge = "Richtprijs · enkele rit";
+    } else if (triptype === "retour") {
+      routeText = `${addressText} ⇄ ${airport.label}`;
+      badge = "Richtprijs · heen en terug";
+    } else {
+      routeText = `${addressText} → ${airport.label}`;
+      badge = "Richtprijs · enkele rit";
+    }
+
     const via = stopTexts.length ? `<p class="calc__route calc__route--via">via ${stopTexts.join(" · ")}</p>` : "";
+
+    // Prijsopbouw
+    let rows = "";
+    if (triptype === "retour") {
+      rows += `<div class="calc__row"><span>Enkele rit (heen)</span><span>${euro(perRide)}</span></div>`;
+      rows += `<div class="calc__row"><span>Enkele rit (terug)</span><span>${euro(perRide)}</span></div>`;
+      if (discount > 0) rows += `<div class="calc__row"><span>Korting heen &amp; terug (−${discountPct}%)</span><span>− ${euro(discount)}</span></div>`;
+    } else {
+      const extra = perRide - airport.price;
+      rows += `<div class="calc__row"><span>Basisprijs (t.e.m. ${MODA_CALC.basePersons} pers.)</span><span>${euro(airport.price)}</span></div>`;
+      if (extra > 0) rows += `<div class="calc__row"><span>Supplement (${pax - MODA_CALC.basePersons} extra pers.)</span><span>+ ${euro(extra)}</span></div>`;
+    }
+    if (stopCount > 0) rows += `<div class="calc__row"><span>Tussenstop${stopCount > 1 ? "pen" : ""} (${stopCount})</span><span>+ ${euro(stopsFee)}</span></div>`;
+    rows += `<div class="calc__row calc__row--total"><span>Totaal (${pax} pers.)</span><span>${euro(price)}</span></div>`;
 
     result.innerHTML = `
       <div class="calc__state calc__state--ok">
-        <span class="calc__badge">Richtprijs · enkele rit</span>
+        <span class="calc__badge">${badge}</span>
         <div class="calc__price">${euro(price)}</div>
-        <p class="calc__route">${addressText} → ${airport.label}</p>
+        <p class="calc__route">${routeText}</p>
         ${via}
-        <div class="calc__breakdown">
-          <div class="calc__row"><span>Basisprijs (t.e.m. ${MODA_CALC.basePersons} pers.)</span><span>${euro(base)}</span></div>
-          ${extraLine}
-          ${stopLine}
-          <div class="calc__row calc__row--total"><span>Totaal (${pax} pers.)</span><span>${euro(price)}</span></div>
-        </div>
+        <div class="calc__breakdown">${rows}</div>
         <p class="calc__fineprint">Binnen ${MODA_CALC.radiusKm} km (± ${km.toFixed(0)} km). Richtprijs — je krijgt steeds een definitieve bevestiging.</p>
         <button type="button" class="btn btn--primary btn--lg btn--block" id="calcToBooking">Reserveer deze rit →</button>
       </div>`;
 
     document.getElementById("calcToBooking").addEventListener("click", () => {
       const set = (id, val) => { const el = document.getElementById(id); if (el) el.value = val; };
-      set("from", addressText);
-      set("to", airport.label);
+      if (triptype === "van") { set("from", airport.label); set("to", addressText); }
+      else { set("from", addressText); set("to", airport.label); }
       set("pax", pax);
-      if (stopTexts.length) {
+      const extraNotes = [];
+      if (triptype === "retour") extraNotes.push("Rit: heen én terug");
+      if (stopTexts.length) extraNotes.push(`Tussenstop(pen): ${stopTexts.join("; ")}`);
+      if (extraNotes.length) {
         const notes = document.getElementById("notes");
-        if (notes) notes.value = `Tussenstop(pen): ${stopTexts.join("; ")}` + (notes.value ? `\n${notes.value}` : "");
+        if (notes) notes.value = extraNotes.join(" · ") + (notes.value ? `\n${notes.value}` : "");
       }
       document.getElementById("reserveer").scrollIntoView({ behavior: "smooth" });
     });
@@ -351,21 +396,29 @@ function initCalc() {
     const airport = MODA_CALC.airports.find(a => a.value === select.value);
     if (!airport) { form.reportValidity(); return; }
 
+    const triptype  = getTripType();
+    const rides     = triptype === "retour" ? 2 : 1;
     const pax       = Math.min(Math.max(parseInt(paxIn.value, 10) || 1, 1), 8);
     const stopInputs = getStopInputs();
     const stopCount = stopInputs.length;
-    const base      = airport.price;
-    const extra     = Math.max(0, pax - MODA_CALC.basePersons) * MODA_CALC.extraPersonFee;
-    const stopsFee  = stopCount * MODA_CALC.stopFee;
-    const price     = base + extra + stopsFee;
+
+    const extraPerRide = Math.max(0, pax - MODA_CALC.basePersons) * MODA_CALC.extraPersonFee;
+    const perRide     = airport.price + extraPerRide;          // prijs van één rit
+    const ridesTotal  = perRide * rides;                       // alle ritten samen
+    const discountPct = triptype === "retour" ? Math.max(0, MODA_CALC.roundTripDiscount || 0) : 0;
+    const discount    = Math.round(ridesTotal * discountPct / 100);
+    const stopsFee    = stopCount * MODA_CALC.stopFee;         // tussenstops: eenmalig
+    const price       = ridesTotal - discount + stopsFee;
+
     const addressText = address.value.trim();
     const stopTexts   = stopInputs.map(i => i.value.trim());
+    const addrPointLabel = triptype === "van" ? "Je afzetadres" : "Je ophaaladres";
 
     showLoading();
 
     try {
-      // Ophaaladres + alle tussenstops moeten binnen de zone liggen
-      const points = [{ label: "Je ophaaladres", input: address }]
+      // Adres + alle tussenstops moeten binnen de zone liggen
+      const points = [{ label: addrPointLabel, input: address }]
         .concat(stopInputs.map(i => ({ label: "Je tussenstop", input: i })));
 
       let maxKm = 0;
@@ -377,7 +430,8 @@ function initCalc() {
         if (km > maxKm) maxKm = km;
       }
 
-      showPrice({ airport, price, base, extra, stopsFee, stopCount, pax, addressText, stopTexts, km: maxKm });
+      showPrice({ airport, price, perRide, rides, discountPct, discount, stopsFee, stopCount,
+                  pax, addressText, stopTexts, km: maxKm, triptype });
     } catch (err) {
       showError();
     }

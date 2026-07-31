@@ -69,6 +69,7 @@ collections:
           - { name: basisprijs_personen, label: "Basisprijs geldt t.e.m. … personen", widget: number, value_type: int, min: 1 }
           - { name: supplement_per_extra_persoon, label: "Supplement per extra persoon (€)", widget: number, value_type: int, min: 0 }
           - { name: supplement_per_tussenstop, label: "Supplement per tussenstop (€)", widget: number, value_type: int, min: 0 }
+          - { name: heenterug_korting_procent, label: "Korting op heen-én-terug (%)", widget: number, value_type: int, min: 0, max: 100, default: 0, hint: "0 = geen korting (heen en terug = 2× de enkele rit). Bv. 10 = 10% korting op een retour." }
           - { name: km_straal, label: "Vaste prijs binnen … km", widget: number, value_type: int, min: 1 }
           - name: luchthavens
             label: "Luchthavens"

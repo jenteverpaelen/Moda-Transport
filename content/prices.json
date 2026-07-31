@@ -2,6 +2,7 @@
   "basisprijs_personen": 2,
   "supplement_per_extra_persoon": 5,
   "supplement_per_tussenstop": 10,
+  "heenterug_korting_procent": 0,
   "km_straal": 20,
   "luchthavens": [
     {

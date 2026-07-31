@@ -364,7 +364,19 @@
       <div class="calc reveal">
         <form class="calc__form" id="calcForm" novalidate>
           <div class="field">
-            <label for="calc-airport">Naar welke luchthaven?</label>
+            <label>Wat wil je boeken?</label>
+            <div class="calc__segment" id="calcTripType" role="radiogroup" aria-label="Type rit">
+              <input type="radio" name="triptype" id="trip-naar" value="naar" checked />
+              <label for="trip-naar">Naar de luchthaven</label>
+              <input type="radio" name="triptype" id="trip-van" value="van" />
+              <label for="trip-van">Van de luchthaven</label>
+              <input type="radio" name="triptype" id="trip-retour" value="retour" />
+              <label for="trip-retour">Heen én terug</label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="calc-airport" id="calc-airport-label">Naar welke luchthaven?</label>
             <select id="calc-airport" name="airport" required>
               <option value="" disabled selected>Kies een luchthaven…</option>
               <!-- opties worden ingevuld via assets/js/calculator.js -->
@@ -372,7 +384,7 @@
           </div>
 
           <div class="field">
-            <label for="calc-address">Ophaaladres</label>
+            <label for="calc-address" id="calc-address-label">Ophaaladres</label>
             <div class="autocomplete">
               <input type="text" id="calc-address" name="address"
                      placeholder="Begin te typen, bv. Paalseweg 30…" autocomplete="off"
