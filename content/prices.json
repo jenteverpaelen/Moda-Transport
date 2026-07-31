@@ -38,6 +38,11 @@
       "value": "amsterdam",
       "label": "Amsterdam — Schiphol",
       "price": 240
+    },
+    {
+      "value": "weeze",
+      "label": "Luchthaven Weeze",
+      "price": 140
     }
   ]
 }
