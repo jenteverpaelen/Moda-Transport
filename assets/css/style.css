@@ -265,6 +265,46 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.12; font-weight: 
 .autocomplete__line1 { color: #fff; font-size: .95rem; font-weight: 500; }
 .autocomplete__line2 { color: var(--muted); font-size: .82rem; }
 
+/* Tussenstop toevoegen (subtiel, groen accent) */
+.calc__addstop {
+  display: inline-flex; align-items: center; gap: 8px; margin-top: 12px;
+  background: none; border: 1px dashed rgba(74, 222, 128, .45); color: #d7d7de;
+  font-family: var(--font-body); font-size: .88rem; font-weight: 500;
+  padding: 9px 14px; border-radius: 100px; cursor: pointer;
+  transition: background .25s, border-color .25s, transform .2s;
+}
+.calc__addstop:hover { background: rgba(74, 222, 128, .1); border-color: rgba(74, 222, 128, .8); transform: translateY(-1px); }
+.calc__addstop-icon {
+  display: inline-grid; place-items: center; width: 18px; height: 18px;
+  background: #22c55e; color: #06210f; border-radius: 50%; font-size: .72rem; font-weight: 800;
+}
+.calc__addstop-fee { color: var(--muted); font-size: .8rem; }
+
+.calc__stops { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+.calc__stop {
+  display: flex; align-items: center; gap: 8px;
+  padding-left: 12px; border-left: 2px solid rgba(74, 222, 128, .5);
+  animation: calc-in .28s var(--ease);
+}
+.calc__stop-ac { flex: 1; }
+.calc__stop-input {
+  width: 100%; padding: 11px 13px; background: var(--black); color: #fff;
+  border: 1px solid var(--line); border-radius: var(--radius-sm); font-family: var(--font-body); font-size: .92rem;
+  transition: border-color .25s, box-shadow .25s;
+}
+.calc__stop-input:focus { outline: none; border-color: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,.15); }
+.calc__stop-fee { color: var(--muted); font-size: .82rem; white-space: nowrap; }
+.calc__stop-remove {
+  flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%;
+  background: rgba(255,255,255,.06); border: 1px solid var(--line); color: var(--muted);
+  font-size: 1.2rem; line-height: 1; cursor: pointer; transition: background .2s, color .2s;
+}
+.calc__stop-remove:hover { background: rgba(225,29,42,.2); color: #fff; }
+
+@keyframes calc-out { to { opacity: 0; transform: translateX(-12px); height: 0; margin: 0; padding: 0; } }
+
+.calc__route--via { color: var(--muted); font-size: .86rem; margin-top: -12px; margin-bottom: 18px; }
+
 .calc__result {
   background: linear-gradient(160deg, #17171d, #101014); border: 1px solid var(--line);
   border-radius: var(--radius); padding: 30px; display: flex; align-items: center; justify-content: center;
