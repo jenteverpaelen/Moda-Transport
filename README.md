@@ -114,6 +114,7 @@ Daarna kun je een eigen domein (bv. `modatravel.be`) koppelen.
 ## 🎨 Kenmerken
 
 - 100% mobielvriendelijk (mobile-first)
+- Licht/donker-knop rechtsboven (de site opent altijd in dark mode)
 - Vloeiende scroll-animaties, hero met Ken Burns-effect, tellers, parallax
 - Toegankelijk (respecteert `prefers-reduced-motion`)
 - Snel: geen frameworks, geen build-stap
