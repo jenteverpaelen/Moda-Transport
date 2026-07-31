@@ -23,8 +23,8 @@ const MODA_CONFIG_REVIEWS = {
   //    handmatige voorbeeldreviews hieronder te tonen).
   FEATURABLE_WIDGET_ID: "",
 
-  // Hoeveel reviews tonen we maximaal op de site?
-  maxReviews: 9,
+  // Hoeveel reviews tonen we maximaal in de lopende rij?
+  maxReviews: 30,
 
   // Toon enkel reviews met een tekst (rating-zonder-tekst overslaan)?
   onlyWithText: true,
@@ -75,6 +75,42 @@ const MODA_REVIEWS = [
     stars: 5,
     meta: "Google · Vroege vlucht",
     text: "Perfecte service van begin tot eind. Duidelijke communicatie, vaste prijs en een aangename rit. Boek zeker opnieuw!"
+  },
+  {
+    name: "Ellen V.",
+    stars: 5,
+    meta: "Google · Transfer Eindhoven",
+    text: "Vlot geboekt, vriendelijk contact en keurig op tijd. De wagen was spotless. Niks dan lof!"
+  },
+  {
+    name: "Bram C.",
+    stars: 5,
+    meta: "Google · Zakenreis",
+    text: "Chauffeur volgde mijn vlucht op en paste het ophaaluur aan bij vertraging. Zorgeloos van deur tot deur."
+  },
+  {
+    name: "Linda H.",
+    stars: 5,
+    meta: "Google · Retour Charleroi",
+    text: "Heen én terug met Moda. Beide keren stipt, correcte prijs afgesproken vooraf. Absolute aanrader."
+  },
+  {
+    name: "Wim T.",
+    stars: 5,
+    meta: "Google · Groepsvervoer",
+    text: "Met 7 vrienden naar de luchthaven. Ruime bus, plaats voor alle bagage en een toffe chauffeur. Top geregeld!"
+  },
+  {
+    name: "Fatima E.",
+    stars: 5,
+    meta: "Google · Ophaling Zaventem",
+    text: "Na een lange vlucht stond de chauffeur klaar met naambordje. Vriendelijk en behulpzaam met de koffers. Dankjewel!"
+  },
+  {
+    name: "Dirk M.",
+    stars: 5,
+    meta: "Google · Vroege ochtendrit",
+    text: "Om 3u opgehaald, alles vlekkeloos. Rustige rit, veilig gereden. Precies wat je wil voor je op reis vertrekt."
   }
 ];
 
@@ -104,7 +140,7 @@ const MODA_REVIEWS = [
       : `<span class="review__avatar" style="background:${color}">${initial}</span>`;
 
     return `
-      <article class="review reveal">
+      <article class="review">
         <div class="review__stars">${stars}</div>
         <p class="review__text">“${escapeHTML(r.text)}”</p>
         <div class="review__author">
@@ -119,12 +155,41 @@ const MODA_REVIEWS = [
   }
 
   function render(list) {
+    track.classList.remove("is-animated");
+    track.style.removeProperty("--marquee-distance");
+    track.style.removeProperty("--marquee-dur");
     track.innerHTML = list.map(cardHTML).join("");
-    // Nieuw geïnjecteerde .reveal-kaarten meteen zichtbaar maken
-    // (de IntersectionObserver in main.js heeft ze al gemist).
-    track.querySelectorAll(".reveal").forEach((el, i) => {
-      setTimeout(() => el.classList.add("is-visible"), (i % 4) * 90);
+    // Laat de rij automatisch lopen (naadloze, oneindige marquee).
+    setupMarquee(list.length);
+  }
+
+  /* -- Kaarten dupliceren voor een naadloos lopende rij -- */
+  function setupMarquee(count) {
+    // Bij te weinig kaarten heeft rondlopen geen zin.
+    if (count < 3) return;
+
+    const styles = getComputedStyle(track);
+    const gap = parseFloat(styles.columnGap || styles.gap || "22") || 22;
+
+    // Breedte van één volledige set (interne tussenruimtes inbegrepen).
+    const setWidth = track.scrollWidth;
+
+    // Zelfde set nog eens toevoegen zodat de lus naadloos overloopt.
+    Array.from(track.children).forEach((node) => {
+      const clone = node.cloneNode(true);
+      clone.setAttribute("aria-hidden", "true");
+      track.appendChild(clone);
     });
+
+    // Precieze verschuiving = één set + de tussenruimte naar de kopie.
+    const distance = setWidth + gap;
+
+    // Constante snelheid (~55 px per seconde), ongeacht het aantal reviews.
+    const duration = Math.max(24, Math.round(distance / 55));
+
+    track.style.setProperty("--marquee-distance", distance + "px");
+    track.style.setProperty("--marquee-dur", duration + "s");
+    track.classList.add("is-animated");
   }
 
   function escapeHTML(str) {
@@ -152,13 +217,16 @@ const MODA_REVIEWS = [
   /* -- Featurable-review -> ons kaartformaat -- */
   function normalize(rv) {
     const reviewer = rv.reviewer || {};
-    const rel = relativeDate(rv.updateTime || rv.createTime);
+    const when = rv.updateTime || rv.createTime;
+    const rel = relativeDate(when);
+    const ts = when ? new Date(when).getTime() : 0;
     return {
       name: reviewer.displayName || "Google-gebruiker",
       photo: reviewer.isAnonymous ? "" : (reviewer.profilePhotoUrl || ""),
       stars: rv.starRating || 5,
       text: (rv.comment || "").trim(),
-      meta: rel ? `Google · ${rel}` : "Google"
+      meta: rel ? `Google · ${rel}` : "Google",
+      ts: isNaN(ts) ? 0 : ts
     };
   }
 
@@ -173,6 +241,8 @@ const MODA_REVIEWS = [
     let list = raw.map(normalize);
     if (MODA_CONFIG_REVIEWS.onlyWithText) list = list.filter(r => r.text.length > 0);
     list = list.filter(r => (r.stars || 0) >= MODA_CONFIG_REVIEWS.minStars);
+    // Nieuwste reviews eerst.
+    list.sort((a, b) => b.ts - a.ts);
     list = list.slice(0, MODA_CONFIG_REVIEWS.maxReviews);
 
     if (!list.length) throw new Error("Geen bruikbare reviews ontvangen");
