@@ -234,7 +234,12 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.12; font-weight: 
   width: min(340px, 80vw); flex: 0 0 auto;
 }
 .review__stars { color: var(--gold); font-size: 1.05rem; letter-spacing: 2px; }
-.review__text { font-size: 1rem; color: var(--off); line-height: 1.7; flex-grow: 1; }
+.review__text {
+  font-size: 1rem; color: var(--off); line-height: 1.7; flex-grow: 1;
+  /* Zeer lange reviews netjes inkorten zodat alle kaarten even hoog blijven */
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 5;
+  line-clamp: 5; overflow: hidden;
+}
 .review__author { display: flex; align-items: center; gap: 12px; margin-top: 6px; }
 .review__avatar {
   width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center;

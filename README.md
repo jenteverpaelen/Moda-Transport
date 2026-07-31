@@ -48,8 +48,8 @@ Op deze plaatsen staan **voorbeeldgegevens** die je moet vervangen door de echte
 - **WhatsApp** → zoek `wa.me/3200000000`
 - **Google-reviews link** → zoek `google.com/search?q=Moda+Transport` en zet de link naar je
   echte Google Business-pagina
-- **Google-reviews automatisch** → koppel Featurable (zie hieronder). Tot dat gebeurt, toont
-  de site automatisch de voorbeeldreviews in `assets/js/reviews.js`.
+- **Google-reviews** → er staan al **echte reviews** ingevuld in `assets/js/reviews.js`. Wil je
+  dat nieuwe reviews vanzelf binnenkomen? Koppel dan Featurable (zie hieronder).
 
 ## 💶 Prijscalculator
 
@@ -66,11 +66,16 @@ dan zijn de coördinaten meteen gekend. Het adres wordt getoetst aan de km-straa
 verder, dan krijgt de bezoeker géén vaste prijs maar een uitnodiging om een prijs op maat
 aan te vragen. Verhuist het bedrijf? Pas dan de `company`-coördinaten in `calculator.js` aan.
 
-## ⭐ Google-reviews (automatisch)
+## ⭐ Google-reviews
 
-De reviews worden **automatisch van Google gehaald** — je hoeft ze niet meer met de hand bij
-te houden. Dat loopt via een gratis dienst genaamd **Featurable**, die dagelijks met je
-Google-profiel synct. Zo stel je het één keer in:
+Er staan al **echte Google-reviews** van Moda Transport ingevuld in `assets/js/reviews.js`.
+Ze worden automatisch op datum gesorteerd (nieuwste eerst) en in een lopende rij getoond.
+Een nieuwe review met de hand toevoegen? Kopieer één blok en pas `name`, `stars`,
+`date` (JJJJ-MM-DD) en `text` aan.
+
+**Liever helemaal automatisch?** Dan hoef je nooit meer iets bij te werken. Dat loopt via een
+gratis dienst genaamd **Featurable**, die dagelijks met je Google-profiel synct. Zo stel je
+het één keer in:
 
 1. Maak een gratis account op **featurable.com**.
 2. Koppel het Google-profiel **"Moda Transport"**.
@@ -83,8 +88,8 @@ sterren en datum). Bovenaan `reviews.js` kun je nog instellen hoeveel reviews je
 (`onlyWithText`).
 
 > Zolang er nog geen Widget ID is ingevuld — of als de verbinding met Featurable even
-> uitvalt — toont de site automatisch de voorbeeldreviews die onderaan in `reviews.js`
-> staan, zodat de reviewsectie er nooit leeg uitziet.
+> uitvalt — toont de site automatisch de reviews die in `reviews.js` staan, zodat de
+> reviewsectie er nooit leeg uitziet.
 
 ## 📨 Boekingsformulier
 

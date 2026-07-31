@@ -1,26 +1,27 @@
 /* =========================================================
    MODA TRAVEL — Reviews
    ---------------------------------------------------------
-   De reviews worden AUTOMATISCH van Google gehaald via een
-   gratis Featurable-widget (die synct dagelijks met je
-   Google-profiel). Je hoeft dus normaal niks meer manueel
-   bij te houden.
+   Hieronder staan ECHTE Google-reviews van Moda Transport,
+   handmatig ingevuld. Ze worden automatisch op datum
+   gesorteerd (nieuwste eerst) en in een lopende rij getoond.
 
-   👉 STAP 1 — Eenmalig instellen (5 min):
+   👉 WIL JE DAT NIEUWE REVIEWS AUTOMATISCH BINNENKOMEN?
+      Koppel dan éénmalig een gratis Featurable-widget, dan
+      hoef je deze lijst nooit meer bij te werken:
       1. Maak een gratis account op https://featurable.com
       2. Koppel het Google-profiel "Moda Transport"
       3. Maak een widget en kopieer het "Widget ID"
-         (dat is de code in de link, bv. 1a2b3c4d-....)
+         (de code in de link, bv. 1a2b3c4d-....)
       4. Plak dat ID hieronder bij FEATURABLE_WIDGET_ID.
 
-   Zolang er geen ID is ingevuld (of als de verbinding faalt),
-   toont de site automatisch de voorbeeldreviews hieronder,
-   zodat de site er nooit leeg uitziet.
+   Zodra dat ID is ingevuld, worden de live Google-reviews
+   getoond en dient de lijst hieronder enkel nog als terugval
+   (voor als de verbinding met Featurable even uitvalt).
    ========================================================= */
 
 const MODA_CONFIG_REVIEWS = {
-  // 👇 Plak hier je Featurable Widget ID (laat leeg om de
-  //    handmatige voorbeeldreviews hieronder te tonen).
+  // 👇 Plak hier je Featurable Widget ID om reviews automatisch
+  //    te laten binnenkomen (laat leeg om de lijst hieronder te tonen).
   FEATURABLE_WIDGET_ID: "",
 
   // Hoeveel reviews tonen we maximaal in de lopende rij?
@@ -34,83 +35,126 @@ const MODA_CONFIG_REVIEWS = {
 };
 
 /* ---------------------------------------------------------
-   Handmatige terugval-reviews (worden alleen gebruikt als
-   er geen Featurable-widget is ingesteld of de verbinding
-   faalt). Je mag ze aanpassen, maar dat is niet nodig zodra
-   Featurable werkt.
+   Echte Google-reviews (Moda Transport).
+   - "date" is bij benadering (maand waarin de review verscheen);
+     die bepaalt de volgorde en de "x maanden geleden"-tekst.
+   - Nieuwe review toevoegen? Kopieer een blok en pas naam,
+     stars, date (JJJJ-MM-DD) en text aan.
    --------------------------------------------------------- */
 const MODA_REVIEWS = [
   {
-    name: "Sofie D.",
+    name: "Jalisa Pollaris",
     stars: 5,
-    meta: "Google · Luchthaventransfer",
-    text: "Super vriendelijke chauffeur en piekfijn verzorgde wagen. Stipt om 4u 's ochtends aan de deur. Echt reizen zonder zorgen!"
+    date: "2026-06-15",
+    text: "Alles wat perfect gelopen! En superlieve chauffeur."
   },
   {
-    name: "Thomas V.",
+    name: "Jesse De Loore",
     stars: 5,
-    meta: "Google · Zakelijke rit",
-    text: "Al meermaals gebruikt voor zakelijke trips naar Zaventem. Altijd op tijd, comfortabel en correcte prijs. Een aanrader."
+    date: "2026-06-15",
+    text: "Uitstekende service. Alles snel en goed geregeld."
   },
   {
-    name: "Nadia B.",
+    name: "Larissa Cutillas-Carpe",
     stars: 5,
-    meta: "Google · Familie-uitstap",
-    text: "Met het hele gezin naar Charleroi gebracht. Ruime Mercedes, plaats genoeg voor alle koffers. Vlot geboekt en top service."
+    date: "2026-03-15",
+    text: "Perfect op tijd en geweldige service. We zouden het zo opnieuw doen!"
   },
   {
-    name: "Kevin M.",
+    name: "Erik",
     stars: 5,
-    meta: "Google · Ophaling Schiphol",
-    text: "Vlucht had vertraging maar de chauffeur stond gewoon klaar. Geen stress, meteen naar huis. Dikke merci!"
+    date: "2026-03-15",
+    text: "Top ervaring, fijn op tijd, zowel brengen als afhalen."
   },
   {
-    name: "Isabelle R.",
+    name: "Gilbert Buekenberghs",
     stars: 5,
-    meta: "Google · Luchthaventransfer",
-    text: "Nette wagen, correcte en discrete chauffeur. Voelde me veilig en op mijn gemak. Zeker de moeite waard."
+    date: "2026-02-15",
+    text: "Jente heeft ons rustig en vriendelijk allemaal naar huis gebracht. Nu we hem kennen wordt de samenwerking vanzelfsprekend."
   },
   {
-    name: "Jonas P.",
+    name: "Linda Vangeneugden",
     stars: 5,
-    meta: "Google · Vroege vlucht",
-    text: "Perfecte service van begin tot eind. Duidelijke communicatie, vaste prijs en een aangename rit. Boek zeker opnieuw!"
+    date: "2026-02-15",
+    text: "Alles naar wens, zeer vriendelijk personeel, altijd op tijd, merciekes."
   },
   {
-    name: "Ellen V.",
+    name: "Nuria Martín",
     stars: 5,
-    meta: "Google · Transfer Eindhoven",
-    text: "Vlot geboekt, vriendelijk contact en keurig op tijd. De wagen was spotless. Niks dan lof!"
+    date: "2025-12-15",
+    text: "Zeer tevreden over de afhaling en retour. Een vriendelijk en bekwaam team. Fijne feestdagen!"
   },
   {
-    name: "Bram C.",
+    name: "Veerle Vanstiphout",
     stars: 5,
-    meta: "Google · Zakenreis",
-    text: "Chauffeur volgde mijn vlucht op en paste het ophaaluur aan bij vertraging. Zorgeloos van deur tot deur."
+    date: "2025-12-15",
+    text: "Heel tevreden van onze airportservice. Snelle en duidelijke communicatie via WhatsApp, stipt en vriendelijk! Bedankt!"
   },
   {
-    name: "Linda H.",
+    name: "Celine Schepers",
     stars: 5,
-    meta: "Google · Retour Charleroi",
-    text: "Heen én terug met Moda. Beide keren stipt, correcte prijs afgesproken vooraf. Absolute aanrader."
+    date: "2025-09-15",
+    text: "We zijn in alle luxe en met heel goede service opgehaald en naar de luchthaven gebracht. Onze koffers werden ingeladen door de chauffeur zelf. Een leuke babbel onderweg gaf mijn vriend al minder stress om te vliegen. Bij de retour werden we opgewacht in de aankomsthal en werd mijn koffer zelfs aangenomen. De taxi was weer top in orde, luxueus en ruim. We kiezen zeker opnieuw voor deze taxiservice en raden ze iedereen aan!"
   },
   {
-    name: "Wim T.",
+    name: "Greet Thys",
     stars: 5,
-    meta: "Google · Groepsvervoer",
-    text: "Met 7 vrienden naar de luchthaven. Ruime bus, plaats voor alle bagage en een toffe chauffeur. Top geregeld!"
+    date: "2025-09-15",
+    text: "Heel vriendelijke chauffeur die goed op tijd was, perfect reed en vlot babbelde. De prijzen waren beter dan elders en het was een hele goede ervaring."
   },
   {
-    name: "Fatima E.",
+    name: "Rita Schroyen",
     stars: 5,
-    meta: "Google · Ophaling Zaventem",
-    text: "Na een lange vlucht stond de chauffeur klaar met naambordje. Vriendelijk en behulpzaam met de koffers. Dankjewel!"
+    date: "2025-09-15",
+    text: "Jente, onze jonge (vrijwel) vaste chauffeur van Moda Travel voor luchthavenvervoer, altijd heel stipt, vriendelijk en behulpzaam."
   },
   {
-    name: "Dirk M.",
+    name: "Kapsalon Liesbeth",
     stars: 5,
-    meta: "Google · Vroege ochtendrit",
-    text: "Om 3u opgehaald, alles vlekkeloos. Rustige rit, veilig gereden. Precies wat je wil voor je op reis vertrekt."
+    date: "2025-08-15",
+    text: "Wij hebben al verschillende keren gebruik gemaakt van Moda Transport en zijn super content. Zijn altijd aanwezig op het afgesproken uur. Ze brengen je veilig van en naar de luchthaven voor een eerlijke prijs. Fam. Mulkers"
+  },
+  {
+    name: "Jan Skoczylas",
+    stars: 5,
+    date: "2025-08-15",
+    text: "Super taxi luchthavenvervoer, met zeer goede en vriendelijke chauffeurs. Ben al meerdere malen met jullie geweest en heb al gereserveerd voor september!"
+  },
+  {
+    name: "Sarah Wellens",
+    stars: 5,
+    date: "2025-08-15",
+    text: "Één zeer vriendelijke jonge man. Stipt op de afspraak. Een berichtje gekregen de dag voor de afreis in Mallorca met het uur en de plaats. Alles prima verlopen."
+  },
+  {
+    name: "Timmy Sokolowski",
+    stars: 5,
+    date: "2025-07-15",
+    text: "Voor de 1ste keer gebruik gemaakt van Moda Transport voor luchthavenvervoer en ik ben alleen maar positief. Alles online kunnen regelen: datum, uur van vertrek/ophaling thuis en uur van ophaling in Schiphol Amsterdam. Goede en vriendelijke chauffeur Sabine, dikke pluim! Mercedes busje gewoon top. Zeker voor herhaling vatbaar, nog eens dikke merci!"
+  },
+  {
+    name: "Fabiola Arnesano",
+    stars: 5,
+    date: "2025-07-15",
+    text: "Wij hebben een heel fijne ervaring gehad met Moda Transport. Wat echt heel tof was, is de stiptheid en vriendelijkheid. Zelfs mijn bejaarde moeder helpen instappen. We gaan zeker terug van hun diensten gebruik maken. Bedankt voor alles Moda Travel!"
+  },
+  {
+    name: "esther janssens",
+    stars: 5,
+    date: "2025-07-15",
+    text: "Fijne ervaring. Vlotte afhandeling. Comfortabele taxi en op tijd op het afgesproken uur. De dag voor vertrek laten ze extra weten op welk uur ze je ophalen. Jente de chauffeur is heel vriendelijk en behulpzaam. Fijne samenwerking waar we graag nog dikwijls gebruik van zullen maken."
+  },
+  {
+    name: "yolanda vanlaer",
+    stars: 5,
+    date: "2025-07-15",
+    text: "Wij hebben al verschillende keren gebruik gemaakt van taxivervoer Moda, niet duur en we zijn er heel tevreden. Ze zijn netjes op het afgesproken uur ter plaatse en brengen ons veilig naar huis terug."
+  },
+  {
+    name: "Alex Vandingelen",
+    stars: 5,
+    date: "2025-07-15",
+    text: "Zeer stipt en behulpzaam. Zelfs toen we door een noodgeval vroeger terug moesten komen, hebben ze hun uiterste best gedaan om ons te komen afhalen op de luchthaven. Dikke pluim!"
   }
 ];
 
@@ -200,7 +244,7 @@ const MODA_REVIEWS = [
       .replace(/"/g, "&quot;");
   }
 
-  /* -- Featurable-datum -> "· 3 maanden geleden" -- */
+  /* -- Datum -> "3 maanden geleden" -- */
   function relativeDate(iso) {
     if (!iso) return "";
     const then = new Date(iso).getTime();
@@ -214,20 +258,42 @@ const MODA_REVIEWS = [
     return `${years} jaar geleden`;
   }
 
-  /* -- Featurable-review -> ons kaartformaat -- */
+  function withMeta(name, stars, text, ts, photo) {
+    const rel = relativeDate(ts ? new Date(ts).toISOString() : null);
+    return {
+      name: name || "Google-gebruiker",
+      photo: photo || "",
+      stars: stars || 5,
+      text: (text || "").trim(),
+      meta: rel ? `Google · ${rel}` : "Google",
+      ts: isNaN(ts) ? 0 : (ts || 0)
+    };
+  }
+
+  /* -- Gemeenschappelijke filter + sortering (nieuwste eerst) -- */
+  function finalize(list) {
+    let out = list;
+    if (MODA_CONFIG_REVIEWS.onlyWithText) out = out.filter(r => r.text.length > 0);
+    out = out.filter(r => (r.stars || 0) >= MODA_CONFIG_REVIEWS.minStars);
+    out.sort((a, b) => b.ts - a.ts);
+    return out.slice(0, MODA_CONFIG_REVIEWS.maxReviews);
+  }
+
+  /* -- Handmatige reviews -> kaartformaat -- */
+  function prepManual(list) {
+    return finalize(list.map(r => {
+      const ts = r.date ? new Date(r.date).getTime() : 0;
+      return withMeta(r.name, r.stars, r.text, isNaN(ts) ? 0 : ts, "");
+    }));
+  }
+
+  /* -- Featurable-review -> kaartformaat -- */
   function normalize(rv) {
     const reviewer = rv.reviewer || {};
     const when = rv.updateTime || rv.createTime;
-    const rel = relativeDate(when);
     const ts = when ? new Date(when).getTime() : 0;
-    return {
-      name: reviewer.displayName || "Google-gebruiker",
-      photo: reviewer.isAnonymous ? "" : (reviewer.profilePhotoUrl || ""),
-      stars: rv.starRating || 5,
-      text: (rv.comment || "").trim(),
-      meta: rel ? `Google · ${rel}` : "Google",
-      ts: isNaN(ts) ? 0 : ts
-    };
+    const photo = reviewer.isAnonymous ? "" : (reviewer.profilePhotoUrl || "");
+    return withMeta(reviewer.displayName, rv.starRating, rv.comment, isNaN(ts) ? 0 : ts, photo);
   }
 
   /* -- Reviews live ophalen bij Featurable -- */
@@ -237,34 +303,21 @@ const MODA_REVIEWS = [
     if (!res.ok) throw new Error(`Featurable HTTP ${res.status}`);
     const data = await res.json();
     const raw = Array.isArray(data.reviews) ? data.reviews : [];
-
-    let list = raw.map(normalize);
-    if (MODA_CONFIG_REVIEWS.onlyWithText) list = list.filter(r => r.text.length > 0);
-    list = list.filter(r => (r.stars || 0) >= MODA_CONFIG_REVIEWS.minStars);
-    // Nieuwste reviews eerst.
-    list.sort((a, b) => b.ts - a.ts);
-    list = list.slice(0, MODA_CONFIG_REVIEWS.maxReviews);
-
+    const list = finalize(raw.map(normalize));
     if (!list.length) throw new Error("Geen bruikbare reviews ontvangen");
     return list;
   }
 
-  /* -- Start: probeer Google (Featurable), val anders terug -- */
+  /* -- Start: toon handmatige reviews, probeer Google te laden -- */
+  const manual = prepManual(MODA_REVIEWS);
+  render(manual);
+
   const widgetId = (MODA_CONFIG_REVIEWS.FEATURABLE_WIDGET_ID || "").trim();
-
-  if (!widgetId) {
-    render(MODA_REVIEWS);
-    return;
-  }
-
-  // Toon meteen de terugval-reviews zodat er nooit een lege plek is,
-  // en vervang ze zodra de echte Google-reviews binnen zijn.
-  render(MODA_REVIEWS);
+  if (!widgetId) return;
 
   fetchFeaturable(widgetId)
     .then(render)
     .catch((err) => {
-      console.warn("[Moda] Google-reviews konden niet geladen worden, voorbeeldreviews blijven staan:", err);
-      // De terugval-reviews staan al getoond — niks te doen.
+      console.warn("[Moda] Google-reviews konden niet geladen worden, handmatige reviews blijven staan:", err);
     });
 })();
