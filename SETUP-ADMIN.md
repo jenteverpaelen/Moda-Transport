@@ -18,9 +18,10 @@ GitHub of Netlify niets.
 
 ## Vooraf: 1 regel controleren
 
-Open `admin/config.yml` en kijk bij `branch:`. Zet die op de branch waarvan je
-site **live** staat op Netlify (bij de meeste sites is dat `main`). Staat je site
-live vanaf een andere branch, zet die naam daar.
+Open `admin/config.yml` en kijk bij `branch:`. Die staat op
+`claude/moda-transport-website-xo8e61` — dat is de enige branch in deze repo en
+dus ook de branch waarvan je site live staat. Enkel als je later naar een andere
+branch (bv. `main`) overstapt, moet je die naam hier aanpassen.
 
 ---
 

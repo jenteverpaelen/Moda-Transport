@@ -10,7 +10,7 @@ backend:
   # ── OPTIE A (eenvoudigst): Netlify Identity ─────────────
   # Werkt zodra je in Netlify "Identity" en "Git Gateway" aanzet.
   name: git-gateway
-  branch: main   # ⚠️ Zet dit op de branch waarvan je site LIVE staat.
+  branch: claude/moda-transport-website-xo8e61   # de branch waarvan je site LIVE staat
 
   # ── OPTIE B (toekomstvast): inloggen met GitHub ─────────
   # Gebruik dit als je Netlify-account geen Identity meer aanbiedt.
@@ -18,7 +18,7 @@ backend:
   #
   # name: github
   # repo: jenteverpaelen/moda-transport
-  # branch: main
+  # branch: claude/moda-transport-website-xo8e61
   # base_url: https://JOUW-OAUTH-WORKER.workers.dev   # zie SETUP-ADMIN.md
 
 # Laat de klant lokaal testen zonder inloggen (enkel actief op localhost).
