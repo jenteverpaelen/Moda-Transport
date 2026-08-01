@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
   //    e-mailadres in, bv. het adres van de klant, en kopieer de key).
   //    Plak die hieronder. Zonder geldige key valt het formulier netjes
   //    terug op het openen van de e-mailclient.
-  const WEB3FORMS_ACCESS_KEY = "PLAK-HIER-JE-WEB3FORMS-KEY";
+  const WEB3FORMS_ACCESS_KEY = "b15f5257-ac69-4f87-8c9f-99a86f80578a";
 
   const form = document.getElementById("bookingForm");
   const note = document.getElementById("formNote");
