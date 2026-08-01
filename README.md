@@ -119,30 +119,29 @@ sterren en datum). Bovenaan `reviews.js` kun je nog instellen hoeveel reviews je
 > uitvalt — toont de site automatisch de reviews die in `reviews.js` staan, zodat de
 > reviewsectie er nooit leeg uitziet.
 
-## 📨 Boekingsformulier
+## 📨 Boekingsformulier (Web3Forms)
 
-Het formulier gebruikt **Netlify Forms**: elke aanvraag wordt **automatisch** verstuurd
-(de bezoeker hoeft geen e-mailprogramma te openen) en verschijnt in je Netlify-dashboard
-onder **Forms → booking**.
+Het formulier verstuurt aanvragen **automatisch per e-mail** via **Web3Forms** — een gratis
+dienst met **onbeperkt aantal inzendingen** (dus geen maandlimiet). De aanvraag komt als een
+nette, overzichtelijke e-mail binnen met alle gegevens en de postcode.
 
-### 📥 Aanvragen per e-mail ontvangen
+### 🔑 Eénmalig instellen (2 min)
 
-Zo laat je elke aanvraag ook naar een mailbox sturen:
+1. Ga naar **web3forms.com** en vul het e-mailadres in waarop je de aanvragen wil ontvangen
+   (bv. `jenteverpaelen1@gmail.com` of het adres van de klant).
+2. Je krijgt meteen een **Access Key** (een lange code) in je mailbox.
+3. Open `assets/js/main.js`, zoek `WEB3FORMS_ACCESS_KEY` en plak je key ertussen de aanhalingstekens.
+4. Klaar — elke ingevulde aanvraag belandt vanaf nu automatisch in die mailbox.
 
-1. Publiceer de site op Netlify (form-detectie staat standaard aan).
-2. Ga in Netlify naar **Forms** en verstuur eenmalig het formulier op de live site als test —
-   dan verschijnt het formulier "booking" in de lijst.
-3. Klik **Forms → Settings & usage → Form notifications → Add notification →
-   Email notification**.
-4. Vul bij **Email to notify** het gewenste adres in (bv. `jenteverpaelen1@gmail.com`) en
-   koppel het aan formulier **booking**. Opslaan.
+Meerdere ontvangers of een ander adres? Pas gewoon het e-mailadres aan op web3forms.com (of maak
+een tweede key). De **spam-val (honeypot)** in het formulier houdt bots tegen.
 
-Vanaf dan komt elke ingevulde aanvraag automatisch in die mailbox binnen. Wil je meerdere
-ontvangers? Voeg gewoon extra notificaties toe. (De ingebouwde spam-val `bot-field` houdt
-bots tegen.)
+> Zolang er nog geen geldige key is ingevuld — of als de dienst even onbereikbaar is — valt het
+> formulier automatisch terug op het openen van de e-mailclient, zodat er nooit een aanvraag
+> verloren gaat.
 
-> Werkt de site (nog) niet op Netlify? Dan valt het formulier automatisch terug op het
-> openen van de e-mailclient, zodat er lokaal niets stukgaat.
+> **Overgestapt van Netlify Forms?** Je mag het oude formulier "booking" in je Netlify-dashboard
+> (onder **Forms**) gerust verwijderen — dat wordt niet meer gebruikt.
 
 ## 🌐 Online zetten (gratis)
 

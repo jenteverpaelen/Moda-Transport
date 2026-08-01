@@ -98,7 +98,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }, { passive: true });
   }
 
-  /* ---------- 6. Boekingsformulier ---------- */
+  /* ---------- 6. Boekingsformulier (Web3Forms) ---------- */
+  // 👉 Haal je GRATIS access key op via https://web3forms.com (voer je
+  //    e-mailadres in, bv. het adres van de klant, en kopieer de key).
+  //    Plak die hieronder. Zonder geldige key valt het formulier netjes
+  //    terug op het openen van de e-mailclient.
+  const WEB3FORMS_ACCESS_KEY = "PLAK-HIER-JE-WEB3FORMS-KEY";
+
   const form = document.getElementById("bookingForm");
   const note = document.getElementById("formNote");
 
@@ -115,25 +121,40 @@ document.addEventListener("DOMContentLoaded", () => {
     note.textContent = "Bezig met versturen…";
     note.className = "booking__note";
 
-    // Automatische verzending via Netlify Forms (geen e-mailclient nodig).
-    // De aanvragen verschijnen in je Netlify-dashboard en worden per e-mail
-    // doorgestuurd zodra je een formuliermelding instelt (zie README).
-    const payload = new URLSearchParams(new FormData(form)).toString();
+    const data = Object.fromEntries(new FormData(form).entries());
 
-    fetch("/", {
+    // Nette, gestructureerde inhoud voor de e-mail (Nederlandse labels + emoji).
+    const payload = {
+      access_key: WEB3FORMS_ACCESS_KEY,
+      subject: `🚕 Nieuwe ritaanvraag — ${data.name || "website"}`,
+      from_name: "Moda Transport — website",
+      replyto: data.email || "",
+      botcheck: form.botcheck && form.botcheck.checked ? true : false,
+      "👤 Naam": data.name || "—",
+      "📞 Telefoonnummer": data.phone || "—",
+      "✉️ E-mailadres": data.email || "—",
+      "📍 Ophaaladres": data.from || "—",
+      "🏷️ Postcode": data.postcode || "—",
+      "🛫 Bestemming": data.to || "—",
+      "🗓️ Datum & tijd": data.date || "—",
+      "👥 Aantal personen": data.pax || "—",
+      "📝 Opmerkingen": data.notes || "—",
+    };
+
+    fetch("https://api.web3forms.com/submit", {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: payload,
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify(payload),
     })
-      .then((res) => {
-        if (!res.ok) throw new Error("HTTP " + res.status);
+      .then((res) => res.json())
+      .then((json) => {
+        if (!json.success) throw new Error(json.message || "verzenden mislukt");
         note.textContent = "Bedankt! Uw aanvraag is verstuurd — wij nemen snel contact op.";
         note.className = "booking__note is-ok";
         form.reset();
       })
       .catch(() => {
-        // Terugval (bv. lokaal testen buiten Netlify): open de e-mailclient.
-        const data = Object.fromEntries(new FormData(form).entries());
+        // Terugval (key nog niet ingevuld of dienst onbereikbaar): e-mailclient.
         const subject = encodeURIComponent(`Ritaanvraag — ${data.name}`);
         const body = encodeURIComponent(
           `Nieuwe ritaanvraag via de website:\n\n` +
@@ -141,6 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
           `Telefoon: ${data.phone}\n` +
           `E-mail: ${data.email}\n` +
           `Ophaaladres: ${data.from}\n` +
+          `Postcode: ${data.postcode || "-"}\n` +
           `Bestemming: ${data.to}\n` +
           `Datum & tijd: ${data.date}\n` +
           `Aantal personen: ${data.pax}\n` +

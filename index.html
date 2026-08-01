@@ -550,12 +550,9 @@
         </ul>
       </div>
 
-      <form class="booking__form reveal" id="bookingForm"
-            name="booking" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
-        <!-- Nodig voor Netlify Forms: koppelt de inzending aan dit formulier -->
-        <input type="hidden" name="form-name" value="booking" />
-        <!-- Spam-val (mensen zien dit niet; bots vullen het in) -->
-        <p hidden aria-hidden="true"><label>Laat dit leeg: <input name="bot-field" /></label></p>
+      <form class="booking__form reveal" id="bookingForm" novalidate>
+        <!-- Spam-val (onzichtbaar; enkel bots vinken dit aan) -->
+        <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none" />
 
         <div class="field">
           <label for="name">Naam</label>
@@ -571,10 +568,20 @@
             <input type="email" id="email" name="email" placeholder="u@voorbeeld.be" required />
           </div>
         </div>
+        <div class="field">
+          <label for="from">Ophaaladres</label>
+          <div class="autocomplete">
+            <input type="text" id="from" name="from" placeholder="Begin te typen, bv. Paalseweg 30…"
+                   autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false"
+                   aria-controls="from-ac-list" required />
+            <ul class="autocomplete__list" id="from-ac-list" role="listbox" hidden></ul>
+          </div>
+          <span class="field__hint">Kies je adres uit de lijst — de postcode wordt dan automatisch ingevuld.</span>
+        </div>
         <div class="field-row">
           <div class="field">
-            <label for="from">Ophaaladres</label>
-            <input type="text" id="from" name="from" placeholder="Straat, gemeente" required />
+            <label for="postcode">Postcode</label>
+            <input type="text" id="postcode" name="postcode" placeholder="bv. 3550" inputmode="numeric" autocomplete="postal-code" />
           </div>
           <div class="field">
             <label for="to">Bestemming</label>
@@ -660,6 +667,7 @@
   <script src="assets/js/content.js"></script>
   <script src="assets/js/reviews.js"></script>
   <script src="assets/js/calculator.js"></script>
+  <script src="assets/js/address.js"></script>
   <script src="assets/js/main.js"></script>
 
   <!-- Na inloggen (of na het instellen van je wachtwoord via de
