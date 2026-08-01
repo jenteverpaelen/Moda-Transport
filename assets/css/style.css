@@ -353,7 +353,9 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.12; font-weight: 
   background: var(--input-bg); border: 1px solid var(--line);
   border-radius: var(--radius-sm); padding: 5px;
 }
-.calc__segment input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; margin: 0; padding: 0; }
+/* Radio's onzichtbaar houden — selector specifiek genoeg zodat .field input
+   (width:100%) ze niet uitrekt (anders steken ze buiten beeld → horizontaal scrollen). */
+.calc__form .calc__segment input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; margin: 0; padding: 0; border: 0; }
 .calc__segment label {
   display: flex; align-items: center; justify-content: center; text-align: center;
   margin: 0; padding: 11px 8px; border-radius: calc(var(--radius-sm) - 3px);
