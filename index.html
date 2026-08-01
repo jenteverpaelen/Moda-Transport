@@ -550,7 +550,13 @@
         </ul>
       </div>
 
-      <form class="booking__form reveal" id="bookingForm" novalidate>
+      <form class="booking__form reveal" id="bookingForm"
+            name="booking" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+        <!-- Nodig voor Netlify Forms: koppelt de inzending aan dit formulier -->
+        <input type="hidden" name="form-name" value="booking" />
+        <!-- Spam-val (mensen zien dit niet; bots vullen het in) -->
+        <p hidden aria-hidden="true"><label>Laat dit leeg: <input name="bot-field" /></label></p>
+
         <div class="field">
           <label for="name">Naam</label>
           <input type="text" id="name" name="name" placeholder="Uw naam" required />

@@ -112,30 +112,45 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const data = Object.fromEntries(new FormData(form).entries());
+    note.textContent = "Bezig met versturen…";
+    note.className = "booking__note";
 
-    // Standaard: open de e-mailclient met een vooraf ingevulde aanvraag.
-    // (Voor automatische verzending zonder e-mailclient: koppel later een
-    //  formulierdienst zoals Formspree of Netlify Forms — zie README.)
-    const subject = encodeURIComponent(`Ritaanvraag — ${data.name}`);
-    const body = encodeURIComponent(
-      `Nieuwe ritaanvraag via de website:\n\n` +
-      `Naam: ${data.name}\n` +
-      `Telefoon: ${data.phone}\n` +
-      `E-mail: ${data.email}\n` +
-      `Ophaaladres: ${data.from}\n` +
-      `Bestemming: ${data.to}\n` +
-      `Datum & tijd: ${data.date}\n` +
-      `Aantal personen: ${data.pax}\n` +
-      `Opmerkingen: ${data.notes || "-"}\n`
-    );
+    // Automatische verzending via Netlify Forms (geen e-mailclient nodig).
+    // De aanvragen verschijnen in je Netlify-dashboard en worden per e-mail
+    // doorgestuurd zodra je een formuliermelding instelt (zie README).
+    const payload = new URLSearchParams(new FormData(form)).toString();
 
-    const to = window.MODA_EMAIL || "info@moda-sneltransport.be";
-    window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
-
-    note.textContent = "Bedankt! Uw e-mailprogramma opent met de aanvraag — verstuur die en wij nemen snel contact op.";
-    note.className = "booking__note is-ok";
-    form.reset();
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: payload,
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        note.textContent = "Bedankt! Uw aanvraag is verstuurd — wij nemen snel contact op.";
+        note.className = "booking__note is-ok";
+        form.reset();
+      })
+      .catch(() => {
+        // Terugval (bv. lokaal testen buiten Netlify): open de e-mailclient.
+        const data = Object.fromEntries(new FormData(form).entries());
+        const subject = encodeURIComponent(`Ritaanvraag — ${data.name}`);
+        const body = encodeURIComponent(
+          `Nieuwe ritaanvraag via de website:\n\n` +
+          `Naam: ${data.name}\n` +
+          `Telefoon: ${data.phone}\n` +
+          `E-mail: ${data.email}\n` +
+          `Ophaaladres: ${data.from}\n` +
+          `Bestemming: ${data.to}\n` +
+          `Datum & tijd: ${data.date}\n` +
+          `Aantal personen: ${data.pax}\n` +
+          `Opmerkingen: ${data.notes || "-"}\n`
+        );
+        const to = window.MODA_EMAIL || "info@moda-sneltransport.be";
+        window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+        note.textContent = "We openen je e-mailprogramma om de aanvraag te versturen.";
+        note.className = "booking__note is-ok";
+      });
   });
 
   /* ---------- 7. Jaartal in footer ---------- */

@@ -121,13 +121,28 @@ sterren en datum). Bovenaan `reviews.js` kun je nog instellen hoeveel reviews je
 
 ## 📨 Boekingsformulier
 
-Standaard opent het formulier de e-mailclient van de bezoeker met een vooraf ingevulde
-aanvraag naar jouw adres. Wil je dat aanvragen **automatisch** in je mailbox belanden
-(zonder dat de klant zelf moet versturen)? Koppel dan een gratis formulierdienst:
+Het formulier gebruikt **Netlify Forms**: elke aanvraag wordt **automatisch** verstuurd
+(de bezoeker hoeft geen e-mailprogramma te openen) en verschijnt in je Netlify-dashboard
+onder **Forms → booking**.
 
-- **Formspree** (formspree.io) — plak je Formspree-URL in de `<form>` en verwijder de
-  `mailto`-code in `main.js`, of
-- **Netlify Forms** — voeg `netlify` toe aan de `<form>` tag als je op Netlify host.
+### 📥 Aanvragen per e-mail ontvangen
+
+Zo laat je elke aanvraag ook naar een mailbox sturen:
+
+1. Publiceer de site op Netlify (form-detectie staat standaard aan).
+2. Ga in Netlify naar **Forms** en verstuur eenmalig het formulier op de live site als test —
+   dan verschijnt het formulier "booking" in de lijst.
+3. Klik **Forms → Settings & usage → Form notifications → Add notification →
+   Email notification**.
+4. Vul bij **Email to notify** het gewenste adres in (bv. `jenteverpaelen1@gmail.com`) en
+   koppel het aan formulier **booking**. Opslaan.
+
+Vanaf dan komt elke ingevulde aanvraag automatisch in die mailbox binnen. Wil je meerdere
+ontvangers? Voeg gewoon extra notificaties toe. (De ingebouwde spam-val `bot-field` houdt
+bots tegen.)
+
+> Werkt de site (nog) niet op Netlify? Dan valt het formulier automatisch terug op het
+> openen van de e-mailclient, zodat er lokaal niets stukgaat.
 
 ## 🌐 Online zetten (gratis)
 
