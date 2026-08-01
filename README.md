@@ -139,6 +139,35 @@ Kies één van deze — allemaal gratis en zonder server:
 
 Daarna kun je een eigen domein (bv. `modatravel.be`) koppelen.
 
+## 🔎 SEO (vindbaarheid in Google)
+
+De site is geoptimaliseerd voor lokale vindbaarheid:
+
+- Zoekvriendelijke **title & meta-description** met locatie (Heusden-Zolder / Limburg)
+- **Open Graph + Twitter-kaart** → nette preview als je de link deelt (WhatsApp, Facebook…)
+- **Gestructureerde data (JSON-LD, `LocalBusiness`)** → adres, telefoon, openingsuren en
+  beoordeling die Google kan tonen (kans op sterren + bedrijfskaart in de zoekresultaten)
+- **`robots.txt`** en **`sitemap.xml`** → zoekmachines vinden en indexeren de site vlot
+- **Geo-tags** en consistente bedrijfsnaam/adres (belangrijk voor lokale SEO)
+
+### ⚠️ Eén ding invullen: je domein
+
+Overal staat nu `www.moda-sneltransport.be` als voorbeelddomein. Zodra je echte domein
+vaststaat, vervang je die op **drie plekken**:
+
+1. `index.html` — de `canonical`, `og:`/`twitter:`-tags en het JSON-LD-blok bovenaan
+2. `robots.txt`
+3. `sitemap.xml`
+
+(Tip: zoek-en-vervang `www.moda-sneltransport.be` door je domein.) Werkt de site al op een
+Netlify-adres? Dan kan je die URL tijdelijk gebruiken.
+
+### Na livegang
+
+- Meld de site aan bij **Google Search Console** en dien daar je `sitemap.xml` in.
+- Koppel/maak een **Google Bedrijfsprofiel** ("Moda Transport") — dat is voor een lokaal
+  taxibedrijf de allergrootste SEO-hefboom, samen met Google-reviews.
+
 ## 🎨 Kenmerken
 
 - 100% mobielvriendelijk (mobile-first)

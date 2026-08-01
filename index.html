@@ -5,14 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0c0c0e" />
 
-  <title>Moda Travel — Luchthavenvervoer zonder zorgen</title>
-  <meta name="description" content="Moda Travel verzorgt exclusief luchthavenvervoer met luxe Mercedes-wagens. Stipt, comfortabel en aan een vaste prijs. Reizen zonder zorgen — 24/7 beschikbaar." />
+  <title>Moda Transport — Luchthavenvervoer Limburg | Reizen zonder zorgen</title>
+  <meta name="description" content="Exclusief luchthavenvervoer vanuit Heusden-Zolder en heel Limburg. Stipt en comfortabel naar Zaventem, Charleroi, Schiphol e.a. — vaste prijs, 24/7 beschikbaar." />
 
-  <!-- Social preview -->
-  <meta property="og:title" content="Moda Travel — Luchthavenvervoer zonder zorgen" />
-  <meta property="og:description" content="Exclusief luchthavenvervoer met luxe Mercedes-wagens. Stipt, comfortabel en aan een vaste prijs." />
+  <!-- ⚠️ Vervang overal hieronder www.moda-sneltransport.be door je echte
+       domein zodra dat gekozen is (ook in robots.txt en sitemap.xml). -->
+  <link rel="canonical" href="https://www.moda-sneltransport.be/" />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Moda Transport" />
+
+  <!-- Lokale SEO (geo) -->
+  <meta name="geo.region" content="BE-VLI" />
+  <meta name="geo.placename" content="Heusden-Zolder" />
+  <meta name="geo.position" content="51.0271799;5.2654197" />
+  <meta name="ICBM" content="51.0271799, 5.2654197" />
+
+  <!-- Social preview (Open Graph) -->
+  <meta property="og:site_name" content="Moda Transport" />
+  <meta property="og:title" content="Moda Transport — Luchthavenvervoer Limburg | Reizen zonder zorgen" />
+  <meta property="og:description" content="Exclusief luchthavenvervoer vanuit Heusden-Zolder en heel Limburg. Stipt, comfortabel en aan een vaste prijs — 24/7." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="assets/images/fleet.jpeg" />
+  <meta property="og:locale" content="nl_BE" />
+  <meta property="og:url" content="https://www.moda-sneltransport.be/" />
+  <meta property="og:image" content="https://www.moda-sneltransport.be/assets/images/fleet.jpeg" />
+  <meta property="og:image:alt" content="De luxe Mercedes-vloot van Moda Transport" />
+
+  <!-- Twitter-kaart -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Moda Transport — Luchthavenvervoer Limburg" />
+  <meta name="twitter:description" content="Exclusief luchthavenvervoer vanuit Heusden-Zolder en heel Limburg. Vaste prijs, stipt en 24/7." />
+  <meta name="twitter:image" content="https://www.moda-sneltransport.be/assets/images/fleet.jpeg" />
 
   <link rel="icon" type="image/svg+xml" href="assets/images/logo-moda.svg" />
   <link rel="icon" type="image/png" href="assets/images/logo.png" />
@@ -28,6 +50,57 @@
        wachtwoord-instelvenster verschijnen. Nodig voor de beheerpagina
        (/admin) met "Optie A". Zie SETUP-ADMIN.md. -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+  <!-- Gestructureerde data: laat Google weten dat dit een lokale
+       taxi-/luchthavenvervoerdienst is (adres, uren, beoordeling …). -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": "https://www.moda-sneltransport.be/#business",
+    "name": "Moda Transport",
+    "alternateName": "Moda Travel",
+    "description": "Exclusief luchthavenvervoer vanuit Heusden-Zolder en heel Limburg met luxe Mercedes-wagens. Stipt, comfortabel en aan een vaste prijs.",
+    "url": "https://www.moda-sneltransport.be/",
+    "image": "https://www.moda-sneltransport.be/assets/images/fleet.jpeg",
+    "logo": "https://www.moda-sneltransport.be/assets/images/logo.png",
+    "telephone": "+3211243003",
+    "email": "info@moda-sneltransport.be",
+    "priceRange": "€€",
+    "currenciesAccepted": "EUR",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Beringersteenweg 14",
+      "postalCode": "3550",
+      "addressLocality": "Heusden-Zolder",
+      "addressRegion": "Limburg",
+      "addressCountry": "BE"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 51.0271799,
+      "longitude": 5.2654197
+    },
+    "areaServed": [
+      { "@type": "AdministrativeArea", "name": "Limburg" },
+      { "@type": "Country", "name": "België" }
+    ],
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+      "opens": "00:00",
+      "closes": "23:59"
+    },
+    "knowsAbout": ["Luchthavenvervoer", "Airport transfer", "Taxi luchthaven", "Zaventem", "Charleroi", "Schiphol"],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5.0",
+      "reviewCount": "19",
+      "bestRating": "5",
+      "worstRating": "1"
+    }
+  }
+  </script>
 </head>
 <body>
 
@@ -66,7 +139,7 @@
   <!-- ===================== NAVIGATIE ===================== -->
   <header class="nav" id="nav">
     <div class="container nav__inner">
-      <a href="#home" class="nav__brand" aria-label="Moda Travel — home">
+      <a href="#home" class="nav__brand" aria-label="Moda Transport — home">
         <svg class="nav__logo" viewBox="0 0 470 175" role="img" aria-label="Moda Transport"><use href="#moda-lockup"/></svg>
       </a>
 
@@ -184,7 +257,7 @@
         <p class="section__eyebrow">Onze diensten</p>
         <h2 class="section__title">Één specialiteit: <span class="text-accent">luchthavenvervoer</span></h2>
         <p class="section__lead">
-          Wij doen niets half. Moda Travel richt zich volledig op transfers van en naar de luchthaven,
+          Wij doen niets half. Moda Transport richt zich volledig op transfers van en naar de luchthaven,
           zodat u altijd op tijd en ontspannen aan uw reis begint.
         </p>
       </div>
@@ -235,7 +308,7 @@
   <section class="section section--alt" id="waarom">
     <div class="container waarom__grid">
       <div class="waarom__intro reveal">
-        <p class="section__eyebrow">Waarom Moda Travel</p>
+        <p class="section__eyebrow">Waarom Moda Transport</p>
         <h2 class="section__title">Uw comfort, onze zorg.</h2>
         <p class="section__lead">
           Vanaf het moment dat u boekt tot u veilig op uw bestemming bent, nemen wij alles uit handen.
@@ -304,7 +377,7 @@
 
       <div class="gallery">
         <figure class="gallery__item gallery__item--feature reveal">
-          <img src="assets/images/fleet.jpeg" alt="De Mercedes-vloot van Moda Travel" />
+          <img src="assets/images/fleet.jpeg" alt="De luxe Mercedes-vloot van Moda Transport voor luchthavenvervoer" />
           <figcaption>Onze Mercedes V-Klasse &amp; Vito vloot</figcaption>
         </figure>
         <figure class="gallery__item gallery__item--wide reveal">
@@ -521,7 +594,7 @@
     </div>
 
     <div class="container footer__bottom">
-      <p>© <span id="year"></span> Moda Travel — Luchthavenvervoer. Alle rechten voorbehouden.</p>
+      <p>© <span id="year"></span> Moda Transport — Luchthavenvervoer. Alle rechten voorbehouden.</p>
       <p class="footer__made">Reizen zonder zorgen.</p>
     </div>
   </footer>
