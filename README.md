@@ -150,17 +150,17 @@ De site is geoptimaliseerd voor lokale vindbaarheid:
 - **`robots.txt`** en **`sitemap.xml`** → zoekmachines vinden en indexeren de site vlot
 - **Geo-tags** en consistente bedrijfsnaam/adres (belangrijk voor lokale SEO)
 
-### ⚠️ Eén ding invullen: je domein
+### ⚠️ Je domein
 
-Overal staat nu `www.moda-sneltransport.be` als voorbeelddomein. Zodra je echte domein
-vaststaat, vervang je die op **drie plekken**:
+De **canonical-URL en de social-preview** passen zich automatisch aan het domein aan waarop
+de site draait (je Netlify-adres nu, je eigen domein later) — daar hoef je niets voor te doen.
 
-1. `index.html` — de `canonical`, `og:`/`twitter:`-tags en het JSON-LD-blok bovenaan
-2. `robots.txt`
-3. `sitemap.xml`
+Zodra je echte domein vaststaat, vervang je `www.moda-sneltransport.be` nog op **twee plekken**
+(zoek-en-vervang), plus in het structured-data-blok:
 
-(Tip: zoek-en-vervang `www.moda-sneltransport.be` door je domein.) Werkt de site al op een
-Netlify-adres? Dan kan je die URL tijdelijk gebruiken.
+1. `robots.txt`
+2. `sitemap.xml`
+3. `index.html` → enkel in het `application/ld+json`-blok (de `url`, `@id`, `image`, `logo`)
 
 ### Na livegang
 

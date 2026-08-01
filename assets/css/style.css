@@ -249,6 +249,10 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.12; font-weight: 
 .card h3 { font-size: 1.16rem; margin-bottom: 10px; }
 .card p { color: var(--muted); font-size: .96rem; }
 
+/* Inline tekstlinks (verwijzen naar andere secties) — subtiel maar duidelijk */
+.card p a, .section__lead a { color: var(--red); text-decoration: underline; text-underline-offset: 2px; text-decoration-thickness: 1px; font-weight: 600; transition: color .25s; }
+.card p a:hover, .section__lead a:hover { color: var(--red-dark); }
+
 .destinations { margin-top: 46px; text-align: center; padding: 30px; background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius); }
 .destinations__label { color: var(--muted); margin-bottom: 16px; font-weight: 500; }
 .destinations__list { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
@@ -485,6 +489,7 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.12; font-weight: 
 .footer__logo { height: 64px; width: auto; display: block; color: var(--text-strong); margin-bottom: 16px; }
 .footer__slogan { font-family: var(--font-head); color: var(--gold); font-style: italic; margin-bottom: 10px; }
 .footer__desc { color: var(--muted); font-size: .94rem; max-width: 320px; }
+.footer__legal { color: var(--muted); font-size: .82rem; margin-top: 12px; opacity: .85; max-width: 320px; }
 .footer__col h4 { font-size: 1rem; margin-bottom: 16px; }
 .footer__col ul { display: flex; flex-direction: column; gap: 10px; }
 .footer__col a, .footer__col li { color: var(--muted); font-size: .94rem; transition: color .25s; }

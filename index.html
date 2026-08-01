@@ -8,9 +8,9 @@
   <title>Moda Transport — Luchthavenvervoer Limburg | Reizen zonder zorgen</title>
   <meta name="description" content="Exclusief luchthavenvervoer vanuit Heusden-Zolder en heel Limburg. Stipt en comfortabel naar Zaventem, Charleroi, Schiphol e.a. — vaste prijs, 24/7 beschikbaar." />
 
-  <!-- ⚠️ Vervang overal hieronder www.moda-sneltransport.be door je echte
-       domein zodra dat gekozen is (ook in robots.txt en sitemap.xml). -->
-  <link rel="canonical" href="https://www.moda-sneltransport.be/" />
+  <!-- Zelf-verwijzende canonical: verwijst altijd naar de pagina zelf,
+       op eender welk domein (Netlify-adres nu, eigen domein later). -->
+  <link rel="canonical" href="/" />
   <meta name="robots" content="index, follow" />
   <meta name="author" content="Moda Transport" />
 
@@ -35,6 +35,20 @@
   <meta name="twitter:title" content="Moda Transport — Luchthavenvervoer Limburg" />
   <meta name="twitter:description" content="Exclusief luchthavenvervoer vanuit Heusden-Zolder en heel Limburg. Vaste prijs, stipt en 24/7." />
   <meta name="twitter:image" content="https://www.moda-sneltransport.be/assets/images/fleet.jpeg" />
+
+  <!-- Zet canonical + social-URL's op het werkelijke live-domein (welk ook),
+       zodat alles zelf-verwijzend en correct is zonder handmatig aanpassen. -->
+  <script>
+    (function () {
+      var origin = location.origin, page = origin + location.pathname;
+      var img = origin + "/assets/images/fleet.jpeg";
+      var set = function (sel, attr, val) { var el = document.querySelector(sel); if (el) el.setAttribute(attr, val); };
+      set('link[rel="canonical"]', "href", page);
+      set('meta[property="og:url"]', "content", page);
+      set('meta[property="og:image"]', "content", img);
+      set('meta[name="twitter:image"]', "content", img);
+    })();
+  </script>
 
   <link rel="icon" type="image/svg+xml" href="assets/images/logo-moda.svg" />
   <link rel="icon" type="image/png" href="assets/images/logo.png" />
@@ -98,7 +112,33 @@
       "reviewCount": "19",
       "bestRating": "5",
       "worstRating": "1"
-    }
+    },
+    "review": [
+      {
+        "@type": "Review",
+        "author": { "@type": "Person", "name": "Veerle Vanstiphout" },
+        "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+        "reviewBody": "Heel tevreden van onze airportservice. Snelle en duidelijke communicatie via WhatsApp, stipt en vriendelijk! Bedankt!"
+      },
+      {
+        "@type": "Review",
+        "author": { "@type": "Person", "name": "Celine Schepers" },
+        "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+        "reviewBody": "We zijn in alle luxe en met heel goede service opgehaald en naar de luchthaven gebracht. De taxi was top in orde, luxueus en ruim. We kiezen zeker opnieuw voor deze taxiservice en raden ze iedereen aan!"
+      },
+      {
+        "@type": "Review",
+        "author": { "@type": "Person", "name": "Jan Skoczylas" },
+        "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+        "reviewBody": "Super taxi luchthavenvervoer, met zeer goede en vriendelijke chauffeurs. Ben al meerdere malen met jullie geweest en heb al gereserveerd voor september!"
+      },
+      {
+        "@type": "Review",
+        "author": { "@type": "Person", "name": "esther janssens" },
+        "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+        "reviewBody": "Fijne ervaring. Vlotte afhandeling. Comfortabele taxi en op tijd op het afgesproken uur. Jente de chauffeur is heel vriendelijk en behulpzaam."
+      }
+    ]
   }
   </script>
 </head>
@@ -284,7 +324,7 @@
         <article class="card reveal">
           <div class="card__icon">👨‍👩‍👧‍👦</div>
           <h3>Groepen &amp; families</h3>
-          <p>Ruime Mercedes V-Klasse en Vito met plaats voor de hele groep, koffers en al. Comfortabel samen op weg.</p>
+          <p>Ruime <a href="#vloot">Mercedes V-Klasse en Vito</a> met plaats voor de hele groep, koffers en al. Comfortabel samen op weg.</p>
         </article>
       </div>
 
@@ -500,7 +540,7 @@
         <p class="section__eyebrow">Reserveer of vraag een prijs</p>
         <h2 class="section__title">Klaar om zorgeloos te reizen?</h2>
         <p class="section__lead">
-          Vul kort uw gegevens in en wij bezorgen u snel een vaste prijs.
+          Vul kort uw gegevens in en wij bezorgen u snel <a href="#prijs">een vaste prijs</a>.
           Liever direct boeken? Bel of mail ons gerust.
         </p>
         <ul class="booking__contactlist">
@@ -562,6 +602,9 @@
         <svg class="footer__logo" viewBox="0 0 470 175" role="img" aria-label="Moda Transport"><use href="#moda-lockup"/></svg>
         <p class="footer__slogan">“Reizen zonder zorgen”</p>
         <p class="footer__desc">Exclusief luchthavenvervoer met een persoonlijke, professionele service.</p>
+        <!-- Bedrijfsgegevens (goed voor vertrouwen & lokale SEO).
+             Vul hier gerust je ondernemingsnummer/BTW aan als je dat wil tonen. -->
+        <p class="footer__legal">Moda Transport · Beringersteenweg 14, 3550 Heusden-Zolder, België</p>
       </div>
 
       <div class="footer__col">
@@ -574,11 +617,13 @@
       </div>
 
       <div class="footer__col">
-        <h4>Diensten</h4>
+        <h4>Ontdek</h4>
         <ul>
-          <li><a href="#diensten">Luchthaventransfer</a></li>
-          <li><a href="#diensten">Zakelijk vervoer</a></li>
-          <li><a href="#diensten">Groepen &amp; families</a></li>
+          <li><a href="#diensten">Onze diensten</a></li>
+          <li><a href="#vloot">Onze vloot</a></li>
+          <li><a href="#reviews">Reviews</a></li>
+          <li><a href="#prijs">Prijs berekenen</a></li>
+          <li><a href="#waarom">Over ons</a></li>
           <li><a href="#reserveer">Reserveren</a></li>
         </ul>
       </div>
