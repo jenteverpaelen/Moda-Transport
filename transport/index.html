@@ -29,20 +29,20 @@
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="nl_BE" />
   <meta property="og:url" content="https://www.moda-sneltransport.be/transport/" />
-  <meta property="og:image" content="https://www.moda-sneltransport.be/assets/images/fleet.jpeg" />
+  <meta property="og:image" content="https://www.moda-sneltransport.be/assets/images/transport/hero.jpg" />
   <meta property="og:image:alt" content="Het wagenpark van Moda Transport" />
 
   <!-- Twitter-kaart -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Moda Transport | Sneltransport Limburg" />
   <meta name="twitter:description" content="Van pakket tot volle vracht. Snel, betrouwbaar en 24/7 beschikbaar." />
-  <meta name="twitter:image" content="https://www.moda-sneltransport.be/assets/images/fleet.jpeg" />
+  <meta name="twitter:image" content="https://www.moda-sneltransport.be/assets/images/transport/hero.jpg" />
 
   <!-- Canonical + social-URL's op het werkelijke live-domein zetten. -->
   <script>
     (function () {
       var origin = location.origin, page = origin + location.pathname;
-      var img = origin + "/assets/images/fleet.jpeg";
+      var img = origin + "/assets/images/transport/hero.jpg";
       var set = function (sel, attr, val) { var el = document.querySelector(sel); if (el) el.setAttribute(attr, val); };
       set('link[rel="canonical"]', "href", page);
       set('meta[property="og:url"]', "content", page);
@@ -71,7 +71,7 @@
     "name": "Moda Transport",
     "description": "Sneltransport, koeriersdiensten en vrachtvervoer vanuit Heusden-Zolder. Van 1 pallet tot volle vracht, koeltransport en ADR, lokaal én internationaal.",
     "url": "https://www.moda-sneltransport.be/transport/",
-    "image": "https://www.moda-sneltransport.be/assets/images/fleet.jpeg",
+    "image": "https://www.moda-sneltransport.be/assets/images/transport/hero.jpg",
     "logo": "https://www.moda-sneltransport.be/assets/images/logo.png",
     "telephone": "+3211243003",
     "email": "info@moda-sneltransport.be",
@@ -161,7 +161,7 @@
   <!-- ===================== HERO ===================== -->
   <section class="hero" id="home">
     <div class="hero__media" aria-hidden="true">
-      <div class="hero__img" style="background-image:url('../assets/images/fleet.jpeg')"></div>
+      <div class="hero__img" style="background-image:url('../assets/images/transport/hero.jpg')"></div>
       <div class="hero__overlay"></div>
     </div>
 
@@ -301,82 +301,114 @@
 
       <div class="fleet">
         <article class="fleet-card reveal">
-          <div class="fleet-card__head">
-            <span class="fleet-card__icon" aria-hidden="true">🚐</span>
-            <div><h3>Vito</h3><span class="fleet-card__tag">Colli's of 1 pallet</span></div>
+          <div class="fleet-card__img fleet-card__img--contain"><img src="../assets/images/transport/vito.png" alt="Moda Transport Vito bestelwagen" loading="lazy" /></div>
+          <div class="fleet-card__body">
+            <div class="fleet-card__head"><h3>Vito</h3><span class="fleet-card__tag">Colli's of 1 pallet</span></div>
+            <ul class="fleet-card__specs">
+              <li><span class="k">Laadvermogen</span><span class="v">tot 500 kg</span></li>
+              <li><span class="k">Afmetingen L×B×H</span><span class="v">1,50 × 1,40 × 1,10 m</span></li>
+              <li><span class="k">Europaletten</span><span class="v">1</span></li>
+            </ul>
+            <p class="fleet-card__desc">Ideaal voor colli's of één pallet, tot 600 kg.</p>
           </div>
-          <ul class="fleet-card__specs">
-            <li><span class="k">Laadvermogen</span><span class="v">tot 500 kg</span></li>
-            <li><span class="k">Afmetingen L×B×H</span><span class="v">1,50 × 1,40 × 1,10 m</span></li>
-            <li><span class="k">Europaletten</span><span class="v">1</span></li>
-          </ul>
-          <p class="fleet-card__desc">Ideaal voor colli's of één pallet, tot 600 kg.</p>
         </article>
 
         <article class="fleet-card reveal">
-          <div class="fleet-card__head">
-            <span class="fleet-card__icon" aria-hidden="true">🚚</span>
-            <div><h3>Sprinter</h3><span class="fleet-card__tag">Zijkant laden/lossen</span></div>
+          <div class="fleet-card__img"><img src="../assets/images/transport/sprinter.jpg" alt="Moda Transport Mercedes Sprinter" loading="lazy" /></div>
+          <div class="fleet-card__body">
+            <div class="fleet-card__head"><h3>Sprinter</h3><span class="fleet-card__tag">Zijkant laden/lossen</span></div>
+            <ul class="fleet-card__specs">
+              <li><span class="k">Laadvermogen</span><span class="v">tot 1.100 kg</span></li>
+              <li><span class="k">Afmetingen L×B×H</span><span class="v">4,30 × 1,70 × 1,90 m</span></li>
+              <li><span class="k">Europaletten</span><span class="v">6</span></li>
+            </ul>
+            <p class="fleet-card__desc">Tot 6 pallets. Laden en lossen kan ook langs de zijkant, met spanriemen en zijbindingen.</p>
           </div>
-          <ul class="fleet-card__specs">
-            <li><span class="k">Laadvermogen</span><span class="v">tot 1.100 kg</span></li>
-            <li><span class="k">Afmetingen L×B×H</span><span class="v">4,30 × 1,70 × 1,90 m</span></li>
-            <li><span class="k">Europaletten</span><span class="v">6</span></li>
-          </ul>
-          <p class="fleet-card__desc">Tot 6 pallets. Laden en lossen kan ook langs de zijkant, met spanriemen en zijbindingen.</p>
         </article>
 
         <article class="fleet-card reveal">
-          <div class="fleet-card__head">
-            <span class="fleet-card__icon" aria-hidden="true">🛻</span>
-            <div><h3>Meubelbak</h3><span class="fleet-card__tag">Met laadklep</span></div>
+          <div class="fleet-card__img"><img src="../assets/images/transport/meubelbak.jpg" alt="Moda Transport meubelbak met laadklep" loading="lazy" /></div>
+          <div class="fleet-card__body">
+            <div class="fleet-card__head"><h3>Meubelbak</h3><span class="fleet-card__tag">Met laadklep</span></div>
+            <ul class="fleet-card__specs">
+              <li><span class="k">Laadvermogen</span><span class="v">tot 850 kg</span></li>
+              <li><span class="k">Afmetingen L×B×H</span><span class="v">4,30 × 2,10 × 2,30 m</span></li>
+              <li><span class="k">Europaletten</span><span class="v">9 + laadklep</span></li>
+            </ul>
+            <p class="fleet-card__desc">Wagen met laadklep, dus laden en lossen zonder heftruck. Ideaal voor lichte pallets of karren.</p>
           </div>
-          <ul class="fleet-card__specs">
-            <li><span class="k">Laadvermogen</span><span class="v">tot 850 kg</span></li>
-            <li><span class="k">Afmetingen L×B×H</span><span class="v">4,30 × 2,10 × 2,30 m</span></li>
-            <li><span class="k">Europaletten</span><span class="v">9 + laadklep</span></li>
-          </ul>
-          <p class="fleet-card__desc">Wagen met laadklep, dus laden en lossen zonder heftruck. Ideaal voor lichte pallets of karren.</p>
         </article>
 
         <article class="fleet-card reveal">
-          <div class="fleet-card__head">
-            <span class="fleet-card__icon" aria-hidden="true">❄️</span>
-            <div><h3>Koelwagen</h3><span class="fleet-card__tag">Temperatuurgeregeld</span></div>
+          <div class="fleet-card__img fleet-card__img--contain"><img src="../assets/images/transport/koelwagen.png" alt="Moda Transport koelwagen" loading="lazy" /></div>
+          <div class="fleet-card__body">
+            <div class="fleet-card__head"><h3>Koelwagen</h3><span class="fleet-card__tag">Temperatuurgeregeld</span></div>
+            <ul class="fleet-card__specs">
+              <li><span class="k">Laadvermogen</span><span class="v">tot 700 kg</span></li>
+              <li><span class="k">Afmetingen L×B×H</span><span class="v">4,00 × 2,00 × 1,90 m</span></li>
+              <li><span class="k">Temperatuur</span><span class="v">-26 tot +26 °C</span></li>
+            </ul>
+            <p class="fleet-card__desc">Tot 8 pallets met stabiele temperatuurcontrole. Geschikt voor voeding en temperatuurgevoelige producten.</p>
           </div>
-          <ul class="fleet-card__specs">
-            <li><span class="k">Laadvermogen</span><span class="v">tot 700 kg</span></li>
-            <li><span class="k">Afmetingen L×B×H</span><span class="v">4,00 × 2,00 × 1,90 m</span></li>
-            <li><span class="k">Temperatuur</span><span class="v">-26 tot +26 °C</span></li>
-          </ul>
-          <p class="fleet-card__desc">Tot 8 pallets met stabiele temperatuurcontrole. Geschikt voor voeding en temperatuurgevoelige producten.</p>
         </article>
 
         <article class="fleet-card reveal">
-          <div class="fleet-card__head">
-            <span class="fleet-card__icon" aria-hidden="true">🚛</span>
-            <div><h3>Remorque</h3><span class="fleet-card__tag">Grotere ladingen</span></div>
+          <div class="fleet-card__img"><img src="../assets/images/transport/remorque.jpg" alt="Moda Transport remorque / aanhangwagen" loading="lazy" /></div>
+          <div class="fleet-card__body">
+            <div class="fleet-card__head"><h3>Remorque</h3><span class="fleet-card__tag">Grotere ladingen</span></div>
+            <ul class="fleet-card__specs">
+              <li><span class="k">Laadvermogen</span><span class="v">tot 4.250 kg</span></li>
+              <li><span class="k">Afmetingen L×B×H</span><span class="v">5,00 × 1,80 × 2,00 m</span></li>
+              <li><span class="k">Europaletten</span><span class="v">15</span></li>
+            </ul>
+            <p class="fleet-card__desc">Voor grotere ladingen tot 4.250 kg, tot 15 pallets.</p>
           </div>
-          <ul class="fleet-card__specs">
-            <li><span class="k">Laadvermogen</span><span class="v">tot 4.250 kg</span></li>
-            <li><span class="k">Afmetingen L×B×H</span><span class="v">5,00 × 1,80 × 2,00 m</span></li>
-            <li><span class="k">Europaletten</span><span class="v">15</span></li>
-          </ul>
-          <p class="fleet-card__desc">Voor grotere ladingen tot 4.250 kg, tot 15 pallets.</p>
         </article>
 
         <article class="fleet-card reveal">
-          <div class="fleet-card__head">
-            <span class="fleet-card__icon" aria-hidden="true">🚛</span>
-            <div><h3>Vrachtwagen</h3><span class="fleet-card__tag">Heel Europa</span></div>
+          <div class="fleet-card__img"><img src="../assets/images/transport/vrachtwagen.jpg" alt="Moda Transport vrachtwagen voor heel Europa" loading="lazy" /></div>
+          <div class="fleet-card__body">
+            <div class="fleet-card__head"><h3>Vrachtwagen</h3><span class="fleet-card__tag">Heel Europa</span></div>
+            <ul class="fleet-card__specs">
+              <li><span class="k">Laadvermogen</span><span class="v">tot 25.000 kg</span></li>
+              <li><span class="k">Afmetingen L×B×H</span><span class="v">13,20 × 2,50 × 2,60 m</span></li>
+              <li><span class="k">Europaletten</span><span class="v">33</span></li>
+            </ul>
+            <p class="fleet-card__desc">Voor volle ladingen tot 33 pallets. Heel Europa, inclusief Frankrijk. Tautliner en boxtrailers.</p>
           </div>
-          <ul class="fleet-card__specs">
-            <li><span class="k">Laadvermogen</span><span class="v">tot 25.000 kg</span></li>
-            <li><span class="k">Afmetingen L×B×H</span><span class="v">13,20 × 2,50 × 2,60 m</span></li>
-            <li><span class="k">Europaletten</span><span class="v">33</span></li>
-          </ul>
-          <p class="fleet-card__desc">Voor volle ladingen tot 33 pallets. Heel Europa, inclusief Frankrijk. Tautliner en boxtrailers.</p>
         </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== IN BEELD (vloot) ===================== -->
+  <section class="section" id="vloot">
+    <div class="container">
+      <div class="section__head reveal">
+        <p class="section__eyebrow">In beeld</p>
+        <h2 class="section__title">Onze <span class="text-accent">vloot</span> aan het werk</h2>
+        <p class="section__lead">
+          Een greep uit ons wagenpark, van bestelwagen en bakwagen tot trekker met oplegger.
+        </p>
+      </div>
+
+      <div class="gallery">
+        <figure class="gallery__item gallery__item--feature reveal">
+          <img src="../assets/images/transport/gallery-1.jpg" alt="Bakwagen en bestelwagen van Moda Transport" />
+          <figcaption>Van klein tot groot transport</figcaption>
+        </figure>
+        <figure class="gallery__item gallery__item--wide reveal">
+          <img src="../assets/images/transport/vrachtwagen.jpg" alt="Vrachtwagen met oplegger van Moda Transport" loading="lazy" />
+          <figcaption>Vrachtwagen voor heel Europa</figcaption>
+        </figure>
+        <figure class="gallery__item reveal">
+          <img src="../assets/images/transport/gallery-2.jpg" alt="Mercedes Sprinter van Moda Transport" loading="lazy" />
+          <figcaption>Onze Sprinters</figcaption>
+        </figure>
+        <figure class="gallery__item reveal">
+          <img src="../assets/images/transport/gallery-3.jpg" alt="Bakwagen van Moda Transport" loading="lazy" />
+          <figcaption>Bakwagens met laadklep</figcaption>
+        </figure>
       </div>
     </div>
   </section>
