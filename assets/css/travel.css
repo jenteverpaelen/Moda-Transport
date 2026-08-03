@@ -1,0 +1,106 @@
+/* =========================================================
+   MODA TRAVEL — Aanvullende stijl voor de reisbureau-pagina (/travel)
+   ---------------------------------------------------------
+   Wordt geladen ná style.css en hergebruikt al zijn design-tokens.
+   Bevat enkel wat uniek is voor /travel: de bestemmingskaarten en
+   de Instagram-galerij "Laatste reizen". De rest (nav, hero, secties,
+   kaarten, formulier, footer) komt uit style.css.
+   ========================================================= */
+
+/* -------------------- Bestemmingskaarten -------------------- */
+.trips {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.trip-card {
+  background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius);
+  overflow: hidden; position: relative; display: flex; flex-direction: column;
+  transition: transform .4s var(--ease), border-color .4s var(--ease), box-shadow .4s var(--ease);
+}
+.trip-card:hover { transform: translateY(-8px); border-color: rgba(225,29,42,.35); box-shadow: var(--shadow); }
+
+.trip-card__img { position: relative; aspect-ratio: 4 / 3; overflow: hidden; }
+.trip-card__img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s var(--ease); }
+.trip-card:hover .trip-card__img img { transform: scale(1.06); }
+.trip-card__badge {
+  position: absolute; top: 12px; left: 12px; z-index: 2;
+  background: rgba(12,12,14,.72); color: #fff; backdrop-filter: blur(4px);
+  font-family: var(--font-head); font-weight: 600; font-size: .74rem; letter-spacing: .02em;
+  padding: 6px 12px; border-radius: 100px;
+}
+
+.trip-card__body { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.trip-card__body h3 { font-size: 1.25rem; letter-spacing: -0.01em; }
+.trip-card__tagline { color: var(--red); font-weight: 600; font-size: .9rem; font-family: var(--font-head); }
+.trip-card__desc { color: var(--muted); font-size: .93rem; line-height: 1.6; margin-top: 2px; }
+.trip-card__foot {
+  margin-top: auto; padding-top: 14px; display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; border-top: 1px solid var(--line); font-size: .86rem;
+}
+.trip-card__price { color: var(--text-strong); font-weight: 600; }
+.trip-card__cta { color: var(--red); font-weight: 600; font-family: var(--font-head); }
+
+/* -------------------- Instagram-galerij "Laatste reizen" -------------------- */
+.reisfeed__bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  margin-bottom: 26px;
+}
+.reisfeed__handle {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-head); font-weight: 600; color: var(--text-strong);
+  padding: 9px 16px; border: 1px solid var(--line); border-radius: 100px; background: var(--surface-2);
+  transition: border-color .25s, transform .25s var(--ease);
+}
+.reisfeed__handle:hover { border-color: rgba(225,29,42,.4); transform: translateY(-2px); }
+.reisfeed__ig {
+  width: 22px; height: 22px; border-radius: 6px; flex-shrink: 0;
+  background: linear-gradient(45deg, #f9ce34, #ee2a7b 45%, #6228d7);
+  display: inline-grid; place-items: center; color: #fff;
+}
+
+.reisfeed {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.reisfeed__item {
+  position: relative; display: block; aspect-ratio: 1 / 1; overflow: hidden;
+  border-radius: var(--radius-sm); background: var(--surface-2); border: 1px solid var(--line);
+}
+.reisfeed__item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s var(--ease); }
+.reisfeed__item:hover img { transform: scale(1.08); }
+.reisfeed__cap {
+  position: absolute; inset: 0; display: flex; align-items: flex-end;
+  padding: 16px; color: #fff; font-size: .88rem; line-height: 1.45;
+  background: linear-gradient(to top, rgba(8,8,10,.86) 0%, rgba(8,8,10,.35) 45%, rgba(8,8,10,0) 75%);
+  opacity: 0; transform: translateY(8px); transition: opacity .35s var(--ease), transform .35s var(--ease);
+}
+.reisfeed__item:hover .reisfeed__cap,
+.reisfeed__item:focus-visible .reisfeed__cap { opacity: 1; transform: translateY(0); }
+.reisfeed__cap span {
+  display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+}
+.reisfeed__badge {
+  position: absolute; top: 10px; right: 10px; z-index: 2; width: 30px; height: 30px;
+  border-radius: 8px; display: grid; place-items: center; color: #fff;
+  background: linear-gradient(45deg, #f9ce34, #ee2a7b 45%, #6228d7);
+  opacity: .92; box-shadow: 0 4px 12px rgba(0,0,0,.25);
+}
+/* Nette statusmelding (laden / geen posts) */
+.reisfeed__status { color: var(--muted); text-align: center; padding: 30px 0; grid-column: 1 / -1; }
+
+/* Snelle contactknoppen (offerte-intro) */
+.quickcontact { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+
+/* -------------------- Responsive -------------------- */
+@media (max-width: 980px) {
+  .trips { grid-template-columns: repeat(2, 1fr); }
+  .reisfeed { grid-template-columns: repeat(3, 1fr); }
+  /* Op touch tonen we het bijschrift altijd (geen hover). */
+  .reisfeed__cap { opacity: 1; transform: none; background: linear-gradient(to top, rgba(8,8,10,.82) 0%, rgba(8,8,10,.15) 55%, rgba(8,8,10,0) 80%); }
+}
+@media (max-width: 620px) {
+  .trips { grid-template-columns: 1fr; }
+  .reisfeed { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+}

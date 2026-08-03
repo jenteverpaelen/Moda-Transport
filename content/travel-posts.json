@@ -1,0 +1,41 @@
+{
+  "note": "Voorbeeldreizen voor de 'Laatste reizen'-galerij op /travel. Dit is de terugval zolang de live Instagram-feed nog niet gekoppeld is. Zodra je in assets/js/travel.js een feed-URL invult (of het data-feed-url attribuut op #reisfeed), worden deze vervangen door de echte Instagram-posts. Je mag deze lijst ook zelf aanpassen.",
+  "profile": "https://www.instagram.com/modatravel_/",
+  "posts": [
+    {
+      "img": "../assets/images/travel/zakynthos.jpg",
+      "link": "https://www.instagram.com/modatravel_/",
+      "caption": "Oase van rust op Zakynthos. Fly & Go naar Pelagos Blue Zante: zon, zee en niets dan ontspanning."
+    },
+    {
+      "img": "../assets/images/travel/thailand.jpg",
+      "link": "https://www.instagram.com/modatravel_/",
+      "caption": "Van Ko naar Ko. Twaalf nachten priverondreis langs de mooiste eilanden van Thailand."
+    },
+    {
+      "img": "../assets/images/travel/lapland.jpg",
+      "link": "https://www.instagram.com/modatravel_/",
+      "caption": "Noorderlicht, huskies en sneeuwscooters. Onze begeleide Nederlandstalige groepsreis naar Lapland."
+    },
+    {
+      "img": "../assets/images/travel/newyork.jpg",
+      "link": "https://www.instagram.com/modatravel_/",
+      "caption": "The city that never sleeps. Een onvergetelijke stedentrip naar New York."
+    },
+    {
+      "img": "../assets/images/travel/parijs.jpg",
+      "link": "https://www.instagram.com/modatravel_/",
+      "caption": "Un weekend à Paris. Eén overnachting langs de Seine met ontbijt, vanaf 79 euro per persoon."
+    },
+    {
+      "img": "../assets/images/travel/hero.jpg",
+      "link": "https://www.instagram.com/modatravel_/",
+      "caption": "Dolce far niente aan de kust. Laat je verrassen door onze reizen op maat."
+    },
+    {
+      "img": "../assets/images/travel/hero-alt.jpg",
+      "link": "https://www.instagram.com/modatravel_/",
+      "caption": "Huwelijksreizen om nooit te vergeten. Samen op reis, wij regelen de rest."
+    }
+  ]
+}

@@ -166,7 +166,10 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.12; font-weight: 
   transition: background .25s var(--ease), transform .25s var(--ease), border-color .25s;
 }
 .nav__switch:hover { background: rgba(255,255,255,0.18); transform: translateY(-2px); border-color: rgba(255,255,255,0.5); }
-@media (max-width: 430px) {
+/* Op tablet/smal-laptop tonen de wisselknoppen enkel hun icoon (het
+   aria-label blijft de betekenis geven), zodat de nav niet overloopt.
+   Vanaf ~1120px verschijnt de tekst weer. */
+@media (max-width: 1120px) {
   .nav__switch { padding: 8px 12px; }
   .nav__switch .nav__switch__txt { display: none; }
 }
