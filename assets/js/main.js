@@ -132,19 +132,19 @@ document.addEventListener("DOMContentLoaded", () => {
     // Nette, gestructureerde inhoud voor de e-mail (Nederlandse labels + emoji).
     const payload = {
       access_key: WEB3FORMS_ACCESS_KEY,
-      subject: `🚕 Nieuwe ritaanvraag — ${data.name || "website"}`,
-      from_name: "Moda Transport — website",
+      subject: `🚕 Nieuwe ritaanvraag van ${data.name || "de website"}`,
+      from_name: "Moda Transport website",
       replyto: data.email || "",
       botcheck: form.botcheck && form.botcheck.checked ? true : false,
-      "👤 Naam": data.name || "—",
-      "📞 Telefoonnummer": data.phone || "—",
-      "✉️ E-mailadres": data.email || "—",
-      "📍 Ophaaladres": data.from || "—",
-      "🏷️ Postcode": data.postcode || "—",
-      "🛫 Bestemming": data.to || "—",
-      "🗓️ Datum & tijd": data.date || "—",
-      "👥 Aantal personen": data.pax || "—",
-      "📝 Opmerkingen": data.notes || "—",
+      "👤 Naam": data.name || "-",
+      "📞 Telefoonnummer": data.phone || "-",
+      "✉️ E-mailadres": data.email || "-",
+      "📍 Ophaaladres": data.from || "-",
+      "🏷️ Postcode": data.postcode || "-",
+      "🛫 Bestemming": data.to || "-",
+      "🗓️ Datum & tijd": data.date || "-",
+      "👥 Aantal personen": data.pax || "-",
+      "📝 Opmerkingen": data.notes || "-",
     };
 
     fetch("https://api.web3forms.com/submit", {
@@ -155,13 +155,13 @@ document.addEventListener("DOMContentLoaded", () => {
       .then((res) => res.json())
       .then((json) => {
         if (!json.success) throw new Error(json.message || "verzenden mislukt");
-        note.textContent = "Bedankt! Uw aanvraag is verstuurd — wij nemen snel contact op.";
+        note.textContent = "Bedankt! Uw aanvraag is verstuurd, wij nemen snel contact op.";
         note.className = "booking__note is-ok";
         form.reset();
       })
       .catch(() => {
         // Terugval (key nog niet ingevuld of dienst onbereikbaar): e-mailclient.
-        const subject = encodeURIComponent(`Ritaanvraag — ${data.name}`);
+        const subject = encodeURIComponent(`Ritaanvraag van ${data.name}`);
         const body = encodeURIComponent(
           `Nieuwe ritaanvraag via de website:\n\n` +
           `Naam: ${data.name}\n` +

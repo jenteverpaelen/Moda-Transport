@@ -20,13 +20,13 @@ const MODA_CALC = {
 
   // Luchthavens + vaste basisprijs (enkele rit, 2 personen)
   airports: [
-    { value: "zaventem",   label: "Brussels Airport — Zaventem", price: 100 },
+    { value: "zaventem",   label: "Brussels Airport (Zaventem)", price: 100 },
     { value: "luik",       label: "Luik (Liège)",                price: 100 },
     { value: "antwerpen",  label: "Antwerpen",                   price: 100 },
     { value: "eindhoven",  label: "Eindhoven",                   price: 100 },
-    { value: "charleroi",  label: "Brussels South — Charleroi",  price: 160 },
+    { value: "charleroi",  label: "Brussels South (Charleroi)",  price: 160 },
     { value: "dusseldorf", label: "Düsseldorf",                  price: 160 },
-    { value: "amsterdam",  label: "Amsterdam — Schiphol",        price: 240 },
+    { value: "amsterdam",  label: "Amsterdam (Schiphol)",        price: 240 },
   ],
 
   // Contactgegevens die in de resultaten getoond worden
@@ -90,8 +90,8 @@ function initCalc() {
   const TRIP_LABELS = {
     naar:   { airport: "Naar welke luchthaven?",         address: "Ophaaladres" },
     van:    { airport: "Van welke luchthaven?",          address: "Afzetadres (waar zetten we u af?)" },
-    retour: { airport: "Heen — naar welke luchthaven?",  address: "Uw adres (ophalen én terugbrengen)",
-              airportReturn: "Terug — van welke luchthaven?" }
+    retour: { airport: "Naar welke luchthaven? (heenreis)",  address: "Uw adres (ophalen én terugbrengen)",
+              airportReturn: "Van welke luchthaven? (terugreis)" }
   };
   function getTripType() {
     const r = form.querySelector("input[name='triptype']:checked");
@@ -336,7 +336,7 @@ function initCalc() {
         <span class="calc__emoji">📍</span>
         <h3>Net buiten ons vaste-prijs gebied</h3>
         <p>${where} ligt op ± ${km.toFixed(0)} km van Heusden-Zolder (max. ${MODA_CALC.radiusKm} km voor een vaste prijs).
-           Geen probleem — we maken graag een prijs op maat.</p>
+           Geen probleem, we maken graag een prijs op maat.</p>
         <div class="calc__actions">
           <a href="tel:${MODA_CALC.phone}" class="btn btn--primary">📞 Bel ${MODA_CALC.phoneNice}</a>
           <a href="#reserveer" class="btn btn--ghost">Aanvraag op maat</a>
@@ -404,8 +404,8 @@ function initCalc() {
     // Prijsopbouw — supplement en tussenstops staan altijd apart vermeld.
     let rows = "";
     if (isRetour) {
-      rows += `<div class="calc__row"><span>Heen — ${airport.label} (${perPax})</span><span>${euro(airport.price)}</span></div>`;
-      rows += `<div class="calc__row"><span>Terug — ${airportReturn.label} (${perPax})</span><span>${euro(airportReturn.price)}</span></div>`;
+      rows += `<div class="calc__row"><span>Heen: ${airport.label} (${perPax})</span><span>${euro(airport.price)}</span></div>`;
+      rows += `<div class="calc__row"><span>Terug: ${airportReturn.label} (${perPax})</span><span>${euro(airportReturn.price)}</span></div>`;
       if (extraPersons > 0) rows += `<div class="calc__row"><span>Supplement (${extraPersons} extra pers. × 2 ritten)</span><span>+ ${euro(supplement)}</span></div>`;
     } else {
       rows += `<div class="calc__row"><span>Basisprijs (${perPax})</span><span>${euro(airport.price)}</span></div>`;
@@ -422,7 +422,7 @@ function initCalc() {
         <p class="calc__route">${routeText}</p>
         ${via}
         <div class="calc__breakdown">${rows}</div>
-        <p class="calc__fineprint">Binnen ${MODA_CALC.radiusKm} km (± ${km.toFixed(0)} km). Richtprijs — je krijgt steeds een definitieve bevestiging.</p>
+        <p class="calc__fineprint">Binnen ${MODA_CALC.radiusKm} km (± ${km.toFixed(0)} km). Richtprijs, je krijgt steeds een definitieve bevestiging.</p>
         <button type="button" class="btn btn--primary btn--lg btn--block" id="calcToBooking">Reserveer deze rit →</button>
       </div>`;
 

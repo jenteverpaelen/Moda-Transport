@@ -7,7 +7,7 @@
   "luchthavens": [
     {
       "value": "zaventem",
-      "label": "Brussels Airport — Zaventem",
+      "label": "Brussels Airport (Zaventem)",
       "price": 110
     },
     {
@@ -27,7 +27,7 @@
     },
     {
       "value": "charleroi",
-      "label": "Brussels South — Charleroi",
+      "label": "Brussels South (Charleroi)",
       "price": 160
     },
     {
@@ -37,7 +37,7 @@
     },
     {
       "value": "amsterdam",
-      "label": "Amsterdam — Schiphol",
+      "label": "Amsterdam (Schiphol)",
       "price": 240
     },
     {
