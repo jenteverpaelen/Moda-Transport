@@ -356,10 +356,10 @@
         <a class="btn btn--sm btn--ghost" href="https://www.instagram.com/modatravel_/" target="_blank" rel="noopener">Volg ons op Instagram</a>
       </div>
 
-      <!-- Wordt gevuld door travel.js: standaard de voorbeeldreizen, of de echte
-           Instagram-posts zodra een feed-URL is ingesteld (data-feed-url of de
-           constante bovenaan travel.js). -->
-      <div class="reisfeed" id="reisfeed" data-feed-url="" data-fallback="../content/travel-posts.json">
+      <!-- Wordt gevuld door travel.js: klikbare reiskaarten uit de voorbeeldreizen,
+           of de echte Instagram-posts zodra een feed-URL is ingesteld (data-feed-url
+           of de constante bovenaan travel.js). Klik op een kaart opent het detailvenster. -->
+      <div class="reizen" id="reisfeed" data-feed-url="" data-fallback="../content/travel-posts.json">
         <p class="reisfeed__status">Reizen worden geladen…</p>
       </div>
     </div>
@@ -635,6 +635,16 @@
      class="floating-wa" target="_blank" rel="noopener" aria-label="Chat via WhatsApp">
     <svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><use href="#wa-icon"/></svg>
   </a>
+
+  <!-- ===================== DETAILVENSTER (reis) ===================== -->
+  <!-- Leeg skelet; wordt door travel.js gevuld wanneer je op een reiskaart klikt. -->
+  <div class="reismodal" id="reisModal" aria-hidden="true">
+    <div class="reismodal__backdrop" data-close></div>
+    <div class="reismodal__panel" role="dialog" aria-modal="true" aria-labelledby="reisModalTitle">
+      <button class="reismodal__close" type="button" data-close aria-label="Venster sluiten">&times;</button>
+      <div class="reismodal__content" id="reisModalContent"></div>
+    </div>
+  </div>
 
   <script src="../assets/js/travel.js"></script>
 </body>

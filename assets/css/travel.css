@@ -59,34 +59,49 @@
   display: inline-grid; place-items: center; color: #fff;
 }
 
-.reisfeed {
+/* De reizen-kaarten (klikbaar → detailvenster) */
+.reizen {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
 }
-.reisfeed__item {
-  position: relative; display: block; aspect-ratio: 1 / 1; overflow: hidden;
-  border-radius: var(--radius-sm); background: var(--surface-2); border: 1px solid var(--line);
+.reiscard {
+  position: relative; cursor: pointer; overflow: hidden;
+  background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius);
+  display: flex; flex-direction: column;
+  transition: transform .4s var(--ease), border-color .4s var(--ease), box-shadow .4s var(--ease);
 }
-.reisfeed__item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s var(--ease); }
-.reisfeed__item:hover img { transform: scale(1.08); }
-.reisfeed__cap {
-  position: absolute; inset: 0; display: flex; align-items: flex-end;
-  padding: 16px; color: #fff; font-size: .88rem; line-height: 1.45;
-  background: linear-gradient(to top, rgba(8,8,10,.86) 0%, rgba(8,8,10,.35) 45%, rgba(8,8,10,0) 75%);
-  opacity: 0; transform: translateY(8px); transition: opacity .35s var(--ease), transform .35s var(--ease);
-}
-.reisfeed__item:hover .reisfeed__cap,
-.reisfeed__item:focus-visible .reisfeed__cap { opacity: 1; transform: translateY(0); }
-.reisfeed__cap span {
-  display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
-}
-.reisfeed__badge {
-  position: absolute; top: 10px; right: 10px; z-index: 2; width: 30px; height: 30px;
+.reiscard:hover { transform: translateY(-8px); border-color: rgba(225,29,42,.35); box-shadow: var(--shadow); }
+.reiscard:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+
+.reiscard__media { position: relative; aspect-ratio: 4 / 3; overflow: hidden; }
+.reiscard__media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s var(--ease); }
+.reiscard:hover .reiscard__media img { transform: scale(1.06); }
+.reiscard__ig {
+  position: absolute; top: 12px; right: 12px; z-index: 2; width: 30px; height: 30px;
   border-radius: 8px; display: grid; place-items: center; color: #fff;
   background: linear-gradient(45deg, #f9ce34, #ee2a7b 45%, #6228d7);
-  opacity: .92; box-shadow: 0 4px 12px rgba(0,0,0,.25);
+  box-shadow: 0 4px 12px rgba(0,0,0,.25);
 }
+.reiscard__count {
+  position: absolute; top: 12px; left: 12px; z-index: 2;
+  background: rgba(12,12,14,.72); color: #fff; backdrop-filter: blur(4px);
+  font-size: .72rem; font-weight: 600; padding: 4px 9px; border-radius: 100px;
+}
+.reiscard__badges { position: absolute; left: 12px; bottom: 12px; z-index: 2; display: flex; flex-wrap: wrap; gap: 6px; }
+.reiscard__badge {
+  background: rgba(12,12,14,.80); color: #fff; backdrop-filter: blur(4px);
+  font-family: var(--font-head); font-weight: 600; font-size: .8rem;
+  padding: 6px 11px; border-radius: 100px;
+}
+.reiscard__body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.reiscard__title { font-size: 1.18rem; letter-spacing: -0.01em; }
+.reiscard__sum {
+  color: var(--muted); font-size: .92rem; line-height: 1.55;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.reiscard__more { margin-top: auto; padding-top: 8px; color: var(--red); font-weight: 600; font-family: var(--font-head); font-size: .9rem; }
+
 /* Nette statusmelding (laden / geen posts) */
 .reisfeed__status { color: var(--muted); text-align: center; padding: 30px 0; grid-column: 1 / -1; }
 
@@ -95,12 +110,82 @@
 
 /* -------------------- Responsive -------------------- */
 @media (max-width: 980px) {
-  .trips { grid-template-columns: repeat(2, 1fr); }
-  .reisfeed { grid-template-columns: repeat(3, 1fr); }
-  /* Op touch tonen we het bijschrift altijd (geen hover). */
-  .reisfeed__cap { opacity: 1; transform: none; background: linear-gradient(to top, rgba(8,8,10,.82) 0%, rgba(8,8,10,.15) 55%, rgba(8,8,10,0) 80%); }
+  .trips, .reizen { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 620px) {
-  .trips { grid-template-columns: 1fr; }
-  .reisfeed { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .trips, .reizen { grid-template-columns: 1fr; }
+}
+
+/* =========================================================
+   Detailvenster (modal) voor een reis
+   ========================================================= */
+.reismodal {
+  position: fixed; inset: 0; z-index: 2000; display: none;
+  align-items: center; justify-content: center; padding: 24px;
+}
+.reismodal.is-open { display: flex; }
+.reismodal__backdrop {
+  position: absolute; inset: 0; background: rgba(8,8,10,.66); backdrop-filter: blur(4px);
+  animation: reismodal-fade .25s var(--ease);
+}
+.reismodal__panel {
+  position: relative; z-index: 1; width: min(900px, 100%); max-height: 90vh; overflow: hidden;
+  background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: 0 40px 100px rgba(0,0,0,.45); display: flex; flex-direction: column;
+  animation: reismodal-pop .3s var(--ease);
+}
+.reismodal__close {
+  position: absolute; top: 12px; right: 12px; z-index: 5; width: 40px; height: 40px;
+  border: 0; border-radius: 50%; cursor: pointer; font-size: 1.6rem; line-height: 1;
+  background: rgba(12,12,14,.6); color: #fff; display: grid; place-items: center;
+  transition: background .25s, transform .25s var(--ease);
+}
+.reismodal__close:hover { background: var(--red); transform: rotate(90deg); }
+
+.reismodal__content { overflow-y: auto; display: grid; grid-template-columns: 1.05fr 1fr; }
+.reismodal__media { position: relative; background: #000; min-height: 260px; display: flex; flex-direction: column; }
+.reismodal__img { width: 100%; height: 100%; max-height: 90vh; object-fit: cover; display: block; flex: 1; }
+.reismodal__thumbs {
+  position: absolute; left: 0; right: 0; bottom: 0; display: flex; gap: 8px; padding: 12px;
+  background: linear-gradient(to top, rgba(0,0,0,.55), rgba(0,0,0,0)); overflow-x: auto;
+}
+.reismodal__thumb { width: 54px; height: 54px; flex-shrink: 0; border-radius: 8px; overflow: hidden; border: 2px solid transparent; background: none; cursor: pointer; padding: 0; }
+.reismodal__thumb.is-active { border-color: #fff; }
+.reismodal__thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+.reismodal__info { padding: 34px 34px 30px; display: flex; flex-direction: column; }
+.reismodal__title { font-size: 1.7rem; letter-spacing: -0.02em; line-height: 1.1; }
+.reismodal__sub { color: var(--muted); margin-top: 8px; font-size: 1.02rem; line-height: 1.5; }
+
+.reismodal__badges { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 6px; }
+.reismodal__badge {
+  display: inline-flex; align-items: center; gap: 9px;
+  background: var(--surface-3); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px;
+}
+.reismodal__badge-ic { font-size: 1.05rem; }
+.reismodal__badge strong { display: block; font-family: var(--font-head); font-size: .95rem; color: var(--text-strong); font-weight: 600; }
+.reismodal__badge em { display: block; font-style: normal; color: var(--muted); font-size: .8rem; margin-top: 1px; }
+
+.reismodal__desc { margin-top: 20px; color: var(--text); line-height: 1.7; }
+.reismodal__desc p { margin-bottom: 12px; }
+.reismodal__desc p:last-child { margin-bottom: 0; }
+
+.reismodal__actions { margin-top: auto; padding-top: 26px; display: flex; flex-wrap: wrap; gap: 12px; }
+.reismodal__actions .btn { flex: 1 1 auto; }
+
+@keyframes reismodal-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes reismodal-pop { from { opacity: 0; transform: translateY(16px) scale(.98); } to { opacity: 1; transform: none; } }
+
+@media (max-width: 760px) {
+  .reismodal { padding: 0; }
+  .reismodal__panel { width: 100%; max-height: 100vh; height: 100%; border-radius: 0; border: 0; }
+  .reismodal__content { grid-template-columns: 1fr; display: block; }
+  .reismodal__media { aspect-ratio: 4 / 3; min-height: 0; }
+  .reismodal__img { max-height: none; height: 100%; }
+  .reismodal__info { padding: 24px 22px 28px; }
+  .reismodal__title { font-size: 1.4rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reismodal__backdrop, .reismodal__panel { animation: none; }
+  .reismodal__close:hover { transform: none; }
 }
