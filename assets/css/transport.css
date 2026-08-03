@@ -1,0 +1,85 @@
+/* =========================================================
+   MODA TRANSPORT — Aanvullende stijl voor de transportpagina
+   ---------------------------------------------------------
+   Wordt geladen ná style.css en hergebruikt al zijn design-tokens.
+   Bevat enkel wat uniek is voor /transport: het wagenpark met
+   specificaties en de express-checklist. De rest (nav, hero,
+   secties, kaarten, formulier, footer) komt uit style.css.
+   ========================================================= */
+
+/* -------------------- Wagenpark (spec-kaarten) -------------------- */
+.fleet {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+.fleet-card {
+  background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 28px 26px; position: relative; overflow: hidden;
+  transition: transform .4s var(--ease), border-color .4s var(--ease), box-shadow .4s var(--ease);
+}
+.fleet-card::before {
+  content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
+  background: linear-gradient(90deg, var(--red), var(--gold));
+  transform: scaleX(0); transform-origin: left; transition: transform .45s var(--ease);
+}
+.fleet-card:hover { transform: translateY(-8px); border-color: rgba(225,29,42,.35); box-shadow: var(--shadow); }
+.fleet-card:hover::before { transform: scaleX(1); }
+
+.fleet-card__head { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+.fleet-card__icon {
+  flex-shrink: 0; display: inline-grid; place-items: center;
+  width: 52px; height: 52px; border-radius: 14px; font-size: 1.6rem;
+  background: var(--surface); border: 1px solid var(--line);
+}
+.fleet-card__head h3 { font-size: 1.2rem; letter-spacing: -0.01em; }
+.fleet-card__head .fleet-card__tag { display: block; color: var(--muted); font-size: .8rem; font-weight: 500; font-family: var(--font-body); margin-top: 2px; }
+
+.fleet-card__specs { display: flex; flex-direction: column; gap: 0; margin-bottom: 16px; }
+.fleet-card__specs li {
+  display: flex; justify-content: space-between; gap: 14px;
+  padding: 9px 0; border-bottom: 1px solid var(--line); font-size: .93rem;
+}
+.fleet-card__specs li:last-child { border-bottom: 0; }
+.fleet-card__specs .k { color: var(--muted); }
+.fleet-card__specs .v { color: var(--text-strong); font-weight: 600; text-align: right; }
+
+.fleet-card__desc { color: var(--muted); font-size: .92rem; line-height: 1.6; }
+
+/* -------------------- Express-checklist -------------------- */
+.express__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.express__intro .section__eyebrow,
+.express__intro .section__title,
+.express__intro .section__lead { text-align: left; }
+.express__intro .btn { margin-top: 26px; }
+
+.checklist { display: grid; gap: 14px; }
+.checklist li {
+  display: flex; align-items: flex-start; gap: 14px;
+  background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius-sm);
+  padding: 18px 20px; font-size: 1.02rem; color: var(--text);
+  transition: transform .3s var(--ease), border-color .3s;
+}
+.checklist li:hover { transform: translateX(4px); border-color: rgba(34,197,94,.4); }
+.checklist__check {
+  flex-shrink: 0; display: inline-grid; place-items: center;
+  width: 26px; height: 26px; border-radius: 50%;
+  background: #22c55e; color: #06210f; font-size: .8rem; font-weight: 800;
+}
+.checklist li strong { color: var(--text-strong); font-family: var(--font-head); font-weight: 600; }
+
+/* -------------------- Snelle contactknoppen (offerte-intro) -------------------- */
+.quickcontact { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+
+/* -------------------- Responsive -------------------- */
+@media (max-width: 980px) {
+  .fleet { grid-template-columns: repeat(2, 1fr); }
+  .express__grid { grid-template-columns: 1fr; gap: 32px; }
+  .express__intro .section__eyebrow,
+  .express__intro .section__title,
+  .express__intro .section__lead { text-align: center; }
+  .express__intro .btn { margin-left: auto; margin-right: auto; }
+}
+@media (max-width: 620px) {
+  .fleet { grid-template-columns: 1fr; }
+}

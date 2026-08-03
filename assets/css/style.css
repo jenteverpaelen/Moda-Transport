@@ -155,6 +155,22 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.12; font-weight: 
 
 .nav__actions { display: flex; align-items: center; gap: 10px; }
 
+/* Wisselknop tussen luchthaven- en transportgedeelte (staat in de altijd-donkere nav) */
+.nav__switch {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 8px 16px; border-radius: 100px;
+  font-family: var(--font-head); font-weight: 600; font-size: .86rem;
+  color: #fff; background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.28); backdrop-filter: blur(6px);
+  white-space: nowrap;
+  transition: background .25s var(--ease), transform .25s var(--ease), border-color .25s;
+}
+.nav__switch:hover { background: rgba(255,255,255,0.18); transform: translateY(-2px); border-color: rgba(255,255,255,0.5); }
+@media (max-width: 430px) {
+  .nav__switch { padding: 8px 12px; }
+  .nav__switch .nav__switch__txt { display: none; }
+}
+
 /* Licht/donker-knop (staat in de altijd-donkere nav) */
 .theme-toggle {
   display: inline-grid; place-items: center; width: 40px; height: 40px;
