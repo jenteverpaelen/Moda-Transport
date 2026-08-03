@@ -3,21 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#f5f5f8" />
+  <meta name="theme-color" content="#0b0b0d" />
 
-  <!-- Zet het thema meteen (nog vóór de eerste paint) zodat de site
-       zonder flikkering in light mode opent. De knop rechtsboven laat
-       de bezoeker tijdelijk naar dark mode wisselen. -->
-  <script>document.documentElement.setAttribute("data-theme", "light");</script>
+  <title>Moda | Luchthavenvervoer, Transport en Travel</title>
+  <meta name="description" content="Moda uit Heusden-Zolder: exclusief luchthavenvervoer, sneltransport en vrachtvervoer, en reizen op maat via Moda Travel. Kies hieronder het onderdeel dat u zoekt." />
 
-  <title>Moda Transport | Luchthavenvervoer Limburg | Reizen zonder zorgen</title>
-  <meta name="description" content="Exclusief luchthavenvervoer vanuit Heusden-Zolder en heel Limburg. Stipt en comfortabel naar Zaventem, Charleroi, Schiphol e.a. Vaste prijs, 24/7 beschikbaar." />
-
-  <!-- Zelf-verwijzende canonical: verwijst altijd naar de pagina zelf,
-       op eender welk domein (Netlify-adres nu, eigen domein later). -->
   <link rel="canonical" href="/" />
   <meta name="robots" content="index, follow" />
-  <meta name="author" content="Moda Transport" />
+  <meta name="author" content="Moda" />
 
   <!-- Lokale SEO (geo) -->
   <meta name="geo.region" content="BE-VLI" />
@@ -25,33 +18,29 @@
   <meta name="geo.position" content="51.0271799;5.2654197" />
   <meta name="ICBM" content="51.0271799, 5.2654197" />
 
-  <!-- Social preview (Open Graph) -->
-  <meta property="og:site_name" content="Moda Transport" />
-  <meta property="og:title" content="Moda Transport | Luchthavenvervoer Limburg | Reizen zonder zorgen" />
-  <meta property="og:description" content="Exclusief luchthavenvervoer vanuit Heusden-Zolder en heel Limburg. Stipt, comfortabel en aan een vaste prijs, 24/7." />
+  <!-- Social preview -->
+  <meta property="og:site_name" content="Moda" />
+  <meta property="og:title" content="Moda | Luchthavenvervoer, Transport en Travel" />
+  <meta property="og:description" content="Eén naam, drie specialiteiten. Kies het onderdeel dat u zoekt." />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="nl_BE" />
-  <meta property="og:url" content="https://www.moda-sneltransport.be/" />
-  <meta property="og:image" content="https://www.moda-sneltransport.be/assets/images/fleet.jpeg" />
-  <meta property="og:image:alt" content="De luxe Mercedes-vloot van Moda Transport" />
+  <meta property="og:url" content="https://moda.be/" />
+  <meta property="og:image" content="https://moda.be/assets/images/fleet.jpeg" />
 
-  <!-- Twitter-kaart -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Moda Transport | Luchthavenvervoer Limburg" />
-  <meta name="twitter:description" content="Exclusief luchthavenvervoer vanuit Heusden-Zolder en heel Limburg. Vaste prijs, stipt en 24/7." />
-  <meta name="twitter:image" content="https://www.moda-sneltransport.be/assets/images/fleet.jpeg" />
+  <meta name="twitter:title" content="Moda | Luchthavenvervoer, Transport en Travel" />
+  <meta name="twitter:description" content="Eén naam, drie specialiteiten." />
+  <meta name="twitter:image" content="https://moda.be/assets/images/fleet.jpeg" />
 
-  <!-- Zet canonical + social-URL's op het werkelijke live-domein (welk ook),
-       zodat alles zelf-verwijzend en correct is zonder handmatig aanpassen. -->
+  <!-- Canonical + social-URL's op het werkelijke live-domein zetten. -->
   <script>
     (function () {
       var origin = location.origin, page = origin + location.pathname;
-      var img = origin + "/assets/images/fleet.jpeg";
       var set = function (sel, attr, val) { var el = document.querySelector(sel); if (el) el.setAttribute(attr, val); };
       set('link[rel="canonical"]', "href", page);
       set('meta[property="og:url"]', "content", page);
-      set('meta[property="og:image"]', "content", img);
-      set('meta[name="twitter:image"]', "content", img);
+      set('meta[property="og:image"]', "content", origin + "/assets/images/fleet.jpeg");
+      set('meta[name="twitter:image"]', "content", origin + "/assets/images/fleet.jpeg");
     })();
   </script>
 
@@ -61,32 +50,21 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/moda.css" />
 
-  <!-- Netlify Identity: laat de uitnodigingslink werken en het
-       wachtwoord-instelvenster verschijnen. Nodig voor de beheerpagina
-       (/admin) met "Optie A". Zie SETUP-ADMIN.md. -->
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-
-  <!-- Gestructureerde data: laat Google weten dat dit een lokale
-       taxi-/luchthavenvervoerdienst is (adres, uren, beoordeling …). -->
+  <!-- Gestructureerde data: de overkoepelende organisatie met haar drie onderdelen. -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "@id": "https://www.moda-sneltransport.be/#business",
-    "name": "Moda Transport",
-    "alternateName": "Moda Travel",
-    "description": "Exclusief luchthavenvervoer vanuit Heusden-Zolder en heel Limburg met luxe Mercedes-wagens. Stipt, comfortabel en aan een vaste prijs.",
-    "url": "https://www.moda-sneltransport.be/",
-    "image": "https://www.moda-sneltransport.be/assets/images/fleet.jpeg",
-    "logo": "https://www.moda-sneltransport.be/assets/images/logo.png",
+    "@type": "Organization",
+    "@id": "https://moda.be/#organisatie",
+    "name": "Moda",
+    "description": "Moda uit Heusden-Zolder bundelt drie specialiteiten: exclusief luchthavenvervoer, sneltransport en vrachtvervoer, en reizen op maat via Moda Travel.",
+    "url": "https://moda.be/",
+    "logo": "https://moda.be/assets/images/logo.png",
     "telephone": "+3211243003",
-    "email": "info@moda-sneltransport.be",
-    "priceRange": "€€",
-    "currenciesAccepted": "EUR",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Beringersteenweg 14",
@@ -95,616 +73,125 @@
       "addressRegion": "Limburg",
       "addressCountry": "BE"
     },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": 51.0271799,
-      "longitude": 5.2654197
-    },
-    "areaServed": [
-      { "@type": "AdministrativeArea", "name": "Limburg" },
-      { "@type": "Country", "name": "België" }
-    ],
-    "openingHoursSpecification": {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-      "opens": "00:00",
-      "closes": "23:59"
-    },
-    "knowsAbout": ["Luchthavenvervoer", "Airport transfer", "Taxi luchthaven", "Zaventem", "Charleroi", "Schiphol"],
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "5.0",
-      "reviewCount": "19",
-      "bestRating": "5",
-      "worstRating": "1"
-    },
-    "review": [
-      {
-        "@type": "Review",
-        "author": { "@type": "Person", "name": "Veerle Vanstiphout" },
-        "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
-        "reviewBody": "Heel tevreden van onze airportservice. Snelle en duidelijke communicatie via WhatsApp, stipt en vriendelijk! Bedankt!"
-      },
-      {
-        "@type": "Review",
-        "author": { "@type": "Person", "name": "Celine Schepers" },
-        "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
-        "reviewBody": "We zijn in alle luxe en met heel goede service opgehaald en naar de luchthaven gebracht. De taxi was top in orde, luxueus en ruim. We kiezen zeker opnieuw voor deze taxiservice en raden ze iedereen aan!"
-      },
-      {
-        "@type": "Review",
-        "author": { "@type": "Person", "name": "Jan Skoczylas" },
-        "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
-        "reviewBody": "Super taxi luchthavenvervoer, met zeer goede en vriendelijke chauffeurs. Ben al meerdere malen met jullie geweest en heb al gereserveerd voor september!"
-      },
-      {
-        "@type": "Review",
-        "author": { "@type": "Person", "name": "esther janssens" },
-        "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
-        "reviewBody": "Fijne ervaring. Vlotte afhandeling. Comfortabele taxi en op tijd op het afgesproken uur. Jente de chauffeur is heel vriendelijk en behulpzaam."
-      }
+    "geo": { "@type": "GeoCoordinates", "latitude": 51.0271799, "longitude": 5.2654197 },
+    "subOrganization": [
+      { "@type": "TaxiService", "name": "Moda Luchthavenvervoer", "description": "Exclusief luchthavenvervoer van deur tot luchthaven." },
+      { "@type": "MovingCompany", "name": "Moda Transport", "description": "Sneltransport, koeriersdiensten en vrachtvervoer." },
+      { "@type": "TravelAgency", "name": "Moda Travel", "description": "Reizen op maat met persoonlijke begeleiding." }
     ]
   }
   </script>
 </head>
 <body>
 
-  <!-- Herbruikbaar Moda-logo (SVG). De ring + M volgen de omgevingskleur
-       (wit op donker, zwart op licht); de binnenring blijft altijd rood. -->
-  <svg width="0" height="0" class="svg-sprite" aria-hidden="true" focusable="false" style="position:absolute">
-    <!-- Enkel het embleem (vierkant) — voor favicon / compact gebruik -->
-    <symbol id="moda-logo" viewBox="0 0 120 120">
-      <path d="M 17.73 33.29 A 50 50 0 1 0 86.71 102.27 A 50 50 0 0 1 17.73 33.29 Z" fill="currentColor"/>
-      <path d="M 102.27 86.71 A 50 50 0 1 0 33.29 17.73 A 50 50 0 0 1 102.27 86.71 Z" fill="#e11d2a"/>
-      <rect x="40" y="40" width="40" height="40" rx="9" fill="none" stroke="currentColor" stroke-width="3"/>
-      <text x="60" y="62" text-anchor="middle" dominant-baseline="central"
-            font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="30" fill="currentColor">M</text>
-    </symbol>
+  <!-- ===================== KOP ===================== -->
+  <header class="portal__head">
+    <div class="container">
+      <svg class="portal__logo rise" viewBox="0 0 440 130" role="img" aria-label="Moda">
+        <g transform="translate(15,5)">
+          <path d="M 17.73 33.29 A 50 50 0 1 0 86.71 102.27 A 50 50 0 0 1 17.73 33.29 Z" fill="currentColor"/>
+          <path d="M 102.27 86.71 A 50 50 0 1 0 33.29 17.73 A 50 50 0 0 1 102.27 86.71 Z" fill="#e11d2a"/>
+          <rect x="40" y="40" width="40" height="40" rx="9" fill="none" stroke="currentColor" stroke-width="3"/>
+          <text x="60" y="62" text-anchor="middle" dominant-baseline="central"
+                font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="30" fill="currentColor">M</text>
+        </g>
+        <text x="165" y="98" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="92" letter-spacing="-2" fill="currentColor">MODA</text>
+      </svg>
 
-    <!-- Volledig MODA TRANSPORT-logo (embleem + woordmerk + rode balk) -->
-    <symbol id="moda-lockup" viewBox="0 0 470 175">
-      <g transform="translate(15,25)">
-        <path d="M 17.73 33.29 A 50 50 0 1 0 86.71 102.27 A 50 50 0 0 1 17.73 33.29 Z" fill="currentColor"/>
-        <path d="M 102.27 86.71 A 50 50 0 1 0 33.29 17.73 A 50 50 0 0 1 102.27 86.71 Z" fill="#e11d2a"/>
-        <rect x="40" y="40" width="40" height="40" rx="9" fill="none" stroke="currentColor" stroke-width="3"/>
-        <text x="60" y="62" text-anchor="middle" dominant-baseline="central"
-              font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="30" fill="currentColor">M</text>
-      </g>
-      <text x="165" y="86" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="92" letter-spacing="-2" fill="currentColor">MODA</text>
-      <rect x="167" y="112" width="288" height="46" fill="#f01722"/>
-      <text x="311" y="137" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="30" letter-spacing="6" fill="#ffffff">TRANSPORT</text>
-    </symbol>
-
-    <!-- WhatsApp-icoon -->
-    <symbol id="wa-icon" viewBox="0 0 24 24">
-      <path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-    </symbol>
-  </svg>
-
-  <!-- ===================== NAVIGATIE ===================== -->
-  <header class="nav" id="nav">
-    <div class="container nav__inner">
-      <a href="#home" class="nav__brand" aria-label="Moda Transport, home">
-        <svg class="nav__logo" viewBox="0 0 470 175" role="img" aria-label="Moda Transport"><use href="#moda-lockup"/></svg>
-      </a>
-
-      <nav class="nav__links" id="navLinks" aria-label="Hoofdmenu">
-        <a href="#diensten">Diensten</a>
-        <a href="#vloot">Onze vloot</a>
-        <a href="#reviews">Reviews</a>
-        <a href="#prijs">Prijs berekenen</a>
-        <a href="#contact">Contact</a>
-        <a href="#reserveer" class="btn btn--sm btn--primary nav__cta">Reserveer</a>
-      </nav>
-
-      <div class="nav__actions">
-        <a href="transport/index.html" class="nav__switch" aria-label="Naar transport &amp; sneltransport">
-          <span aria-hidden="true">🚚</span><span class="nav__switch__txt">Transport</span>
-        </a>
-        <a href="travel/index.html" class="nav__switch" aria-label="Naar Moda Travel reisbureau">
-          <span aria-hidden="true">🧳</span><span class="nav__switch__txt">Reizen</span>
-        </a>
-
-        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Wissel tussen licht en donker" title="Licht / donker">
-          <svg class="theme-toggle__sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="4"></circle>
-            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
-          </svg>
-          <svg class="theme-toggle__moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-          </svg>
-        </button>
-
-        <button class="nav__toggle" id="navToggle" aria-label="Menu openen" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
+      <h1 class="portal__tagline rise">Eén naam, drie <em>specialiteiten</em>.</h1>
+      <p class="portal__lead rise">Kies hieronder waarvoor u bij ons bent. Elk onderdeel heeft zijn eigen team, wagens en aanpak.</p>
     </div>
   </header>
 
-  <!-- ===================== HERO ===================== -->
-  <section class="hero" id="home">
-    <div class="hero__media" aria-hidden="true">
-      <div class="hero__img" style="background-image:url('assets/images/fleet.jpeg')"></div>
-      <div class="hero__overlay"></div>
-    </div>
+  <!-- ===================== DE DRIE KEUZES ===================== -->
+  <main class="container">
+    <nav class="portal__grid" aria-label="Onze onderdelen">
 
-    <div class="container hero__content">
-      <p class="hero__eyebrow reveal">✦ Exclusief luchthavenvervoer</p>
-      <h1 class="hero__title reveal">
-        Reizen <span class="text-accent">zonder zorgen</span><br />
-        naar elke luchthaven.
-      </h1>
-      <p class="hero__sub reveal">
-        Comfortabel, stipt en aan een vaste prijs. Wij brengen u met een luxe
-        Mercedes veilig naar Zaventem, Charleroi, Schiphol en verder, dag en nacht.
-      </p>
-
-      <div class="hero__actions reveal">
-        <a href="#reserveer" class="btn btn--primary btn--lg">Reserveer uw rit</a>
-        <a href="#prijs" class="btn btn--ghost btn--lg">
-          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="5" y="2.5" width="14" height="19" rx="2.5"></rect>
-            <line x1="8.5" y1="6.5" x2="15.5" y2="6.5"></line>
-            <line x1="8.5" y1="11" x2="8.5" y2="11"></line>
-            <line x1="12" y1="11" x2="12" y2="11"></line>
-            <line x1="15.5" y1="11" x2="15.5" y2="11"></line>
-            <line x1="8.5" y1="14.5" x2="8.5" y2="14.5"></line>
-            <line x1="12" y1="14.5" x2="12" y2="14.5"></line>
-            <line x1="15.5" y1="14.5" x2="15.5" y2="18"></line>
-            <line x1="8.5" y1="18" x2="12" y2="18"></line>
-          </svg>
-          Prijs berekenen
-        </a>
-        <!-- WhatsApp-nummer: vervang 32000000000 door je echte gsm-nummer
-             (landcode zonder +, bv. 32470123456). Zelfde nummer ook bij
-             de zwevende knop onderaan deze pagina. -->
-        <a href="https://wa.me/32000000000?text=Hallo%2C%20ik%20heb%20een%20vraag%20over%20luchthavenvervoer%20met%20Moda%20Transport"
-           class="btn btn--wa btn--lg" target="_blank" rel="noopener" data-content="whatsapp">
-          <svg class="btn__wa" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><use href="#wa-icon"/></svg>
-          Chat via WhatsApp
-        </a>
-      </div>
-
-      <div class="hero__badges reveal">
-        <span>★★★★★ Top beoordeeld op Google</span>
-        <span class="dot"></span>
-        <span>24/7 beschikbaar</span>
-        <span class="dot"></span>
-        <span>Vaste prijs vooraf</span>
-      </div>
-    </div>
-
-    <a href="#diensten" class="hero__scroll" aria-label="Scroll naar beneden">
-      <span class="hero__mouse"></span>
-    </a>
-  </section>
-
-  <!-- ===================== STATS / TRUST BAR ===================== -->
-  <section class="stats">
-    <div class="container stats__grid">
-      <div class="stat reveal">
-        <span class="stat__num" data-count="100" data-suffix="%">0</span>
-        <span class="stat__label">Stipt &amp; betrouwbaar</span>
-      </div>
-      <div class="stat reveal">
-        <span class="stat__num stat__num--text">24/7</span>
-        <span class="stat__label">Altijd beschikbaar</span>
-      </div>
-      <div class="stat reveal">
-        <span class="stat__num stat__num--stars">★★★★★</span>
-        <span class="stat__label">Top beoordeeld op Google</span>
-      </div>
-      <div class="stat reveal">
-        <span class="stat__num stat__num--text">€</span>
-        <span class="stat__label">Vaste prijs vooraf</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== DIENSTEN ===================== -->
-  <section class="section" id="diensten">
-    <div class="container">
-      <div class="section__head reveal">
-        <p class="section__eyebrow">Onze diensten</p>
-        <h2 class="section__title">Één specialiteit: <span class="text-accent">luchthavenvervoer</span></h2>
-        <p class="section__lead">
-          Wij doen niets half. Moda Transport richt zich volledig op transfers van en naar de luchthaven,
-          zodat u altijd op tijd en ontspannen aan uw reis begint.
-        </p>
-      </div>
-
-      <div class="cards">
-        <article class="card reveal">
-          <div class="card__icon">🛫</div>
-          <h3>Heenrit naar de luchthaven</h3>
-          <p>Wij halen u thuis of op kantoor op en brengen u ruim op tijd naar de vertrekhal. Geen stress, geen parkeerkosten.</p>
-        </article>
-
-        <article class="card reveal">
-          <div class="card__icon">🛬</div>
-          <h3>Ophaling bij aankomst</h3>
-          <p>Uw chauffeur volgt uw vluchtnummer en staat klaar in de aankomsthal, ook bij vertraging. Meet &amp; greet inbegrepen.</p>
-        </article>
-
-        <article class="card reveal">
-          <div class="card__icon">👔</div>
-          <h3>Zakelijk vervoer</h3>
-          <p>Discreet, representatief en op factuur. Ideaal voor bedrijven die hun gasten of team stijlvol laten reizen.</p>
-        </article>
-
-        <article class="card reveal">
-          <div class="card__icon">👨‍👩‍👧‍👦</div>
-          <h3>Groepen &amp; families</h3>
-          <p>Ruime <a href="#vloot">Mercedes V-Klasse en Vito</a> met plaats voor de hele groep, koffers en al. Comfortabel samen op weg.</p>
-        </article>
-      </div>
-
-      <div class="destinations reveal">
-        <p class="destinations__label">Wij rijden onder meer naar:</p>
-        <ul class="destinations__list">
-          <li>Brussels Airport (Zaventem)</li>
-          <li>Brussels South (Charleroi)</li>
-          <li>Amsterdam (Schiphol)</li>
-          <li>Eindhoven Airport</li>
-          <li>Lille</li>
-          <li>Paris CDG &amp; Orly</li>
-          <li>Düsseldorf &amp; Köln</li>
-          <li>Luxembourg</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== WAAROM MODA ===================== -->
-  <section class="section section--alt" id="waarom">
-    <div class="container waarom__grid">
-      <div class="waarom__intro reveal">
-        <p class="section__eyebrow">Waarom Moda Transport</p>
-        <h2 class="section__title">Uw comfort, onze zorg.</h2>
-        <p class="section__lead">
-          Vanaf het moment dat u boekt tot u veilig op uw bestemming bent, nemen wij alles uit handen.
-          Dat is de belofte achter <em>“reizen zonder zorgen”</em>.
-        </p>
-        <a href="#reserveer" class="btn btn--primary">Plan uw rit</a>
-      </div>
-
-      <div class="features">
-        <div class="feature reveal">
-          <div class="feature__icon">💶</div>
-          <div>
-            <h3>Vaste prijs vooraf</h3>
-            <p>U weet exact wat u betaalt. Geen verrassingen, geen wachttarieven, geen kleine lettertjes.</p>
-          </div>
+      <a class="choice rise" href="luchthaven/index.html" aria-label="Naar Moda Luchthavenvervoer">
+        <div class="choice__bg" style="background-image:url('assets/images/fleet.jpeg')" aria-hidden="true"></div>
+        <div class="choice__veil" aria-hidden="true"></div>
+        <div class="choice__body">
+          <span class="choice__icon" aria-hidden="true">✈️</span>
+          <h2 class="choice__title">Luchthavenvervoer</h2>
+          <p class="choice__desc">Stipt en comfortabel van uw deur tot aan de luchthaven, dag en nacht.</p>
+          <span class="choice__go">
+            Bekijk
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="4" y1="12" x2="19" y2="12"></line><polyline points="13 6 19 12 13 18"></polyline>
+            </svg>
+          </span>
         </div>
-        <div class="feature reveal">
-          <div class="feature__icon">⏱️</div>
-          <div>
-            <h3>Altijd stipt op tijd</h3>
-            <p>Wij plannen ruime marges en volgen het verkeer live, zodat u nooit een vlucht mist.</p>
-          </div>
+        <span class="choice__line" aria-hidden="true"></span>
+      </a>
+
+      <a class="choice rise" href="transport/index.html" aria-label="Naar Moda Transport en sneltransport">
+        <div class="choice__bg" style="background-image:url('assets/images/transport/hero.jpg')" aria-hidden="true"></div>
+        <div class="choice__veil" aria-hidden="true"></div>
+        <div class="choice__body">
+          <span class="choice__icon" aria-hidden="true">🚚</span>
+          <h2 class="choice__title">Transport</h2>
+          <p class="choice__desc">Van één pallet tot volle vracht, lokaal en internationaal, 24/7 beschikbaar.</p>
+          <span class="choice__go">
+            Bekijk
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="4" y1="12" x2="19" y2="12"></line><polyline points="13 6 19 12 13 18"></polyline>
+            </svg>
+          </span>
         </div>
-        <div class="feature reveal">
-          <div class="feature__icon">🚐</div>
-          <div>
-            <h3>Luxe Mercedes-vloot</h3>
-            <p>Verzorgde, comfortabele wagens met lederen zetels en ruimte voor bagage.</p>
-          </div>
+        <span class="choice__line" aria-hidden="true"></span>
+      </a>
+
+      <a class="choice rise" href="travel/index.html" aria-label="Naar Moda Travel, ons reisbureau">
+        <div class="choice__bg" style="background-image:url('assets/images/travel/hero.jpg')" aria-hidden="true"></div>
+        <div class="choice__veil" aria-hidden="true"></div>
+        <div class="choice__body">
+          <span class="choice__icon" aria-hidden="true">🧳</span>
+          <h2 class="choice__title">Travel</h2>
+          <p class="choice__desc">Reizen zonder zorgen, volledig op maat en met persoonlijke begeleiding.</p>
+          <span class="choice__go">
+            Bekijk
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="4" y1="12" x2="19" y2="12"></line><polyline points="13 6 19 12 13 18"></polyline>
+            </svg>
+          </span>
         </div>
-        <div class="feature reveal">
-          <div class="feature__icon">🧑‍✈️</div>
-          <div>
-            <h3>Ervaren chauffeurs</h3>
-            <p>Vriendelijke, professionele chauffeurs die de weg én de luchthaven kennen.</p>
-          </div>
-        </div>
-        <div class="feature reveal">
-          <div class="feature__icon">🌙</div>
-          <div>
-            <h3>24/7 beschikbaar</h3>
-            <p>Vroege ochtendvlucht of late landing? Wij rijden dag en nacht, het hele jaar door.</p>
-          </div>
-        </div>
-        <div class="feature reveal">
-          <div class="feature__icon">✈️</div>
-          <div>
-            <h3>Vluchtopvolging</h3>
-            <p>Wij monitoren uw vlucht en passen de ophaaltijd automatisch aan bij vertraging.</p>
-          </div>
-        </div>
+        <span class="choice__line" aria-hidden="true"></span>
+      </a>
+
+    </nav>
+  </main>
+
+  <!-- ===================== VOETTEKST ===================== -->
+  <footer class="portal__foot">
+    <div class="container portal__foot-inner">
+      <div class="portal__contact">
+        <a href="tel:+3211243003">011 24 30 03</a>
+        <a href="mailto:info@moda-sneltransport.be">info@moda-sneltransport.be</a>
+        <a href="https://www.google.com/maps/search/?api=1&amp;query=Beringersteenweg+14+3550+Heusden-Zolder" target="_blank" rel="noopener">Beringersteenweg 14, 3550 Heusden-Zolder</a>
       </div>
-    </div>
-  </section>
-
-  <!-- ===================== VLOOT ===================== -->
-  <section class="section" id="vloot">
-    <div class="container">
-      <div class="section__head reveal">
-        <p class="section__eyebrow">Onze vloot</p>
-        <h2 class="section__title">Reizen in <span class="text-accent">stijl en comfort</span></h2>
-        <p class="section__lead">
-          Een goed onderhouden Mercedes-vloot, binnen en buiten verzorgd tot in de puntjes.
-        </p>
-      </div>
-
-      <div class="gallery">
-        <figure class="gallery__item gallery__item--feature reveal">
-          <img src="assets/images/fleet.jpeg" alt="De luxe Mercedes-vloot van Moda Transport voor luchthavenvervoer" />
-          <figcaption>Onze Mercedes V-Klasse &amp; Vito vloot</figcaption>
-        </figure>
-        <figure class="gallery__item gallery__item--wide reveal">
-          <img src="assets/images/interior-seats.jpeg" alt="Luxe lederen interieur met ruime zetels" loading="lazy" />
-          <figcaption>Ruim, luxe interieur</figcaption>
-        </figure>
-        <figure class="gallery__item reveal">
-          <img src="assets/images/interior-door.jpeg" alt="Comfortabele lederen zetels met makkelijke instap" loading="lazy" />
-          <figcaption>Comfortabele instap</figcaption>
-        </figure>
-        <figure class="gallery__item reveal">
-          <img src="assets/images/steering-amg.jpeg" alt="Verzorgd Mercedes-AMG interieur" loading="lazy" />
-          <figcaption>Verzorgd tot in het detail</figcaption>
-        </figure>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== REVIEWS ===================== -->
-  <section class="section section--dark" id="reviews">
-    <div class="container">
-      <div class="section__head reveal">
-        <p class="section__eyebrow">Wat klanten zeggen</p>
-        <h2 class="section__title">Beoordeeld met <span class="text-accent">★★★★★</span></h2>
-        <p class="section__lead">
-          Onze klanten waarderen vooral de stiptheid, netheid en vriendelijkheid.
-          Lees alle beoordelingen op Google onder <strong>“Moda Transport”</strong>.
-        </p>
-      </div>
-
-      <div class="reviews-marquee reveal">
-        <div class="reviews-row" id="reviews-track">
-          <!-- Reviews worden geïnjecteerd via JS (assets/js/reviews.js) -->
-        </div>
-      </div>
-
-      <div class="reviews__cta reveal">
-        <a href="https://www.google.com/search?q=Moda+Transport+reviews" target="_blank" rel="noopener" class="btn btn--ghost">
-          Bekijk alle Google-reviews
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== PRIJS BEREKENEN ===================== -->
-  <section class="section" id="prijs">
-    <div class="container">
-      <div class="section__head reveal">
-        <p class="section__eyebrow">Bereken je prijs</p>
-        <h2 class="section__title">Meteen je <span class="text-accent">vaste prijs</span></h2>
-        <p class="section__lead">
-          Kies je luchthaven, vul je ophaaladres in en het aantal personen.
-          Je ziet direct een richtprijs voor een enkele rit. Vaste prijs, geen verrassingen.
-        </p>
-      </div>
-
-      <div class="calc reveal">
-        <form class="calc__form" id="calcForm" novalidate>
-          <div class="field">
-            <label>Wat wil je boeken?</label>
-            <div class="calc__segment" id="calcTripType" role="radiogroup" aria-label="Type rit">
-              <input type="radio" name="triptype" id="trip-naar" value="naar" checked />
-              <label for="trip-naar">Naar de luchthaven</label>
-              <input type="radio" name="triptype" id="trip-van" value="van" />
-              <label for="trip-van">Van de luchthaven</label>
-              <input type="radio" name="triptype" id="trip-retour" value="retour" />
-              <label for="trip-retour">Heen én terug</label>
-            </div>
-          </div>
-
-          <div class="field">
-            <label for="calc-airport" id="calc-airport-label">Naar welke luchthaven?</label>
-            <select id="calc-airport" name="airport" required>
-              <option value="" disabled selected>Kies een luchthaven…</option>
-              <!-- opties worden ingevuld via assets/js/calculator.js -->
-            </select>
-          </div>
-
-          <!-- Tweede luchthaven — enkel zichtbaar bij een heen-én-terugrit,
-               zodat men op de ene luchthaven kan vertrekken en op een
-               andere terugkomen. Wordt getoond/verborgen via calculator.js. -->
-          <div class="field" id="calc-airport-return-field" hidden>
-            <label for="calc-airport-return" id="calc-airport-return-label">Van welke luchthaven? (terugreis)</label>
-            <select id="calc-airport-return" name="airportReturn">
-              <option value="" disabled selected>Kies een luchthaven…</option>
-              <!-- opties worden ingevuld via assets/js/calculator.js -->
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="calc-address" id="calc-address-label">Ophaaladres</label>
-            <div class="autocomplete">
-              <input type="text" id="calc-address" name="address"
-                     placeholder="Begin te typen, bv. Paalseweg 30…" autocomplete="off"
-                     role="combobox" aria-autocomplete="list" aria-expanded="false"
-                     aria-controls="calc-ac-list" required />
-              <ul class="autocomplete__list" id="calc-ac-list" role="listbox" hidden></ul>
-            </div>
-            <span class="field__hint">Kies je adres uit de lijst. Staat je exacte huisnummer of busnummer er niet bij? Kies dan gewoon je straat, dat volstaat. Enkel binnen 20 km van Heusden-Zolder.</span>
-
-            <div class="calc__stops" id="calcStops"></div>
-            <button type="button" class="calc__addstop" id="addStop">
-              <span class="calc__addstop-icon" aria-hidden="true">✓</span>
-              Extra tussenstop toevoegen <span class="calc__addstop-fee">+€10</span>
-            </button>
-          </div>
-
-          <div class="field">
-            <label for="calc-pax">Aantal personen</label>
-            <input type="number" id="calc-pax" name="pax" min="1" max="8" value="2" required />
-            <span class="field__hint">Prijs geldt voor 2 personen. Elke extra persoon: +€5.</span>
-          </div>
-
-          <button type="submit" class="btn btn--primary btn--lg btn--block">Bereken mijn prijs</button>
-        </form>
-
-        <div class="calc__result" id="calcResult" aria-live="polite">
-          <div class="calc__placeholder">
-            <span class="calc__euro">€</span>
-            <p>Vul je gegevens in en ontdek meteen je richtprijs.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== RESERVEER / OFFERTE ===================== -->
-  <section class="section section--alt" id="reserveer">
-    <div class="container booking">
-      <div class="booking__intro reveal">
-        <p class="section__eyebrow">Reserveer of vraag een prijs</p>
-        <h2 class="section__title">Klaar om zorgeloos te reizen?</h2>
-        <p class="section__lead">
-          Vul kort uw gegevens in en wij bezorgen u snel <a href="#prijs">een vaste prijs</a>.
-          Liever direct boeken? Bel of mail ons gerust.
-        </p>
-        <ul class="booking__contactlist">
-          <li><span>📞</span> <a href="tel:+3211243003" data-content="phone">011 24 30 03</a></li>
-          <li><span>✉️</span> <a href="mailto:info@moda-sneltransport.be" data-content="email">info@moda-sneltransport.be</a></li>
-          <li><span>📍</span> <a href="https://www.google.com/maps/search/?api=1&amp;query=Beringersteenweg+14+3550+Heusden-Zolder" target="_blank" rel="noopener" data-content="address">Beringersteenweg 14, 3550 Heusden-Zolder</a></li>
-        </ul>
-      </div>
-
-      <form class="booking__form reveal" id="bookingForm" novalidate>
-        <!-- Spam-val (onzichtbaar; enkel bots vinken dit aan) -->
-        <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none" />
-
-        <div class="field">
-          <label for="name">Naam</label>
-          <input type="text" id="name" name="name" placeholder="Uw naam" required />
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label for="phone">Telefoon</label>
-            <input type="tel" id="phone" name="phone" placeholder="+32 ..." required />
-          </div>
-          <div class="field">
-            <label for="email">E-mail</label>
-            <input type="email" id="email" name="email" placeholder="u@voorbeeld.be" required />
-          </div>
-        </div>
-        <div class="field">
-          <label for="from">Ophaaladres</label>
-          <div class="autocomplete">
-            <input type="text" id="from" name="from" placeholder="Begin te typen, bv. Paalseweg 30…"
-                   autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false"
-                   aria-controls="from-ac-list" required />
-            <ul class="autocomplete__list" id="from-ac-list" role="listbox" hidden></ul>
-          </div>
-          <span class="field__hint">Kies je adres uit de lijst, dan wordt de postcode automatisch ingevuld.</span>
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label for="postcode">Postcode</label>
-            <input type="text" id="postcode" name="postcode" placeholder="bv. 3550" inputmode="numeric" autocomplete="postal-code" />
-          </div>
-          <div class="field">
-            <label for="to">Bestemming</label>
-            <input type="text" id="to" name="to" placeholder="Bv. Brussels Airport" required />
-          </div>
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label for="date">Datum &amp; tijd</label>
-            <input type="datetime-local" id="date" name="date" required />
-          </div>
-          <div class="field">
-            <label for="pax">Aantal personen</label>
-            <input type="number" id="pax" name="pax" min="1" max="8" value="2" required />
-          </div>
-        </div>
-        <div class="field">
-          <label for="notes">Opmerkingen (optioneel)</label>
-          <textarea id="notes" name="notes" rows="3" placeholder="Vluchtnummer, bagage, ..."></textarea>
-        </div>
-        <button type="submit" class="btn btn--primary btn--lg btn--block">Vraag mijn prijs aan</button>
-        <p class="booking__note" id="formNote" role="status"></p>
-      </form>
-    </div>
-  </section>
-
-  <!-- ===================== CONTACT / FOOTER ===================== -->
-  <footer class="footer" id="contact">
-    <div class="container footer__grid">
-      <div class="footer__brand">
-        <svg class="footer__logo" viewBox="0 0 470 175" role="img" aria-label="Moda Transport"><use href="#moda-lockup"/></svg>
-        <p class="footer__slogan">“Reizen zonder zorgen”</p>
-        <p class="footer__desc">Exclusief luchthavenvervoer met een persoonlijke, professionele service.</p>
-        <!-- Bedrijfsgegevens (goed voor vertrouwen & lokale SEO).
-             Vul hier gerust je ondernemingsnummer/BTW aan als je dat wil tonen. -->
-        <p class="footer__legal">Moda Transport · Beringersteenweg 14, 3550 Heusden-Zolder, België</p>
-      </div>
-
-      <div class="footer__col">
-        <h4>Contact</h4>
-        <ul>
-          <li><a href="tel:+3211243003" data-content="phone">011 24 30 03</a></li>
-          <li><a href="mailto:info@moda-sneltransport.be" data-content="email">info@moda-sneltransport.be</a></li>
-          <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Beringersteenweg+14+3550+Heusden-Zolder" target="_blank" rel="noopener" data-content="address">Beringersteenweg 14, 3550 Heusden-Zolder</a></li>
-        </ul>
-      </div>
-
-      <div class="footer__col">
-        <h4>Ontdek</h4>
-        <ul>
-          <li><a href="#diensten">Onze diensten</a></li>
-          <li><a href="#vloot">Onze vloot</a></li>
-          <li><a href="#reviews">Reviews</a></li>
-          <li><a href="#prijs">Prijs berekenen</a></li>
-          <li><a href="#waarom">Over ons</a></li>
-          <li><a href="#reserveer">Reserveren</a></li>
-        </ul>
-      </div>
-
-      <div class="footer__col">
-        <h4>Beschikbaarheid</h4>
-        <ul>
-          <li>24 uur per dag</li>
-          <li>7 dagen per week</li>
-          <li>Reserveer op voorhand</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="container footer__bottom">
-      <p>© <span id="year"></span> Moda Transport. Alle rechten voorbehouden.</p>
-      <p class="footer__made">Reizen zonder zorgen. · <a href="moda/index.html">Bekijk moda.be (preview)</a></p>
+      <p class="portal__legal">© <span id="year"></span> Moda. Alle rechten voorbehouden.</p>
     </div>
   </footer>
 
-  <!-- Zwevende WhatsApp-knop (linksonder, volgt mee) — zelfde nummer als de
-       hero-knop: vervang 32000000000 door je echte gsm-nummer. -->
-  <a href="https://wa.me/32000000000?text=Hallo%2C%20ik%20heb%20een%20vraag%20over%20luchthavenvervoer%20met%20Moda%20Transport"
-     class="floating-wa" target="_blank" rel="noopener" aria-label="Chat via WhatsApp" data-content="whatsapp">
-    <svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><use href="#wa-icon"/></svg>
-  </a>
-
-  <script src="assets/js/content.js"></script>
-  <script src="assets/js/reviews.js"></script>
-  <script src="assets/js/calculator.js"></script>
-  <script src="assets/js/address.js"></script>
-  <script src="assets/js/main.js"></script>
-
-  <!-- Na inloggen (of na het instellen van je wachtwoord via de
-       uitnodigingslink) automatisch naar de beheerpagina gaan. -->
   <script>
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", function (user) {
-        if (!user) {
-          window.netlifyIdentity.on("login", function () {
-            document.location.href = "/admin/";
-          });
-        }
-      });
-    }
+    // Jaartal + een rustige binnenkomst van de elementen.
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    (function () {
+      var els = document.querySelectorAll(".rise");
+      if (!("IntersectionObserver" in window)) {
+        els.forEach(function (el) { el.classList.add("is-in"); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry, i) {
+          if (!entry.isIntersecting) return;
+          setTimeout(function () { entry.target.classList.add("is-in"); }, i * 90);
+          io.unobserve(entry.target);
+        });
+      }, { threshold: 0.15 });
+      els.forEach(function (el) { io.observe(el); });
+    })();
   </script>
 </body>
 </html>

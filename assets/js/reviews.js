@@ -310,7 +310,7 @@ const MODA_REVIEWS = [
 
   /* -- Reviews uit content/reviews.json (aan te passen via /admin) -- */
   async function fetchManualJson() {
-    const res = await fetch("content/reviews.json", { cache: "no-store" });
+    const res = await fetch("../content/reviews.json", { cache: "no-store" });
     if (!res.ok) throw new Error(`reviews.json HTTP ${res.status}`);
     const data = await res.json();
     const raw = Array.isArray(data.reviews) ? data.reviews : [];
