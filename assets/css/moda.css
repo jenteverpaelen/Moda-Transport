@@ -1,0 +1,206 @@
+/* =========================================================
+   MODA — Portaalpagina voor moda.be
+   ---------------------------------------------------------
+   Volledig zelfstandige stijl (laadt géén style.css), zodat deze
+   pagina niets kan beïnvloeden van luchthavenvervoer, transport
+   of travel. Eén doel: rustig en duidelijk doorverwijzen naar
+   de juiste sector.
+   ========================================================= */
+
+:root {
+  --ink:        #0b0b0d;
+  --ink-2:      #101014;
+  --line:       rgba(255, 255, 255, 0.10);
+  --line-soft:  rgba(255, 255, 255, 0.06);
+  --white:      #ffffff;
+  --soft:       #b9b9c4;
+  --muted:      #85858f;
+  --red:        #e11d2a;
+  --red-bright: #f01722;
+  --ease:       cubic-bezier(0.22, 1, 0.36, 1);
+  --maxw:       1180px;
+  --radius:     18px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--ink);
+  color: var(--soft);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Heel subtiele sfeer op de achtergrond, geen ruis. */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(900px 520px at 15% -10%, rgba(225, 29, 42, 0.10), transparent 70%),
+    radial-gradient(760px 480px at 92% 108%, rgba(225, 29, 42, 0.07), transparent 72%),
+    linear-gradient(180deg, #0b0b0d 0%, #0e0e12 55%, #0b0b0d 100%);
+}
+
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+
+.container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+/* -------------------- Kop -------------------- */
+.portal__head {
+  padding: clamp(46px, 8vh, 84px) 0 clamp(26px, 4vh, 40px);
+  text-align: center;
+}
+.portal__logo {
+  width: clamp(190px, 26vw, 250px);
+  height: auto;
+  margin: 0 auto clamp(20px, 3vh, 30px);
+  color: var(--white);
+}
+.portal__tagline {
+  font-family: "Sora", sans-serif;
+  font-size: clamp(1.28rem, 3.2vw, 1.95rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: var(--white);
+}
+.portal__tagline em { font-style: normal; color: var(--red-bright); }
+.portal__lead {
+  margin: 14px auto 0;
+  max-width: 520px;
+  font-size: clamp(.95rem, 2vw, 1.03rem);
+  color: var(--muted);
+}
+
+/* -------------------- De drie keuzes -------------------- */
+.portal__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding-bottom: clamp(34px, 6vh, 56px);
+}
+
+.choice {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--ink-2);
+  min-height: clamp(300px, 46vh, 400px);
+  isolation: isolate;
+  transition: transform .5s var(--ease), border-color .5s var(--ease), box-shadow .5s var(--ease);
+}
+.choice:hover,
+.choice:focus-visible {
+  transform: translateY(-6px);
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 26px 60px rgba(0, 0, 0, 0.5);
+}
+.choice:focus-visible { outline: 2px solid var(--red-bright); outline-offset: 3px; }
+
+.choice__bg {
+  position: absolute; inset: 0; z-index: -2;
+  background-size: cover; background-position: center;
+  transform: scale(1.02);
+  transition: transform .8s var(--ease);
+}
+.choice:hover .choice__bg { transform: scale(1.08); }
+
+/* Donkere sluier: houdt de tekst leesbaar en de foto rustig. */
+.choice__veil {
+  position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, rgba(8, 8, 10, 0.18) 0%, rgba(8, 8, 10, 0.52) 46%, rgba(8, 8, 10, 0.93) 100%);
+  transition: background .5s var(--ease);
+}
+.choice:hover .choice__veil {
+  background: linear-gradient(180deg, rgba(8, 8, 10, 0.08) 0%, rgba(8, 8, 10, 0.42) 46%, rgba(8, 8, 10, 0.90) 100%);
+}
+
+.choice__body {
+  position: relative;
+  height: 100%;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 30px 28px 28px;
+  gap: 9px;
+}
+.choice__icon {
+  font-size: 1.5rem; line-height: 1;
+  width: 50px; height: 50px; margin-bottom: 4px;
+  display: grid; place-items: center;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(6px);
+}
+.choice__title {
+  font-family: "Sora", sans-serif;
+  font-size: clamp(1.22rem, 2.4vw, 1.45rem);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--white);
+  line-height: 1.2;
+}
+.choice__desc { font-size: .94rem; color: var(--soft); line-height: 1.55; }
+
+.choice__go {
+  margin-top: 12px;
+  display: inline-flex; align-items: center; gap: 9px;
+  font-family: "Sora", sans-serif; font-weight: 600; font-size: .9rem;
+  color: var(--white);
+}
+.choice__go svg { transition: transform .4s var(--ease); }
+.choice:hover .choice__go svg { transform: translateX(5px); }
+
+/* Fijne rode accentlijn die bij hover doorloopt. */
+.choice__line {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 3px; z-index: 1;
+  background: linear-gradient(90deg, var(--red), var(--red-bright));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .55s var(--ease);
+}
+.choice:hover .choice__line,
+.choice:focus-visible .choice__line { transform: scaleX(1); }
+
+/* -------------------- Voettekst -------------------- */
+.portal__foot {
+  margin-top: auto;
+  border-top: 1px solid var(--line-soft);
+  padding: 24px 0 30px;
+}
+.portal__foot-inner {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 14px 26px;
+}
+.portal__contact { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: .9rem; }
+.portal__contact a, .portal__contact span { color: var(--muted); transition: color .25s; }
+.portal__contact a:hover { color: var(--white); }
+.portal__legal { font-size: .82rem; color: var(--muted); }
+
+/* -------------------- Binnenkomen (subtiel) -------------------- */
+.rise { opacity: 0; transform: translateY(14px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+.rise.is-in { opacity: 1; transform: none; }
+
+/* -------------------- Responsive -------------------- */
+@media (max-width: 900px) {
+  .portal__grid { grid-template-columns: 1fr; gap: 16px; }
+  .choice { min-height: 210px; }
+  .choice__body { padding: 24px 22px 22px; }
+  .choice__icon { width: 44px; height: 44px; font-size: 1.3rem; }
+  .portal__foot-inner { flex-direction: column; align-items: flex-start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: .001ms !important; animation-duration: .001ms !important; }
+  .rise { opacity: 1; transform: none; }
+}

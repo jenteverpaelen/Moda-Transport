@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0b0d" />
+
+  <title>Moda | Luchthavenvervoer, Transport en Travel</title>
+  <meta name="description" content="Moda uit Heusden-Zolder: exclusief luchthavenvervoer, sneltransport en vrachtvervoer, en reizen op maat via Moda Travel. Kies hieronder het onderdeel dat u zoekt." />
+
+  <link rel="canonical" href="/" />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Moda" />
+
+  <!-- Lokale SEO (geo) -->
+  <meta name="geo.region" content="BE-VLI" />
+  <meta name="geo.placename" content="Heusden-Zolder" />
+  <meta name="geo.position" content="51.0271799;5.2654197" />
+  <meta name="ICBM" content="51.0271799, 5.2654197" />
+
+  <!-- Social preview -->
+  <meta property="og:site_name" content="Moda" />
+  <meta property="og:title" content="Moda | Luchthavenvervoer, Transport en Travel" />
+  <meta property="og:description" content="Eén naam, drie specialiteiten. Kies het onderdeel dat u zoekt." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="nl_BE" />
+  <meta property="og:url" content="https://moda.be/" />
+  <meta property="og:image" content="https://moda.be/assets/images/fleet.jpeg" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Moda | Luchthavenvervoer, Transport en Travel" />
+  <meta name="twitter:description" content="Eén naam, drie specialiteiten." />
+  <meta name="twitter:image" content="https://moda.be/assets/images/fleet.jpeg" />
+
+  <!-- Canonical + social-URL's op het werkelijke live-domein zetten. -->
+  <script>
+    (function () {
+      var origin = location.origin, page = origin + location.pathname;
+      var set = function (sel, attr, val) { var el = document.querySelector(sel); if (el) el.setAttribute(attr, val); };
+      set('link[rel="canonical"]', "href", page);
+      set('meta[property="og:url"]', "content", page);
+      set('meta[property="og:image"]', "content", origin + "/assets/images/fleet.jpeg");
+      set('meta[name="twitter:image"]', "content", origin + "/assets/images/fleet.jpeg");
+    })();
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="../assets/images/logo-moda.svg" />
+  <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../assets/css/moda.css" />
+
+  <!-- Gestructureerde data: de overkoepelende organisatie met haar drie onderdelen. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://moda.be/#organisatie",
+    "name": "Moda",
+    "description": "Moda uit Heusden-Zolder bundelt drie specialiteiten: exclusief luchthavenvervoer, sneltransport en vrachtvervoer, en reizen op maat via Moda Travel.",
+    "url": "https://moda.be/",
+    "logo": "https://moda.be/assets/images/logo.png",
+    "telephone": "+3211243003",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Beringersteenweg 14",
+      "postalCode": "3550",
+      "addressLocality": "Heusden-Zolder",
+      "addressRegion": "Limburg",
+      "addressCountry": "BE"
+    },
+    "geo": { "@type": "GeoCoordinates", "latitude": 51.0271799, "longitude": 5.2654197 },
+    "subOrganization": [
+      { "@type": "TaxiService", "name": "Moda Luchthavenvervoer", "description": "Exclusief luchthavenvervoer van deur tot luchthaven." },
+      { "@type": "MovingCompany", "name": "Moda Transport", "description": "Sneltransport, koeriersdiensten en vrachtvervoer." },
+      { "@type": "TravelAgency", "name": "Moda Travel", "description": "Reizen op maat met persoonlijke begeleiding." }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <!-- ===================== KOP ===================== -->
+  <header class="portal__head">
+    <div class="container">
+      <svg class="portal__logo rise" viewBox="0 0 440 130" role="img" aria-label="Moda">
+        <g transform="translate(15,5)">
+          <path d="M 17.73 33.29 A 50 50 0 1 0 86.71 102.27 A 50 50 0 0 1 17.73 33.29 Z" fill="currentColor"/>
+          <path d="M 102.27 86.71 A 50 50 0 1 0 33.29 17.73 A 50 50 0 0 1 102.27 86.71 Z" fill="#e11d2a"/>
+          <rect x="40" y="40" width="40" height="40" rx="9" fill="none" stroke="currentColor" stroke-width="3"/>
+          <text x="60" y="62" text-anchor="middle" dominant-baseline="central"
+                font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="30" fill="currentColor">M</text>
+        </g>
+        <text x="165" y="98" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="92" letter-spacing="-2" fill="currentColor">MODA</text>
+      </svg>
+
+      <h1 class="portal__tagline rise">Eén naam, drie <em>specialiteiten</em>.</h1>
+      <p class="portal__lead rise">Kies hieronder waarvoor u bij ons bent. Elk onderdeel heeft zijn eigen team, wagens en aanpak.</p>
+    </div>
+  </header>
+
+  <!-- ===================== DE DRIE KEUZES ===================== -->
+  <main class="container">
+    <nav class="portal__grid" aria-label="Onze onderdelen">
+
+      <a class="choice rise" href="../index.html" aria-label="Naar Moda Luchthavenvervoer">
+        <div class="choice__bg" style="background-image:url('../assets/images/fleet.jpeg')" aria-hidden="true"></div>
+        <div class="choice__veil" aria-hidden="true"></div>
+        <div class="choice__body">
+          <span class="choice__icon" aria-hidden="true">✈️</span>
+          <h2 class="choice__title">Luchthavenvervoer</h2>
+          <p class="choice__desc">Stipt en comfortabel van uw deur tot aan de luchthaven, dag en nacht.</p>
+          <span class="choice__go">
+            Bekijk
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="4" y1="12" x2="19" y2="12"></line><polyline points="13 6 19 12 13 18"></polyline>
+            </svg>
+          </span>
+        </div>
+        <span class="choice__line" aria-hidden="true"></span>
+      </a>
+
+      <a class="choice rise" href="../transport/index.html" aria-label="Naar Moda Transport en sneltransport">
+        <div class="choice__bg" style="background-image:url('../assets/images/transport/hero.jpg')" aria-hidden="true"></div>
+        <div class="choice__veil" aria-hidden="true"></div>
+        <div class="choice__body">
+          <span class="choice__icon" aria-hidden="true">🚚</span>
+          <h2 class="choice__title">Transport</h2>
+          <p class="choice__desc">Van één pallet tot volle vracht, lokaal en internationaal, 24/7 beschikbaar.</p>
+          <span class="choice__go">
+            Bekijk
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="4" y1="12" x2="19" y2="12"></line><polyline points="13 6 19 12 13 18"></polyline>
+            </svg>
+          </span>
+        </div>
+        <span class="choice__line" aria-hidden="true"></span>
+      </a>
+
+      <a class="choice rise" href="../travel/index.html" aria-label="Naar Moda Travel, ons reisbureau">
+        <div class="choice__bg" style="background-image:url('../assets/images/travel/hero.jpg')" aria-hidden="true"></div>
+        <div class="choice__veil" aria-hidden="true"></div>
+        <div class="choice__body">
+          <span class="choice__icon" aria-hidden="true">🧳</span>
+          <h2 class="choice__title">Travel</h2>
+          <p class="choice__desc">Reizen zonder zorgen, volledig op maat en met persoonlijke begeleiding.</p>
+          <span class="choice__go">
+            Bekijk
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="4" y1="12" x2="19" y2="12"></line><polyline points="13 6 19 12 13 18"></polyline>
+            </svg>
+          </span>
+        </div>
+        <span class="choice__line" aria-hidden="true"></span>
+      </a>
+
+    </nav>
+  </main>
+
+  <!-- ===================== VOETTEKST ===================== -->
+  <footer class="portal__foot">
+    <div class="container portal__foot-inner">
+      <div class="portal__contact">
+        <a href="tel:+3211243003">011 24 30 03</a>
+        <a href="mailto:info@moda-sneltransport.be">info@moda-sneltransport.be</a>
+        <a href="https://www.google.com/maps/search/?api=1&amp;query=Beringersteenweg+14+3550+Heusden-Zolder" target="_blank" rel="noopener">Beringersteenweg 14, 3550 Heusden-Zolder</a>
+      </div>
+      <p class="portal__legal">© <span id="year"></span> Moda. Alle rechten voorbehouden.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Jaartal + een rustige binnenkomst van de elementen.
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    (function () {
+      var els = document.querySelectorAll(".rise");
+      if (!("IntersectionObserver" in window)) {
+        els.forEach(function (el) { el.classList.add("is-in"); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry, i) {
+          if (!entry.isIntersecting) return;
+          setTimeout(function () { entry.target.classList.add("is-in"); }, i * 90);
+          io.unobserve(entry.target);
+        });
+      }, { threshold: 0.15 });
+      els.forEach(function (el) { io.observe(el); });
+    })();
+  </script>
+</body>
+</html>
