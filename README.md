@@ -185,7 +185,7 @@ Zodra je echte domein vaststaat, vervang je `www.moda-sneltransport.be` nog op *
 ## 🎨 Kenmerken
 
 - 100% mobielvriendelijk (mobile-first)
-- Licht/donker-knop rechtsboven (de site opent altijd in dark mode)
+- Licht/donker-knop rechtsboven (de site opent standaard in light mode)
 - Vloeiende scroll-animaties, hero met Ken Burns-effect, tellers, parallax
 - Toegankelijk (respecteert `prefers-reduced-motion`)
 - Snel: geen frameworks, geen build-stap

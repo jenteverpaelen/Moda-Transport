@@ -3,7 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0c0c0e" />
+  <meta name="theme-color" content="#f5f5f8" />
+
+  <!-- Zet het thema meteen (nog vóór de eerste paint) zodat de site
+       zonder flikkering in light mode opent. De knop rechtsboven laat
+       de bezoeker tijdelijk naar dark mode wisselen. -->
+  <script>document.documentElement.setAttribute("data-theme", "light");</script>
 
   <title>Moda Transport — Luchthavenvervoer Limburg | Reizen zonder zorgen</title>
   <meta name="description" content="Exclusief luchthavenvervoer vanuit Heusden-Zolder en heel Limburg. Stipt en comfortabel naar Zaventem, Charleroi, Schiphol e.a. — vaste prijs, 24/7 beschikbaar." />
@@ -491,6 +496,17 @@
           <div class="field">
             <label for="calc-airport" id="calc-airport-label">Naar welke luchthaven?</label>
             <select id="calc-airport" name="airport" required>
+              <option value="" disabled selected>Kies een luchthaven…</option>
+              <!-- opties worden ingevuld via assets/js/calculator.js -->
+            </select>
+          </div>
+
+          <!-- Tweede luchthaven — enkel zichtbaar bij een heen-én-terugrit,
+               zodat men op de ene luchthaven kan vertrekken en op een
+               andere terugkomen. Wordt getoond/verborgen via calculator.js. -->
+          <div class="field" id="calc-airport-return-field" hidden>
+            <label for="calc-airport-return" id="calc-airport-return-label">Terug — van welke luchthaven?</label>
+            <select id="calc-airport-return" name="airportReturn">
               <option value="" disabled selected>Kies een luchthaven…</option>
               <!-- opties worden ingevuld via assets/js/calculator.js -->
             </select>

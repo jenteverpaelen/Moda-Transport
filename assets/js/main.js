@@ -11,18 +11,24 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("scroll", onScroll, { passive: true });
 
   /* ---------- 1b. Thema: licht / donker ---------- */
-  // De site opent BEWUST altijd in dark mode; de knop laat de
-  // bezoeker tijdelijk naar light mode wisselen (niet onthouden).
+  // De site opent standaard in light mode (staat al gezet via een
+  // inline-script in de <head>, zonder flikkering); de knop laat de
+  // bezoeker tijdelijk naar dark mode wisselen (niet onthouden).
   const root = document.documentElement;
-  root.setAttribute("data-theme", "dark");
+  if (root.getAttribute("data-theme") !== "dark") root.setAttribute("data-theme", "light");
   const themeBtn = document.getElementById("themeToggle");
   const metaTheme = document.querySelector('meta[name="theme-color"]');
+  const syncMeta = () => {
+    if (metaTheme) metaTheme.setAttribute("content", root.getAttribute("data-theme") === "light" ? "#f5f5f8" : "#0c0c0e");
+  };
+  syncMeta();
   if (themeBtn) {
+    themeBtn.setAttribute("aria-pressed", String(root.getAttribute("data-theme") === "light"));
     themeBtn.addEventListener("click", () => {
       const next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
       root.setAttribute("data-theme", next);
       themeBtn.setAttribute("aria-pressed", String(next === "light"));
-      if (metaTheme) metaTheme.setAttribute("content", next === "light" ? "#f5f5f8" : "#0c0c0e");
+      syncMeta();
     });
   }
 
