@@ -9,7 +9,7 @@
    staan wat er in index.html is ingevuld — er breekt niets.
    ========================================================= */
 (function () {
-  fetch("../content/settings.json", { cache: "no-store" })
+  fetch("/content/settings.json", { cache: "no-store" })
     .then(function (res) {
       if (!res.ok) throw new Error("settings " + res.status);
       return res.json();

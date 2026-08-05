@@ -8,7 +8,7 @@
   <!-- Zet het thema meteen (nog vóór de eerste paint) zodat de site
        zonder flikkering in light mode opent. De knop rechtsboven laat
        de bezoeker tijdelijk naar dark mode wisselen. -->
-  <script>document.documentElement.setAttribute("data-theme", "light");</script>
+  <script is:inline>document.documentElement.setAttribute("data-theme", "light");</script>
 
   <title>Moda Transport | Luchthavenvervoer Limburg | Reizen zonder zorgen</title>
   <meta name="description" content="Exclusief luchthavenvervoer vanuit Heusden-Zolder en heel Limburg. Stipt en comfortabel naar Zaventem, Charleroi, Schiphol e.a. Vaste prijs, 24/7 beschikbaar." />
@@ -43,7 +43,7 @@
 
   <!-- Zet canonical + social-URL's op het werkelijke live-domein (welk ook),
        zodat alles zelf-verwijzend en correct is zonder handmatig aanpassen. -->
-  <script>
+  <script is:inline>
     (function () {
       var origin = location.origin, page = origin + location.pathname;
       var img = origin + "/assets/images/fleet.jpeg";
@@ -55,24 +55,19 @@
     })();
   </script>
 
-  <link rel="icon" type="image/svg+xml" href="../assets/images/logo-moda.svg" />
-  <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+  <link rel="icon" type="image/svg+xml" href="/assets/images/logo-moda.svg" />
+  <link rel="icon" type="image/png" href="/assets/images/logo.png" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="../assets/css/style.css" />
-
-  <!-- Netlify Identity: laat de uitnodigingslink werken en het
-       wachtwoord-instelvenster verschijnen. Nodig voor de beheerpagina
-       (/admin) met "Optie A". Zie SETUP-ADMIN.md. -->
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <link rel="stylesheet" href="/assets/css/style.css" />
 
   <!-- Gestructureerde data: laat Google weten dat dit een lokale
        taxi-/luchthavenvervoerdienst is (adres, uren, beoordeling …). -->
-  <script type="application/ld+json">
+  <script is:inline type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -198,10 +193,10 @@
       </nav>
 
       <div class="nav__actions">
-        <a href="../transport/index.html" class="nav__switch" aria-label="Naar transport &amp; sneltransport">
+        <a href="/transport/" class="nav__switch" aria-label="Naar transport &amp; sneltransport">
           <span aria-hidden="true">🚚</span><span class="nav__switch__txt">Transport</span>
         </a>
-        <a href="../travel/index.html" class="nav__switch" aria-label="Naar Moda Travel reisbureau">
+        <a href="/travel/" class="nav__switch" aria-label="Naar Moda Travel reisbureau">
           <span aria-hidden="true">🧳</span><span class="nav__switch__txt">Reizen</span>
         </a>
 
@@ -225,7 +220,7 @@
   <!-- ===================== HERO ===================== -->
   <section class="hero" id="home">
     <div class="hero__media" aria-hidden="true">
-      <div class="hero__img" style="background-image:url('../assets/images/fleet.jpeg')"></div>
+      <div class="hero__img" style="background-image:url('/assets/images/fleet.jpeg')"></div>
       <div class="hero__overlay"></div>
     </div>
 
@@ -429,19 +424,19 @@
 
       <div class="gallery">
         <figure class="gallery__item gallery__item--feature reveal">
-          <img src="../assets/images/fleet.jpeg" alt="De luxe Mercedes-vloot van Moda Transport voor luchthavenvervoer" />
+          <img src="/assets/images/fleet.jpeg" alt="De luxe Mercedes-vloot van Moda Transport voor luchthavenvervoer" />
           <figcaption>Onze Mercedes V-Klasse &amp; Vito vloot</figcaption>
         </figure>
         <figure class="gallery__item gallery__item--wide reveal">
-          <img src="../assets/images/interior-seats.jpeg" alt="Luxe lederen interieur met ruime zetels" loading="lazy" />
+          <img src="/assets/images/interior-seats.jpeg" alt="Luxe lederen interieur met ruime zetels" loading="lazy" />
           <figcaption>Ruim, luxe interieur</figcaption>
         </figure>
         <figure class="gallery__item reveal">
-          <img src="../assets/images/interior-door.jpeg" alt="Comfortabele lederen zetels met makkelijke instap" loading="lazy" />
+          <img src="/assets/images/interior-door.jpeg" alt="Comfortabele lederen zetels met makkelijke instap" loading="lazy" />
           <figcaption>Comfortabele instap</figcaption>
         </figure>
         <figure class="gallery__item reveal">
-          <img src="../assets/images/steering-amg.jpeg" alt="Verzorgd Mercedes-AMG interieur" loading="lazy" />
+          <img src="/assets/images/steering-amg.jpeg" alt="Verzorgd Mercedes-AMG interieur" loading="lazy" />
           <figcaption>Verzorgd tot in het detail</figcaption>
         </figure>
       </div>
@@ -676,7 +671,7 @@
 
     <div class="container footer__bottom">
       <p>© <span id="year"></span> Moda Transport. Alle rechten voorbehouden.</p>
-      <p class="footer__made">Reizen zonder zorgen. · <a href="../index.html">Alle Moda-diensten</a></p>
+      <p class="footer__made">Reizen zonder zorgen. · <a href="/">Alle Moda-diensten</a></p>
     </div>
   </footer>
 
@@ -687,24 +682,11 @@
     <svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><use href="#wa-icon"/></svg>
   </a>
 
-  <script src="../assets/js/content.js"></script>
-  <script src="../assets/js/reviews.js"></script>
-  <script src="../assets/js/calculator.js"></script>
-  <script src="../assets/js/address.js"></script>
-  <script src="../assets/js/main.js"></script>
+  <script is:inline src="/assets/js/content.js"></script>
+  <script is:inline src="/assets/js/reviews.js"></script>
+  <script is:inline src="/assets/js/calculator.js"></script>
+  <script is:inline src="/assets/js/address.js"></script>
+  <script is:inline src="/assets/js/main.js"></script>
 
-  <!-- Na inloggen (of na het instellen van je wachtwoord via de
-       uitnodigingslink) automatisch naar de beheerpagina gaan. -->
-  <script>
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", function (user) {
-        if (!user) {
-          window.netlifyIdentity.on("login", function () {
-            document.location.href = "/admin/";
-          });
-        }
-      });
-    }
-  </script>
 </body>
 </html>

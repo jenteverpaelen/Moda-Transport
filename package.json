@@ -1,0 +1,19 @@
+{
+  "name": "moda-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Website van Moda: overzicht, luchthavenvervoer, transport en travel. Statisch gebouwd met Astro.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "devDependencies": {
+    "astro": "^7.1.6"
+  }
+}

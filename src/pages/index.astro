@@ -33,7 +33,7 @@
   <meta name="twitter:image" content="https://moda.be/assets/images/fleet.jpeg" />
 
   <!-- Canonical + social-URL's op het werkelijke live-domein zetten. -->
-  <script>
+  <script is:inline>
     (function () {
       var origin = location.origin, page = origin + location.pathname;
       var set = function (sel, attr, val) { var el = document.querySelector(sel); if (el) el.setAttribute(attr, val); };
@@ -44,18 +44,18 @@
     })();
   </script>
 
-  <link rel="icon" type="image/svg+xml" href="assets/images/logo-moda.svg" />
-  <link rel="icon" type="image/png" href="assets/images/logo.png" />
+  <link rel="icon" type="image/svg+xml" href="/assets/images/logo-moda.svg" />
+  <link rel="icon" type="image/png" href="/assets/images/logo.png" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="assets/css/moda.css" />
+  <link rel="stylesheet" href="/assets/css/moda.css" />
 
   <!-- Gestructureerde data: de overkoepelende organisatie met haar drie onderdelen. -->
-  <script type="application/ld+json">
+  <script is:inline type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -107,8 +107,8 @@
   <main class="container">
     <nav class="portal__grid" aria-label="Onze onderdelen">
 
-      <a class="choice rise" href="luchthaven/index.html" aria-label="Naar Moda Luchthavenvervoer">
-        <div class="choice__bg" style="background-image:url('assets/images/fleet.jpeg')" aria-hidden="true"></div>
+      <a class="choice rise" href="/luchthaven/" aria-label="Naar Moda Luchthavenvervoer">
+        <div class="choice__bg" style="background-image:url('/assets/images/fleet.jpeg')" aria-hidden="true"></div>
         <div class="choice__veil" aria-hidden="true"></div>
         <div class="choice__body">
           <span class="choice__icon" aria-hidden="true">✈️</span>
@@ -124,8 +124,8 @@
         <span class="choice__line" aria-hidden="true"></span>
       </a>
 
-      <a class="choice rise" href="transport/index.html" aria-label="Naar Moda Transport en sneltransport">
-        <div class="choice__bg" style="background-image:url('assets/images/transport/hero.jpg')" aria-hidden="true"></div>
+      <a class="choice rise" href="/transport/" aria-label="Naar Moda Transport en sneltransport">
+        <div class="choice__bg" style="background-image:url('/assets/images/transport/hero.jpg')" aria-hidden="true"></div>
         <div class="choice__veil" aria-hidden="true"></div>
         <div class="choice__body">
           <span class="choice__icon" aria-hidden="true">🚚</span>
@@ -141,8 +141,8 @@
         <span class="choice__line" aria-hidden="true"></span>
       </a>
 
-      <a class="choice rise" href="travel/index.html" aria-label="Naar Moda Travel, ons reisbureau">
-        <div class="choice__bg" style="background-image:url('assets/images/travel/hero.jpg')" aria-hidden="true"></div>
+      <a class="choice rise" href="/travel/" aria-label="Naar Moda Travel, ons reisbureau">
+        <div class="choice__bg" style="background-image:url('/assets/images/travel/hero.jpg')" aria-hidden="true"></div>
         <div class="choice__veil" aria-hidden="true"></div>
         <div class="choice__body">
           <span class="choice__icon" aria-hidden="true">🧳</span>
@@ -173,7 +173,7 @@
     </div>
   </footer>
 
-  <script>
+  <script is:inline>
     // Jaartal + een rustige binnenkomst van de elementen.
     document.getElementById("year").textContent = new Date().getFullYear();
 

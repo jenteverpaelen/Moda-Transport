@@ -7,7 +7,7 @@
 
   <!-- Zet het thema meteen (nog vóór de eerste paint) zodat de pagina
        zonder flikkering in light mode opent. -->
-  <script>document.documentElement.setAttribute("data-theme", "light");</script>
+  <script is:inline>document.documentElement.setAttribute("data-theme", "light");</script>
 
   <title>Moda Travel | Reisbureau voor reizen zonder zorgen</title>
   <meta name="description" content="Moda Travel stelt luxe reizen op maat samen vanuit Heusden-Zolder. Van citytrips en zonvakanties tot verre rondreizen en huwelijksreizen, met persoonlijke begeleiding voor en tijdens je reis." />
@@ -39,7 +39,7 @@
   <meta name="twitter:image" content="https://modatravel.be/assets/images/travel/hero.jpg" />
 
   <!-- Canonical + social-URL's op het werkelijke live-domein zetten. -->
-  <script>
+  <script is:inline>
     (function () {
       var origin = location.origin, page = origin + location.pathname;
       var img = origin + "/assets/images/travel/hero.jpg";
@@ -51,19 +51,19 @@
     })();
   </script>
 
-  <link rel="icon" type="image/svg+xml" href="../assets/images/logo-moda.svg" />
-  <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+  <link rel="icon" type="image/svg+xml" href="/assets/images/logo-moda.svg" />
+  <link rel="icon" type="image/png" href="/assets/images/logo.png" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="../assets/css/style.css" />
-  <link rel="stylesheet" href="../assets/css/travel.css" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+  <link rel="stylesheet" href="/assets/css/travel.css" />
 
   <!-- Gestructureerde data: reisbureau. -->
-  <script type="application/ld+json">
+  <script is:inline type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "TravelAgency",
@@ -132,10 +132,10 @@
       </nav>
 
       <div class="nav__actions">
-        <a href="../luchthaven/index.html" class="nav__switch" aria-label="Naar luchthavenvervoer">
+        <a href="/luchthaven/" class="nav__switch" aria-label="Naar luchthavenvervoer">
           <span aria-hidden="true">✈️</span><span class="nav__switch__txt">Luchthaven</span>
         </a>
-        <a href="../transport/index.html" class="nav__switch" aria-label="Naar transport &amp; sneltransport">
+        <a href="/transport/" class="nav__switch" aria-label="Naar transport &amp; sneltransport">
           <span aria-hidden="true">🚚</span><span class="nav__switch__txt">Transport</span>
         </a>
 
@@ -159,7 +159,7 @@
   <!-- ===================== HERO ===================== -->
   <section class="hero" id="home">
     <div class="hero__media" aria-hidden="true">
-      <div class="hero__img" style="background-image:url('../assets/images/travel/hero.jpg')"></div>
+      <div class="hero__img" style="background-image:url('/assets/images/travel/hero.jpg')"></div>
       <div class="hero__overlay"></div>
     </div>
 
@@ -237,7 +237,7 @@
         <a class="trip-card reveal" href="#offerte">
           <div class="trip-card__img">
             <span class="trip-card__badge">Winter</span>
-            <img src="../assets/images/travel/lapland.jpg" alt="Besneeuwd Lapland" loading="lazy" />
+            <img src="/assets/images/travel/lapland.jpg" alt="Besneeuwd Lapland" loading="lazy" />
           </div>
           <div class="trip-card__body">
             <h3>Lapland</h3>
@@ -253,7 +253,7 @@
         <a class="trip-card reveal" href="#offerte">
           <div class="trip-card__img">
             <span class="trip-card__badge">Rondreis</span>
-            <img src="../assets/images/travel/thailand.jpg" alt="Eilanden van Thailand" loading="lazy" />
+            <img src="/assets/images/travel/thailand.jpg" alt="Eilanden van Thailand" loading="lazy" />
           </div>
           <div class="trip-card__body">
             <h3>Thailand</h3>
@@ -269,7 +269,7 @@
         <a class="trip-card reveal" href="#offerte">
           <div class="trip-card__img">
             <span class="trip-card__badge">Stedentrip</span>
-            <img src="../assets/images/travel/newyork.jpg" alt="Skyline van New York" loading="lazy" />
+            <img src="/assets/images/travel/newyork.jpg" alt="Skyline van New York" loading="lazy" />
           </div>
           <div class="trip-card__body">
             <h3>New York</h3>
@@ -285,7 +285,7 @@
         <a class="trip-card reveal" href="#offerte">
           <div class="trip-card__img">
             <span class="trip-card__badge">Weekend</span>
-            <img src="../assets/images/travel/parijs.jpg" alt="De Eiffeltoren in Parijs" loading="lazy" />
+            <img src="/assets/images/travel/parijs.jpg" alt="De Eiffeltoren in Parijs" loading="lazy" />
           </div>
           <div class="trip-card__body">
             <h3>Citytrip Parijs</h3>
@@ -301,7 +301,7 @@
         <a class="trip-card reveal" href="#offerte">
           <div class="trip-card__img">
             <span class="trip-card__badge">Zon &amp; zee</span>
-            <img src="../assets/images/travel/zakynthos.jpg" alt="Zwembad met zeezicht op Zakynthos" loading="lazy" />
+            <img src="/assets/images/travel/zakynthos.jpg" alt="Zwembad met zeezicht op Zakynthos" loading="lazy" />
           </div>
           <div class="trip-card__body">
             <h3>Zakynthos</h3>
@@ -317,7 +317,7 @@
         <a class="trip-card reveal" href="#offerte">
           <div class="trip-card__img">
             <span class="trip-card__badge">Op maat</span>
-            <img src="../assets/images/travel/hero.jpg" alt="Kustdorp aan de Middellandse Zee" loading="lazy" />
+            <img src="/assets/images/travel/hero.jpg" alt="Kustdorp aan de Middellandse Zee" loading="lazy" />
           </div>
           <div class="trip-card__body">
             <h3>Jouw droomreis</h3>
@@ -359,7 +359,7 @@
       <!-- Wordt gevuld door travel.js: klikbare reiskaarten uit de voorbeeldreizen,
            of de echte Instagram-posts zodra een feed-URL is ingesteld (data-feed-url
            of de constante bovenaan travel.js). Klik op een kaart opent het detailvenster. -->
-      <div class="reizen" id="reisfeed" data-feed-url="" data-fallback="../content/travel-posts.json">
+      <div class="reizen" id="reisfeed" data-feed-url="" data-fallback="/content/travel-posts.json">
         <p class="reisfeed__status">Reizen worden geladen…</p>
       </div>
     </div>
@@ -617,8 +617,8 @@
       <div class="footer__col">
         <h4>Ook bij Moda</h4>
         <ul>
-          <li><a href="../luchthaven/index.html">Luchthavenvervoer</a></li>
-          <li><a href="../transport/index.html">Transport &amp; sneltransport</a></li>
+          <li><a href="/luchthaven/">Luchthavenvervoer</a></li>
+          <li><a href="/transport/">Transport &amp; sneltransport</a></li>
           <li>Reizen zonder zorgen</li>
         </ul>
       </div>
@@ -646,6 +646,6 @@
     </div>
   </div>
 
-  <script src="../assets/js/travel.js"></script>
+  <script is:inline src="/assets/js/travel.js"></script>
 </body>
 </html>

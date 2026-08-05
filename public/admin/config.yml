@@ -7,19 +7,18 @@
 # =========================================================
 
 backend:
-  # ── OPTIE A (eenvoudigst): Netlify Identity ─────────────
-  # Werkt zodra je in Netlify "Identity" en "Git Gateway" aanzet.
-  name: git-gateway
+  # ── Inloggen met GitHub ─────────────────────────────────
+  # Werkt op ELKE host (Cloudflare Pages, Netlify, …), want er is geen
+  # Netlify-dienst voor nodig. Je hebt wel één keer een gratis
+  # OAuth-helper nodig; de stappen staan in SETUP-ADMIN.md.
+  name: github
+  repo: jenteverpaelen/moda-transport
   branch: claude/moda-transport-website-xo8e61   # de branch waarvan je site LIVE staat
 
-  # ── OPTIE B (toekomstvast): inloggen met GitHub ─────────
-  # Gebruik dit als je Netlify-account geen Identity meer aanbiedt.
-  # Haal dan de 3 regels hierboven weg en zet deze aan:
-  #
-  # name: github
-  # repo: jenteverpaelen/moda-transport
-  # branch: claude/moda-transport-website-xo8e61
-  # base_url: https://JOUW-OAUTH-WORKER.workers.dev   # zie SETUP-ADMIN.md
+  # Vul hieronder het adres van je OAuth-helper in (stap 2 in SETUP-ADMIN.md),
+  # bijvoorbeeld: https://moda-cms-auth.jouwnaam.workers.dev
+  # Zolang deze regel uitgeschakeld staat, kan je nog niet inloggen op /admin.
+  # base_url: https://JOUW-HELPER.workers.dev
 
 # Laat de klant lokaal testen zonder inloggen (enkel actief op localhost).
 local_backend: true

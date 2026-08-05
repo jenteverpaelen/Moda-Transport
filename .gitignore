@@ -1,0 +1,12 @@
+# Afhankelijkheden en bouwresultaat horen niet in de repo:
+# de host bouwt de site zelf met "npm run build".
+node_modules/
+dist/
+.astro/
+
+# Logbestanden en lokale rommel
+npm-debug.log*
+yarn-error.log*
+.DS_Store
+.env
+.env.production

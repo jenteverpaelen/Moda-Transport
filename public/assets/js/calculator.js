@@ -42,7 +42,7 @@ const MODA_CALC = {
    gebruikt. Lukt dat niet, dan blijft de config hierboven gelden.
    ========================================================= */
 (function bootCalc() {
-  fetch("../content/prices.json", { cache: "no-store" })
+  fetch("/content/prices.json", { cache: "no-store" })
     .then(function (r) { if (!r.ok) throw new Error("prices " + r.status); return r.json(); })
     .then(applyPrices)
     .catch(function (e) { console.warn("[Moda] content/prices.json niet geladen, vaste prijzen blijven gelden:", e); })
