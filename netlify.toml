@@ -1,9 +1,0 @@
-# Netlify pikt deze instellingen vanzelf op, zodat de site ook na de
-# overstap naar Astro blijft werken. Cloudflare Pages gebruikt dezelfde
-# waarden, maar die stel je daar in het dashboard in (zie README.md).
-[build]
-  command = "npm run build"
-  publish = "dist"
-
-[build.environment]
-  NODE_VERSION = "22"

@@ -13,7 +13,7 @@
    De galerij "Laatste reizen" toont standaard de voorbeeldreizen uit
    content/travel-posts.json. Wil je de ECHTE Instagram-posts tonen?
    Vul dan hieronder één keer een JSON-feed-URL in (bv. van Behold.so of
-   een eigen Netlify-functie). Zodra die is ingevuld, verschijnen de echte
+   een eigen Cloudflare Worker). Zodra die is ingevuld, verschijnen de echte
    posts automatisch, in exact dezelfde stijl. Meer is er niet nodig.
 
    Voorbeeld:

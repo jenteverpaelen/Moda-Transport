@@ -308,7 +308,7 @@ const MODA_REVIEWS = [
     return list;
   }
 
-  /* -- Reviews uit content/reviews.json (aan te passen via /admin) -- */
+  /* -- Reviews uit content/reviews.json (aan te passen in public/content/reviews.json) -- */
   async function fetchManualJson() {
     const res = await fetch("/content/reviews.json", { cache: "no-store" });
     if (!res.ok) throw new Error(`reviews.json HTTP ${res.status}`);

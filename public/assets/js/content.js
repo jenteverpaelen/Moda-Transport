@@ -2,8 +2,8 @@
    MODA — Inhoud inladen (contactgegevens)
    ---------------------------------------------------------
    Leest content/settings.json en vult de contactgegevens
-   in op de site. Zo kan de klant die via de admin-pagina
-   (/admin) aanpassen zonder code aan te raken.
+   in op de site. Pas ze aan in public/content/settings.json,
+   zonder de HTML aan te raken.
 
    Werkt niet of bestand niet gevonden? Dan blijft gewoon
    staan wat er in index.html is ingevuld — er breekt niets.

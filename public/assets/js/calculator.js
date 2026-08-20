@@ -38,7 +38,7 @@ const MODA_CALC = {
    Vanaf hier hoef je niets meer aan te passen.
    ---------------------------------------------------------
    De prijzen hierboven zijn de terugval. Staan er prijzen in
-   content/prices.json (aangepast via /admin), dan worden die
+   content/prices.json (aan te passen in public/content/), dan worden die
    gebruikt. Lukt dat niet, dan blijft de config hierboven gelden.
    ========================================================= */
 (function bootCalc() {

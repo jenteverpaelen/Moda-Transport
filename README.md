@@ -3,9 +3,9 @@
 De volledige online aanwezigheid van **Moda** uit Heusden-Zolder, met één overzichtspagina
 en drie onderdelen: luchthavenvervoer, transport en travel.
 
-Gebouwd met **[Astro](https://astro.build)**: de site wordt vooraf omgezet naar gewone
-HTML-bestanden. Er draait dus geen server en er is geen database, wat betekent dat er
-niets kan uitvallen en de site overal gratis of goedkoop te hosten is.
+Gebouwd met **[Astro](https://astro.build)** en gehost op **Cloudflare Pages**. De site
+wordt vooraf omgezet naar gewone HTML-bestanden: er draait geen server, er is geen
+database en er is geen CMS. Dus niets dat kan stukgaan, en gratis te hosten.
 
 > *"Reizen zonder zorgen"*
 
@@ -33,8 +33,26 @@ Open het adres dat in je scherm verschijnt, meestal <http://localhost:4321>.
 | `npm run build` | Bouwt de kant-en-klare site naar `dist/` |
 | `npm run preview` | Toont de gebouwde site zoals hij online komt |
 
-> Dubbelklikken op een HTML-bestand werkt niet meer, en dat hoort zo:
-> gebruik voortaan `npm run dev`.
+> Dubbelklikken op een HTML-bestand werkt niet, en dat hoort zo:
+> gebruik `npm run dev`.
+
+## ✏️ Waar pas je wat aan?
+
+De teksten en opmaak staan in de pagina's zelf. De gegevens die het vaakst wijzigen staan
+apart in **`public/content/`**, zodat je daarvoor niet in de HTML hoeft:
+
+| Bestand | Wat erin staat |
+| --- | --- |
+| `public/content/settings.json` | Telefoon, e-mail, WhatsApp-nummer en adres |
+| `public/content/prices.json` | Luchthavens, tarieven, supplementen en korting |
+| `public/content/reviews.json` | Klantenreviews |
+| `public/content/travel-posts.json` | De reizen in de galerij op `/travel` |
+
+Pas je zo'n bestand aan en push je het, dan zet Cloudflare de site vanzelf opnieuw online.
+
+> **Let op:** blijf bij geldige JSON — dubbele aanhalingstekens rond tekst, en geen komma
+> achter het laatste item. Klopt een bestand niet, dan valt de site netjes terug op de
+> waarden die in de code staan; er gaat dus niets stuk, maar je wijziging is niet zichtbaar.
 
 ## 📁 Structuur
 
@@ -46,52 +64,33 @@ Moda-Transport/
 │   ├── transport/index.astro  ← transport & sneltransport
 │   └── travel/index.astro     ← Moda Travel (reisbureau)
 ├── public/                    ← wordt onaangeroerd meegekopieerd
-│   ├── content/               ← 👈 gegevens die de klant zelf aanpast (via /admin)
-│   │   ├── settings.json      ← telefoon, e-mail, WhatsApp, adres
-│   │   ├── prices.json        ← luchthavens & prijzen
-│   │   ├── reviews.json       ← klantenreviews
-│   │   └── travel-posts.json  ← reizen in de galerij op /travel
-│   ├── admin/                 ← de beheerpagina (Decap CMS)
+│   ├── content/               ← 👈 de gegevens hierboven
 │   ├── assets/css|js|images/  ← vormgeving, scripts en foto's
-│   ├── _redirects             ← doorstuurregels (werkt op beide hosts)
+│   ├── _redirects             ← doorstuurregels
 │   ├── robots.txt
 │   └── sitemap.xml
 ├── astro.config.mjs           ← instellingen van de bouwstap
-├── netlify.toml               ← bouwinstellingen voor Netlify
-├── SETUP-ADMIN.md             ← 👈 hoe je de admin-login instelt
+├── .nvmrc                     ← Node-versie voor Cloudflare
 └── dist/                      ← het bouwresultaat (staat niet in de repo)
 ```
 
 De adressen op de site volgen de mappen in `src/pages/`:
 `/` · `/luchthaven/` · `/transport/` · `/travel/`
 
-## ☁️ Online zetten
-
-De gebouwde site is gewoon een map met bestanden, dus élke statische host werkt.
-Op beide onderstaande platformen is dit gratis.
-
-### Cloudflare Pages
+## ☁️ Online zetten (Cloudflare Pages)
 
 1. Ga naar **Cloudflare → Workers & Pages → Create → Pages** en koppel deze GitHub-repo.
 2. Vul in bij de bouwinstellingen:
    - **Framework preset:** `Astro`
    - **Build command:** `npm run build`
    - **Build output directory:** `dist`
-3. Klik **Save and Deploy**. Elke push naar de branch zet de site vanzelf opnieuw online.
+3. Klik **Save and Deploy**.
 
-### Netlify
+Elke push naar de branch zet de site daarna vanzelf opnieuw online. De juiste Node-versie
+staat al vast in `.nvmrc`, en `public/_redirects` wordt door Cloudflare automatisch
+opgepikt, dus er is verder niets in te stellen.
 
-Niets in te stellen: `netlify.toml` staat al in de repo met het juiste bouwcommando
-(`npm run build`) en de juiste map (`dist`). Koppel de repo en Netlify doet de rest.
-
-## 🔧 De klant past zelf aan (beheerpagina)
-
-Op **`/admin`** kan de klant met nette invulschermen zélf de **contactgegevens, prijzen
-en reviews** aanpassen, zonder code. Elke aanpassing wordt opgeslagen in de bestanden in
-`public/content/` en zet de site automatisch opnieuw online.
-
-Inloggen gebeurt met een **GitHub-account**. Dat werkt op elke host, dus ook op
-Cloudflare. Eén keer instellen, zie **[SETUP-ADMIN.md](SETUP-ADMIN.md)**.
+Een eigen domein koppel je bij de Pages-site onder **Custom domains**.
 
 ## ✉️ Formulieren
 
@@ -102,7 +101,7 @@ terugvaloptie.
 ## 📸 Foto's vervangen
 
 Zet je nieuwe foto in `public/assets/images/` en verwijs ernaar met een pad dat begint
-met `/assets/images/…`. Via `/admin` kan de klant foto's ook zelf uploaden.
+met `/assets/images/…`.
 
 ---
 
