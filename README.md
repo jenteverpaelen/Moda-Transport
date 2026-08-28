@@ -32,6 +32,7 @@ Open het adres dat in je scherm verschijnt, meestal <http://localhost:4321>.
 | `npm run dev` | Start de site lokaal terwijl je eraan werkt |
 | `npm run build` | Bouwt de kant-en-klare site naar `dist/` |
 | `npm run preview` | Toont de gebouwde site zoals hij online komt |
+| `npm run deploy` | Bouwt de site en zet hem meteen online bij Cloudflare |
 
 > Dubbelklikken op een HTML-bestand werkt niet, en dat hoort zo:
 > gebruik `npm run dev`.
@@ -70,6 +71,7 @@ Moda-Transport/
 │   ├── robots.txt
 │   └── sitemap.xml
 ├── astro.config.mjs           ← instellingen van de bouwstap
+├── wrangler.jsonc             ← instellingen voor Cloudflare
 ├── .nvmrc                     ← Node-versie voor Cloudflare
 └── dist/                      ← het bouwresultaat (staat niet in de repo)
 ```
@@ -77,20 +79,40 @@ Moda-Transport/
 De adressen op de site volgen de mappen in `src/pages/`:
 `/` · `/luchthaven/` · `/transport/` · `/travel/`
 
-## ☁️ Online zetten (Cloudflare Pages)
+## ☁️ Online zetten (Cloudflare)
 
-1. Ga naar **Cloudflare → Workers & Pages → Create → Pages** en koppel deze GitHub-repo.
-2. Vul in bij de bouwinstellingen:
-   - **Framework preset:** `Astro`
-   - **Build command:** `npm run build`
-   - **Build output directory:** `dist`
-3. Klik **Save and Deploy**.
+De site staat bij Cloudflare onder de naam **`moda-transport`**. Elke push naar de branch
+zet hem vanzelf opnieuw online.
 
-Elke push naar de branch zet de site daarna vanzelf opnieuw online. De juiste Node-versie
-staat al vast in `.nvmrc`, en `public/_redirects` wordt door Cloudflare automatisch
-opgepikt, dus er is verder niets in te stellen.
+Cloudflare doet daarbij twee dingen:
 
-Een eigen domein koppel je bij de Pages-site onder **Custom domains**.
+1. **Bouwen** met `npm run build`, wat de kant-en-klare bestanden in `dist/` zet.
+2. **Online zetten** met `npx wrangler deploy`, dat enkel die bestanden uploadt.
+
+Wat waar staat, ligt vast in **`wrangler.jsonc`**:
+
+```jsonc
+{
+  "name": "moda-transport",
+  "compatibility_date": "2026-08-01",
+  "assets": { "directory": "./dist" }
+}
+```
+
+> Dit bestand moet blijven staan. Ontbreekt het, dan gaat Cloudflare het project zelf
+> proberen in te stellen en bouwt het de site om naar een draaiende server. Dat werkt hier
+> niet, en dan faalt de bouwstap.
+
+Er staat bewust géén `main` in: zonder dat draait er geen server, alleen de gewone
+bestanden. `public/_redirects` en de Node-versie in `.nvmrc` worden vanzelf opgepikt.
+
+Wil je vanaf je eigen computer online zetten, dan kan dat met één commando:
+
+```bash
+npm run deploy
+```
+
+Een eigen domein koppel je in Cloudflare bij de site onder **Domains & Routes**.
 
 ## ✉️ Formulieren
 

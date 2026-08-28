@@ -1,0 +1,19 @@
+{
+  // Moda — Cloudflare-instellingen
+  // ---------------------------------------------------------------
+  // De site is volledig statisch: `npm run build` maakt kant-en-klare
+  // HTML-bestanden in dist/, en Cloudflare zet enkel die bestanden online.
+  // Er draait dus geen server ("main" ontbreekt bewust).
+  //
+  // Dit bestand moet bestaan: zonder deze instellingen gaat wrangler het
+  // project zelf proberen in te stellen en bouwt het de site om naar een
+  // draaiende server, wat hier niet werkt.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "moda-transport",
+  "compatibility_date": "2026-08-01",
+  "assets": {
+    // De map met het bouwresultaat. public/_redirects wordt hier
+    // automatisch opgepikt.
+    "directory": "./dist"
+  }
+}

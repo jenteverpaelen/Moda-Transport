@@ -3,6 +3,7 @@
 node_modules/
 dist/
 .astro/
+.wrangler/
 
 # Logbestanden en lokale rommel
 npm-debug.log*

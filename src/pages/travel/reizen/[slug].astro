@@ -1,13 +1,15 @@
 ---
-import fs from "node:fs";
 import Travel from "../../../layouts/Travel.astro";
 import { leesReis, maakSlug } from "../../../lib/reis.mjs";
+/* Het reisbestand wordt hier meteen mee ingelezen tijdens het bouwen. Bewust een
+   gewone import en geen bestand van schijf lezen: zo werkt het ook wanneer de
+   bouwstap in een afgeschermde omgeving draait, zoals bij Cloudflare. */
+import reisbestand from "../../../../public/content/travel-posts.json";
 
 /* Voor elke reis in public/content/travel-posts.json wordt hier tijdens het
    bouwen een eigen pagina gemaakt, met een net adres zoals /travel/reizen/bon-bini/. */
 export async function getStaticPaths() {
-  const data = JSON.parse(fs.readFileSync("public/content/travel-posts.json", "utf8"));
-  return data.posts.map((post, i) => {
+  return reisbestand.posts.map((post, i) => {
     const reis = leesReis(post.caption);
     return {
       params: { slug: maakSlug(reis.titel, i) },
