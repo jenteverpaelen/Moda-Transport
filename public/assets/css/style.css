@@ -588,3 +588,18 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.12; font-weight: 
   .reveal { opacity: 1; transform: none; }
   .hero__img { animation: none; }
 }
+
+/* -------------------- Kaart in de footer -------------------- */
+.footer__kaart {
+  margin-top: 34px; border: 1px solid var(--line); border-radius: var(--radius);
+  overflow: hidden; height: 280px; background: var(--surface-2);
+}
+.footer__kaart iframe { width: 100%; height: 100%; border: 0; display: block; }
+/* In het donkere thema iets temperen zodat de kaart niet uit de pagina springt. */
+[data-theme="dark"] .footer__kaart iframe { filter: grayscale(.35) brightness(.88); }
+.footer__route {
+  display: inline-block; margin-top: 14px; font-family: var(--font-head);
+  font-weight: 600; font-size: .92rem; color: var(--text-strong); transition: color .25s;
+}
+.footer__route:hover { color: var(--red); }
+@media (max-width: 620px) { .footer__kaart { height: 220px; } }

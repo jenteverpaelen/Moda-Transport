@@ -180,3 +180,72 @@ document.addEventListener("DOMContentLoaded", () => {
   const yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 });
+
+/* =========================================================================
+   Fotovenster voor het wagenpark
+   -------------------------------------------------------------------------
+   Elke wagenkaart draagt zijn foto's in data-fotos. Klikken op een tegel
+   opent het venster; daarna kan je bladeren met de pijlen of het toetsenbord.
+   ========================================================================= */
+document.addEventListener("DOMContentLoaded", function () {
+  var box     = document.getElementById("fotobox");
+  var foto    = document.getElementById("fotoboxFoto");
+  var titel   = document.getElementById("fotoboxTitel");
+  var teller  = document.getElementById("fotoboxTeller");
+  if (!box || !foto) return;
+
+  var lijst = [], index = 0, naam = "", vorigeFocus = null;
+
+  function toon(i) {
+    if (!lijst.length) return;
+    index = (i + lijst.length) % lijst.length;      // rondlopen
+    foto.src = lijst[index];
+    foto.alt = naam + ", foto " + (index + 1) + " van " + lijst.length;
+    titel.textContent = naam;
+    teller.textContent = (index + 1) + " / " + lijst.length;
+    // buren alvast inladen, zodat bladeren vlot voelt
+    [index + 1, index - 1].forEach(function (n) {
+      var v = new Image(); v.src = lijst[(n + lijst.length) % lijst.length];
+    });
+  }
+
+  function open(fotos, wagen, start) {
+    lijst = fotos; naam = wagen;
+    vorigeFocus = document.activeElement;
+    toon(start);
+    box.classList.add("is-open");
+    box.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+    var sluit = box.querySelector(".fotobox__sluit");
+    if (sluit) sluit.focus();
+  }
+
+  function sluiten() {
+    if (!box.classList.contains("is-open")) return;
+    box.classList.remove("is-open");
+    box.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+    if (vorigeFocus && vorigeFocus.focus) vorigeFocus.focus();
+  }
+
+  // Klik op een tegel opent het venster (via delegatie, dus ook voor later toegevoegde kaarten)
+  document.addEventListener("click", function (e) {
+    var tegel = e.target.closest(".fleet-thumb");
+    if (tegel) {
+      var houder = tegel.closest(".fleet-card__fotos");
+      if (!houder) return;
+      open(houder.dataset.fotos.split("|"), houder.dataset.wagen || "", parseInt(tegel.dataset.i, 10) || 0);
+      return;
+    }
+    if (e.target.closest("[data-sluit]")) { sluiten(); return; }
+    var stap = e.target.closest("[data-stap]");
+    if (stap) toon(index + parseInt(stap.dataset.stap, 10));
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (!box.classList.contains("is-open")) return;
+    if (e.key === "Escape")     sluiten();
+    if (e.key === "ArrowRight") toon(index + 1);
+    if (e.key === "ArrowLeft")  toon(index - 1);
+  });
+});
