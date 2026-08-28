@@ -8,60 +8,25 @@
    ========================================================= */
 
 /* =========================================================================
-   INSTAGRAM-FEED — nu voorbeelden, later live in één stap
+   INSTAGRAM-FEED — optioneel, in één stap aan te zetten
    -------------------------------------------------------------------------
-   De galerij "Laatste reizen" toont standaard de voorbeeldreizen uit
-   content/travel-posts.json. Wil je de ECHTE Instagram-posts tonen?
-   Vul dan hieronder één keer een JSON-feed-URL in (bv. van Behold.so of
-   een eigen Cloudflare Worker). Zodra die is ingevuld, verschijnen de echte
-   posts automatisch, in exact dezelfde stijl. Meer is er niet nodig.
+   De reizen zelf staan NIET meer hier: die beheert het reisbureau via /admin/
+   en ze staan als tegels op /travel/bestemmingen/.
+
+   Dit stuk is enkel voor het blok "Onze laatste reizen": zodra hieronder een
+   JSON-feed-URL staat (bv. van Behold.so of een eigen Cloudflare Worker),
+   verschijnen daar de ECHTE Instagram-posts, die naar Instagram linken.
+   Staat er niets, dan blijft dat blok leeg en zie je enkel de volgknop.
 
    Voorbeeld:
      const INSTAGRAM_FEED_URL = "https://feeds.behold.so/XXXXXXXXXXXX";
    ========================================================================= */
 const INSTAGRAM_FEED_URL = "";
 
-// Aantal posts dat we tonen (Behold-gratis geeft er max. 6; een betaald plan
-// of een eigen functie meer). Voorbeelden vullen aan als er minder zijn.
+// Aantal posts dat we tonen (Behold-gratis geeft er max. 6).
 const FEED_MAX = 8;
 
-/* Voorbeeldreizen, rechtstreeks in de code zodat ze ALTIJD tonen (ook wanneer je
-   het bestand lokaal opent via file://, waar fetch geblokkeerd is). Zelfde inhoud
-   als content/travel-posts.json. Zodra een echte feed-URL is ingesteld, worden
-   deze automatisch vervangen door de echte Instagram-posts. De eerste is een
-   echte post van modatravel_. Elke post heeft dezelfde opbouw als jullie posts. */
-const FALLBACK_POSTS = [
-  {
-    images: ["/assets/images/travel/curacao.jpg", "/assets/images/travel/zakynthos.jpg"],
-    link: "https://www.instagram.com/modatravel_/",
-    caption: "Bon Bini !\n9 nachten verblijf in dit Boho Chick boutique hotel op Curacao 😍\nVertrek 31/08 vanuit AMS\n1279 euro inclusief ontbijtbuffet\nVan gezellige cafés tot stadsstranden en kleine winkeltjes, je vindt het allemaal op wandelafstand. Maar ook bij het Boho Bohemian Boutique kan je genieten van de lekkere gerechten.",
-  },
-  {
-    images: ["/assets/images/travel/thailand.jpg"],
-    link: "https://www.instagram.com/modatravel_/",
-    caption: "Sawadee Thailand! 🌴\n12 nachten priverondreis van eiland naar eiland\nVertrek 15/10 vanuit BRU\n1890 euro inclusief binnenlandse vluchten en transfers\nVan de bruisende markten van Bangkok tot de verstilde stranden van Ko Lanta. Wij stippelen jouw ideale route uit langs de mooiste juwelen van de Thaise eilanden.",
-  },
-  {
-    images: ["/assets/images/travel/lapland.jpg"],
-    link: "https://www.instagram.com/modatravel_/",
-    caption: "Wintersprookje in Lapland ❄️\n4 nachten begeleide groepsreis boven de poolcirkel\nVertrek 12/12 vanuit BRU\n1450 euro inclusief huskytocht en sneeuwscooter\nSlapen onder het noorderlicht, mushen met husky's en een sneeuwscootersafari door de ongerepte natuur. Een onvergetelijke Nederlandstalige groepsreis met vaste begeleiding.",
-  },
-  {
-    images: ["/assets/images/travel/zakynthos.jpg"],
-    link: "https://www.instagram.com/modatravel_/",
-    caption: "Kalimera Zakynthos ☀️\n7 nachten in het viersterren Pelagos Blue Zante\nVertrek 05/07 vanuit BRU\n845 euro inclusief ontbijt en transfers\nEen oase van rust met zeezicht, azuurblauw water en Griekse gastvrijheid. Fly & Go en laat je verwennen aan het zwembad of op het strand.",
-  },
-  {
-    images: ["/assets/images/travel/newyork.jpg"],
-    link: "https://www.instagram.com/modatravel_/",
-    caption: "The Big Apple 🗽\n5 nachten in hartje Manhattan\nVertrek 22/11 vanuit BRU\n1150 euro inclusief vlucht en hotel\nTimes Square, Central Park en de skyline vanaf de Empire State Building. Ontdek de stad die nooit slaapt, helemaal op jouw ritme.",
-  },
-  {
-    images: ["/assets/images/travel/parijs.jpg"],
-    link: "https://www.instagram.com/modatravel_/",
-    caption: "Un weekend à Paris 🥐\n1 overnachting langs de Seine\nVertrek elke vrijdag vanuit Brussel\n79 euro inclusief ontbijt\nDe stad van de liefde op zijn mooist. Een korte, romantische ontsnapping met de trein, ideaal voor een verrassingsweekend.",
-  },
-];
+
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -252,47 +217,21 @@ function initFeed() {
   if (!grid) return;
 
   const feedUrl = (grid.dataset.feedUrl || INSTAGRAM_FEED_URL || "").trim();
-  const fallbackUrl = grid.dataset.fallback || "/content/travel-posts.json";
 
-  const showStatus = (msg) => {
-    grid.innerHTML = `<p class="reisfeed__status">${msg}</p>`;
-  };
-  showStatus("Reizen worden geladen…");
+  // Geen feed ingesteld? Dan tonen we hier niets. De reizen staan in het
+  // mozaïek erboven; dit blok is enkel voor echte Instagram-posts.
+  if (!feedUrl) { grid.hidden = true; grid.innerHTML = ""; return; }
 
-  // 1) Is er een echte feed-URL? Probeer die eerst, val anders terug op de voorbeelden.
-  if (feedUrl) {
-    fetchJson(feedUrl)
-      .then((raw) => {
-        const items = normalizePosts(raw);
-        if (items.length) { UIT_EIGEN_BESTAND = false; return renderFeed(grid, items); }
-        return loadFallback(grid, fallbackUrl, showStatus);
-      })
-      .catch(() => loadFallback(grid, fallbackUrl, showStatus));
-  } else {
-    loadFallback(grid, fallbackUrl, showStatus);
-  }
-}
+  grid.hidden = false;
+  grid.innerHTML = '<p class="reisfeed__status">Posts worden geladen…</p>';
 
-function loadFallback(grid, url, showStatus) {
-  // Bij lokaal openen (file://) blokkeert de browser fetch van lokale bestanden.
-  // Dan meteen de inline voorbeelden gebruiken, zonder onnodige foutmelding.
-  if (location.protocol === "file:") { useInlineSamples(grid, showStatus); return Promise.resolve(); }
-  // Anders eerst het (bewerkbare) JSON-bestand; lukt dat niet, val dan terug op
-  // de inline voorbeelden, zodat de reizen ALTIJD tonen.
-  return fetchJson(url)
+  fetchJson(feedUrl)
     .then((raw) => {
       const items = normalizePosts(raw);
-      if (items.length) { UIT_EIGEN_BESTAND = true; renderFeed(grid, items); }
-      else useInlineSamples(grid, showStatus);
+      if (items.length) renderFeed(grid, items);
+      else { grid.hidden = true; grid.innerHTML = ""; }
     })
-    .catch(() => useInlineSamples(grid, showStatus));
-}
-
-function useInlineSamples(grid, showStatus) {
-  const items = normalizePosts({ posts: FALLBACK_POSTS });
-  UIT_EIGEN_BESTAND = true;
-  if (items.length) renderFeed(grid, items);
-  else showStatus("Binnenkort vind je hier onze laatste reizen. Volg ons alvast op Instagram.");
+    .catch(() => { grid.hidden = true; grid.innerHTML = ""; });
 }
 
 function fetchJson(url) {
@@ -304,10 +243,6 @@ function fetchJson(url) {
 
 // Alle gerenderde reizen.
 let REIZEN = [];
-// Komen ze uit content/travel-posts.json? Dan is er voor elke reis een eigen
-// pagina gebouwd. Bij een live Instagram-feed bestaat die pagina niet en
-// verwijzen we naar de post zelf.
-let UIT_EIGEN_BESTAND = false;
 
 /* Zet zowel onze eigen voorbeeld-vorm als de Behold-/Graph-vorm om naar één model:
    { images[], link, caption, + geparste velden }. Zo is de omschakeling naadloos. */
@@ -402,25 +337,15 @@ function parsePost(caption) {
   return out;
 }
 
-/** Maakt van een titel hetzelfde webadres als tijdens het bouwen (src/lib/reis.mjs). */
-function maakSlug(tekst, reserve) {
-  const t = (tekst || "")
-    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^\p{L}\p{N}]+/gu, "-")
-    .replace(/^-+|-+$/g, "")
-    .toLowerCase();
-  return t || ("reis-" + reserve);
-}
-
 function renderFeed(grid, items) {
   REIZEN = items;
 
   grid.innerHTML = items.map((it, i) => {
     const cover = it.images[0];
     const title = it.title || "Reis van Moda Travel";
-    // Uit ons eigen bestand? Dan bestaat er een volwaardige reispagina.
-    const doel = UIT_EIGEN_BESTAND ? "/travel/reizen/" + maakSlug(it.title, i) + "/" : it.link;
-    const extern = UIT_EIGEN_BESTAND ? "" : ' target="_blank" rel="noopener"';
+    // Deze kaarten zijn echte Instagram-posts en openen dus op Instagram.
+    const doel = it.link;
+    const extern = ' target="_blank" rel="noopener"';
     const badges = [];
     if (it.price) badges.push(`<span class="reiscard__badge">💶 ${escapeHtml(it.price)}</span>`);
     if (it.duration) badges.push(`<span class="reiscard__badge">🌙 ${escapeHtml(it.duration)}</span>`);
@@ -507,27 +432,28 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-/* ---------- Komt de bezoeker van een reispagina? Dan het formulier alvast invullen ---------- */
+/* ---------- Komt de bezoeker van een reispagina? Dan het formulier alvast invullen ----------
+   De reispagina geeft de gegevens mee in het adres, bv.
+   /travel/contact/?reis=bon-bini&bestemming=Curaçao&titel=Bon+Bini&vertrek=31/08
+   Er hoeft dus niets extra opgehaald te worden. */
 document.addEventListener("DOMContentLoaded", function () {
   const veld = document.getElementById("destination");
   if (!veld) return;
-  const slug = new URLSearchParams(location.search).get("reis");
-  if (!slug) return;
 
-  fetch("/content/travel-posts.json", { headers: { Accept: "application/json" } })
-    .then((r) => r.json())
-    .then((raw) => {
-      const posts = normalizePosts(raw);
-      const reis = posts.find((p, i) => maakSlug(p.title, i) === slug);
-      if (!reis) return;
-      veld.value = reis.destination || reis.title || "";
-      const notities = document.getElementById("notes");
-      if (notities) {
-        const ref = "Interesse in: " + (reis.title || "") + (reis.departure ? " (vertrek " + reis.departure + ")" : "");
-        notities.value = notities.value ? notities.value + "\n" + ref : ref;
-      }
-    })
-    .catch(() => {});
+  const q = new URLSearchParams(location.search);
+  if (!q.get("reis")) return;
+
+  const bestemming = q.get("bestemming") || "";
+  const titel = q.get("titel") || "";
+  const vertrek = q.get("vertrek") || "";
+
+  veld.value = bestemming || titel;
+
+  const notities = document.getElementById("notes");
+  if (notities && titel) {
+    const ref = "Interesse in: " + titel + (vertrek ? " (vertrek " + vertrek + ")" : "");
+    notities.value = notities.value ? notities.value + "\n" + ref : ref;
+  }
 });
 
 function escapeHtml(s) {

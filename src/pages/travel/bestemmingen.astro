@@ -1,9 +1,35 @@
 ---
+import { Image } from "astro:assets";
 import Travel from "../../layouts/Travel.astro";
+import { alleReizen, tegelLabel } from "../../lib/reizen.mjs";
+
+/* De tegels hieronder komen rechtstreeks uit de reizen die het reisbureau zelf
+   beheert op /admin/. Een reis toevoegen = een tegel erbij én een eigen
+   reispagina; een reis verwijderen of op onzichtbaar zetten = tegel weg. */
+const reizen = await alleReizen();
+
+/* De uitgelichte reis krijgt de grote tegel en komt dus vooraan. */
+const uitgelicht = reizen.filter((r) => r.data.uitgelicht);
+const rest = reizen.filter((r) => !r.data.uitgelicht);
+const geordend = [...uitgelicht, ...rest];
+
+/* Vorm van het mozaïek: één grote tegel (2 bij 2), daarnaast twee gewone,
+   en daarna brede tegels twee per rij. De allerlaatste tegel wordt over de
+   volle breedte getrokken als er anders een gat zou overblijven, zodat het
+   raster bij élk aantal reizen netjes afsluit. */
+const aantalTegels = geordend.length + 1; // + de vaste tegel "Jouw droomreis"
+const laatsteVult = aantalTegels > 3 && (aantalTegels - 4) % 2 === 1;
+
+function vorm(i) {
+  if (i === 0) return "moz moz--groot";
+  if (i <= 2) return "moz";
+  if (laatsteVult && i === aantalTegels - 1) return "moz moz--vol";
+  return "moz moz--breed";
+}
 ---
 <Travel
   titel="Bestemmingen | Moda Travel"
-  omschrijving="Lapland, Thailand, New York, Parijs, Zakynthos en reizen volledig op maat. Bekijk waar Moda Travel je naartoe brengt."
+  omschrijving="Ontdek de reizen die Moda Travel voor je samenstelt: van zon en zee tot verre rondreizen, stedentrips en winterse groepsreizen. Alles kan volledig op maat."
   actief="bestemmingen">
 
   <section class="section" id="bestemmingen">
@@ -18,54 +44,23 @@ import Travel from "../../layouts/Travel.astro";
       </div>
 
       <div class="mozaiek">
-        <a class="moz moz--groot reveal" href="/travel/contact/" aria-label="Vraag een reis naar Lapland aan">
-          <span class="moz__label">Winter</span>
-          <img src="/assets/images/travel/lapland.jpg" alt="Besneeuwd bos in Lapland" loading="lazy" />
-          <span class="moz__tekst">
-            <span class="moz__naam">Lapland</span>
-            <span class="moz__regel">Noorderlicht, husky’s en sneeuwscooters</span>
-          </span>
-        </a>
+        {geordend.map((reis, i) => (
+          <a class={vorm(i) + " reveal"} href={`/travel/reizen/${reis.id}/`}
+             aria-label={`Bekijk de reis ${reis.data.titel}`}>
+            {tegelLabel(reis.data) && <span class="moz__label">{tegelLabel(reis.data)}</span>}
+            <Image src={reis.data.fotos[0]} width={900}
+                   alt={`${reis.data.bestemming} — ${reis.data.titel}`} />
+            <span class="moz__tekst">
+              <span class="moz__naam">{reis.data.bestemming}</span>
+              <span class="moz__regel">{reis.data.samenvatting || reis.data.titel}</span>
+            </span>
+          </a>
+        ))}
 
-        <a class="moz reveal" href="/travel/contact/" aria-label="Vraag een reis naar Thailand aan">
-          <span class="moz__label">Rondreis</span>
-          <img src="/assets/images/travel/thailand.jpg" alt="Eilanden in Thailand" loading="lazy" />
-          <span class="moz__tekst">
-            <span class="moz__naam">Thailand</span>
-            <span class="moz__regel">Van eiland naar eiland</span>
-          </span>
-        </a>
-
-        <a class="moz reveal" href="/travel/contact/" aria-label="Vraag een reis naar New York aan">
-          <span class="moz__label">Stedentrip</span>
-          <img src="/assets/images/travel/newyork.jpg" alt="Skyline van New York" loading="lazy" />
-          <span class="moz__tekst">
-            <span class="moz__naam">New York</span>
-            <span class="moz__regel">De stad die nooit slaapt</span>
-          </span>
-        </a>
-
-        <a class="moz moz--breed reveal" href="/travel/contact/" aria-label="Vraag een reis naar Citytrip Parijs aan">
-          <span class="moz__label">Weekend</span>
-          <img src="/assets/images/travel/parijs.jpg" alt="De Eiffeltoren in Parijs" loading="lazy" />
-          <span class="moz__tekst">
-            <span class="moz__naam">Citytrip Parijs</span>
-            <span class="moz__regel">Een nacht langs de Seine</span>
-          </span>
-        </a>
-
-        <a class="moz moz--breed reveal" href="/travel/contact/" aria-label="Vraag een reis naar Zakynthos aan">
-          <span class="moz__label">Zon & zee</span>
-          <img src="/assets/images/travel/zakynthos.jpg" alt="Zwembad met zeezicht op Zakynthos" loading="lazy" />
-          <span class="moz__tekst">
-            <span class="moz__naam">Zakynthos</span>
-            <span class="moz__regel">Grieks eiland, azuurblauw water</span>
-          </span>
-        </a>
-
-        <a class="moz moz--breed reveal" href="/travel/contact/" aria-label="Vraag een reis naar Jouw droomreis aan">
+        <a class={vorm(geordend.length) + " reveal"} href="/travel/contact/"
+           aria-label="Vraag een reis op maat aan">
           <span class="moz__label">Op maat</span>
-          <img src="/assets/images/travel/curacao.jpg" alt="Tropisch strand met palmbomen" loading="lazy" />
+          <img src="/assets/images/travel/hero-alt.jpg" alt="Een koppel op reis bij zonsondergang" loading="lazy" />
           <span class="moz__tekst">
             <span class="moz__naam">Jouw droomreis</span>
             <span class="moz__regel">Een andere bestemming? Wij stellen ze samen</span>
@@ -81,7 +76,8 @@ import Travel from "../../layouts/Travel.astro";
         <p class="section__eyebrow">Volg mee</p>
         <h2 class="section__title">Onze <span class="text-accent">laatste reizen</span></h2>
         <p class="section__lead">
-          Elke reis vertelt een verhaal. Een blik op wat we recent samenstelden en beleefden.
+          Elke reis vertelt een verhaal. Op Instagram delen we sfeerbeelden en de
+          reizen die we net hebben samengesteld.
         </p>
       </div>
 
@@ -97,12 +93,11 @@ import Travel from "../../layouts/Travel.astro";
         <a class="btn btn--sm btn--ghost" href="https://www.instagram.com/modatravel_/" target="_blank" rel="noopener">Volg ons op Instagram</a>
       </div>
 
-      <!-- Wordt gevuld door travel.js: klikbare reiskaarten uit de voorbeeldreizen,
-           of de echte Instagram-posts zodra een feed-URL is ingesteld (data-feed-url
-           of de constante bovenaan travel.js). Klik op een kaart opent het detailvenster. -->
-      <div class="reizen" id="reisfeed" data-feed-url="" data-fallback="/content/travel-posts.json">
-        <p class="reisfeed__status">Reizen worden geladen…</p>
-      </div>
+      <!-- Wordt gevuld door travel.js met de ECHTE Instagram-posts, zodra er een
+           feed-URL is ingesteld (data-feed-url hieronder of de constante bovenaan
+           travel.js). Zolang die er niet is, blijft dit blok leeg en zie je enkel
+           de volgknop hierboven. De reizen zelf staan in het mozaïek. -->
+      <div class="reizen" id="reisfeed" data-feed-url="" hidden></div>
     </div>
   </section>
 

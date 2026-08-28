@@ -1,5 +1,42 @@
 ---
+/* De contactgegevens staan in één bestand, zodat het reisbureau ze zelf kan
+   aanpassen via /admin/ zonder in de code te moeten. Ze worden hier tijdens het
+   bouwen ingevuld: geen extra laadwerk in de browser, geen flikkering. */
+import travel from "../../public/content/travel-settings.json";
+
 const { titel, omschrijving, actief = "", heeftHero = false } = Astro.props;
+
+const adres = `${travel.straat}, ${travel.postcode} ${travel.gemeente}`;
+const adresPlus = `${travel.straat} ${travel.postcode} ${travel.gemeente}`.split(" ").join("+");
+const waLink = `https://wa.me/${travel.whatsapp_nummer}?text=${encodeURIComponent(travel.whatsapp_bericht)}`;
+
+/* Bedrijfsgegevens voor Google. Staat hier en niet los in de HTML, zodat
+   telefoon, e-mail en adres uit hetzelfde bestand komen als de footer. */
+const bedrijfsgegevens = {
+  "@context": "https://schema.org",
+  "@type": "TravelAgency",
+  "@id": "https://modatravel.be/travel/#business",
+  name: travel.bedrijfsnaam,
+  description: "Reisbureau uit Heusden-Zolder dat luxe reizen op maat samenstelt: citytrips, zonvakanties, verre rondreizen en huwelijksreizen, met persoonlijke begeleiding voor en tijdens de reis.",
+  url: "https://modatravel.be/travel/",
+  image: "https://modatravel.be/assets/images/travel/hero.jpg",
+  logo: "https://modatravel.be/assets/images/logo-travel.png",
+  telephone: travel.telefoon_link,
+  email: travel.email,
+  priceRange: "€€",
+  sameAs: [travel.instagram, travel.facebook],
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: travel.straat,
+    postalCode: travel.postcode,
+    addressLocality: travel.gemeente,
+    addressRegion: "Limburg",
+    addressCountry: "BE",
+  },
+  geo: { "@type": "GeoCoordinates", latitude: 51.0271799, longitude: 5.2654197 },
+  areaServed: { "@type": "Country", name: "België" },
+  knowsAbout: ["Reizen op maat", "Citytrips", "Groepsreizen", "Zonvakanties", "Rondreizen", "Huwelijksreizen", "Lapland", "Thailand", "New York", "Parijs", "Zakynthos"],
+};
 ---
 <!DOCTYPE html>
 <html lang="nl">
@@ -65,36 +102,7 @@ const { titel, omschrijving, actief = "", heeftHero = false } = Astro.props;
   <link rel="stylesheet" href="/assets/css/travel.css" />
 
   <!-- Gestructureerde data: reisbureau. -->
-  <script is:inline type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "TravelAgency",
-    "@id": "https://modatravel.be/travel/#business",
-    "name": "Moda Travel",
-    "description": "Reisbureau uit Heusden-Zolder dat luxe reizen op maat samenstelt: citytrips, zonvakanties, verre rondreizen en huwelijksreizen, met persoonlijke begeleiding voor en tijdens de reis.",
-    "url": "https://modatravel.be/travel/",
-    "image": "https://modatravel.be/assets/images/travel/hero.jpg",
-    "logo": "https://modatravel.be/assets/images/logo-travel.png",
-    "telephone": "+3211243003",
-    "email": "info@modatravel.be",
-    "priceRange": "€€",
-    "sameAs": [
-      "https://www.instagram.com/modatravel_/",
-      "https://www.facebook.com/modatravel/"
-    ],
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Beringersteenweg 14",
-      "postalCode": "3550",
-      "addressLocality": "Heusden-Zolder",
-      "addressRegion": "Limburg",
-      "addressCountry": "BE"
-    },
-    "geo": { "@type": "GeoCoordinates", "latitude": 51.0271799, "longitude": 5.2654197 },
-    "areaServed": { "@type": "Country", "name": "België" },
-    "knowsAbout": ["Reizen op maat", "Citytrips", "Groepsreizen", "Zonvakanties", "Rondreizen", "Huwelijksreizen", "Lapland", "Thailand", "New York", "Parijs", "Zakynthos"]
-  }
-  </script>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(bedrijfsgegevens)}></script>
 </head>
 <body>
 
@@ -160,16 +168,16 @@ const { titel, omschrijving, actief = "", heeftHero = false } = Astro.props;
         <img class="footer__logo footer__logo--op-donker" src="/assets/images/logo-travel-licht.png" alt="" aria-hidden="true" width="1600" height="533" />
         <p class="footer__slogan">“Reizen zonder zorgen”</p>
         <p class="footer__desc">Luxe reizen op maat, met persoonlijke begeleiding van de eerste inspiratie tot de terugvlucht.</p>
-        <p class="footer__legal">Moda Travel · Beringersteenweg 14, 3550 Heusden-Zolder, België</p>
+        <p class="footer__legal">{travel.bedrijfsnaam} · {adres}, België</p>
       </div>
 
       <div class="footer__col">
         <h4>Contact</h4>
         <ul>
-          <li><a href="tel:+3211243003">011 24 30 03</a></li>
-          <li><a href="mailto:info@modatravel.be">info@modatravel.be</a></li>
-          <li><a href="https://www.instagram.com/modatravel_/" target="_blank" rel="noopener">Instagram @modatravel_</a></li>
-          <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Beringersteenweg+14+3550+Heusden-Zolder" target="_blank" rel="noopener">Beringersteenweg 14, 3550 Heusden-Zolder</a></li>
+          <li><a href={`tel:${travel.telefoon_link}`}>{travel.telefoon_weergave}</a></li>
+          <li><a href={`mailto:${travel.email}`}>{travel.email}</a></li>
+          <li><a href={travel.instagram} target="_blank" rel="noopener">Instagram @modatravel_</a></li>
+          <li><a href={`https://www.google.com/maps/search/?api=1&query=${adresPlus}`} target="_blank" rel="noopener">{adres}</a></li>
         </ul>
       </div>
 
@@ -197,22 +205,22 @@ const { titel, omschrijving, actief = "", heeftHero = false } = Astro.props;
     <div class="container">
       <div class="footer__kaart">
         <iframe
-          title="Locatie van Moda op de kaart: Beringersteenweg 14, 3550 Heusden-Zolder"
-          src="https://www.google.com/maps?q=Beringersteenweg+14,+3550+Heusden-Zolder,+Belgi%C3%AB&amp;output=embed"
+          title={`Locatie van Moda op de kaart: ${adres}`}
+          src={`https://www.google.com/maps?q=${adresPlus},+Belgi%C3%AB&output=embed`}
           loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
-      <a class="footer__route" href="https://www.google.com/maps/dir/?api=1&amp;destination=Beringersteenweg+14+3550+Heusden-Zolder"
+      <a class="footer__route" href={`https://www.google.com/maps/dir/?api=1&destination=${adresPlus}`}
          target="_blank" rel="noopener">📍 Route berekenen</a>
     </div>
 
     <div class="container footer__bottom">
-      <p>© <span id="year"></span> Moda Travel. Alle rechten voorbehouden.</p>
+      <p>© <span id="year"></span> {travel.bedrijfsnaam}. Alle rechten voorbehouden.</p>
       <p class="footer__made">Persoonlijk, op maat en zorgeloos.</p>
     </div>
   </footer>
 
   <!-- Zwevende WhatsApp-knop (linksonder) -->
-  <a href="https://wa.me/32000000000?text=Hallo%2C%20ik%20heb%20een%20reisvraag%20voor%20Moda%20Travel"
+  <a href={waLink}
      class="floating-wa" target="_blank" rel="noopener" aria-label="Chat via WhatsApp">
     <svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><use href="#wa-icon"/></svg>
   </a>

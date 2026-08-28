@@ -1,36 +1,45 @@
 ---
+import { Image, getImage } from "astro:assets";
+import { render } from "astro:content";
 import Travel from "../../../layouts/Travel.astro";
-import { leesReis, maakSlug } from "../../../lib/reis.mjs";
-/* Het reisbestand wordt hier meteen mee ingelezen tijdens het bouwen. Bewust een
-   gewone import en geen bestand van schijf lezen: zo werkt het ook wanneer de
-   bouwstap in een afgeschermde omgeving draait, zoals bij Cloudflare. */
-import reisbestand from "../../../../public/content/travel-posts.json";
+import travel from "../../../../public/content/travel-settings.json";
+import { alleReizen, prijsTekst, vertrekTekst, vertrekKort } from "../../../lib/reizen.mjs";
 
-/* Voor elke reis in public/content/travel-posts.json wordt hier tijdens het
-   bouwen een eigen pagina gemaakt, met een net adres zoals /travel/reizen/bon-bini/. */
+/* Elke reis uit src/content/reizen/ krijgt tijdens het bouwen een eigen pagina,
+   met de bestandsnaam als adres: bon-bini.md wordt /travel/reizen/bon-bini/.
+   Reizen die op onzichtbaar staan, krijgen geen pagina. */
 export async function getStaticPaths() {
-  return reisbestand.posts.map((post, i) => {
-    const reis = leesReis(post.caption);
-    return {
-      params: { slug: maakSlug(reis.titel, i) },
-      props: { reis, fotos: post.images || [], instagram: post.link },
-    };
-  });
+  const reizen = await alleReizen();
+  return reizen.map((reis) => ({ params: { slug: reis.id }, props: { reis } }));
 }
 
-const { reis, fotos, instagram } = Astro.props;
+const { reis } = Astro.props;
+const d = reis.data;
+const { Content } = await render(reis);
+
+/* De badges bovenaan. Wat niet ingevuld is, valt gewoon weg. */
+const vertrek = vertrekTekst(d);
 const kenmerken = [
-  { icoon: "💶", label: reis.prijs, extra: reis.prijsnoot },
-  { icoon: "📅", label: reis.vertrek ? "Vertrek " + reis.vertrek : "", extra: "" },
-  { icoon: "🌙", label: reis.duur, extra: "" },
-  { icoon: "✈️", label: reis.luchthaven ? "Vanuit " + reis.luchthaven : "", extra: "" },
+  { icoon: "💶", label: prijsTekst(d.prijs), extra: d.prijsnoot },
+  { icoon: "📅", label: vertrek ? "Vertrek " + vertrek : "", extra: "" },
+  { icoon: "🌙", label: d.duur, extra: "" },
+  { icoon: "✈️", label: d.luchthaven ? "Vanuit " + d.luchthaven : "", extra: "" },
 ].filter((k) => k.label);
-const alinea = (reis.omschrijving || "").split("\n").map((r) => r.trim()).filter(Boolean);
-const slug = maakSlug(reis.titel, 0);
+
+/* Grote versies voor het fotovenster; travel.js leest ze uit data-fotos. */
+const groot = await Promise.all(d.fotos.map((f) => getImage({ src: f, width: 1600 })));
+
+/* Het aanvraagformulier vult zichzelf in met wat hier in het adres meegaat. */
+const aanvraag = "/travel/contact/?" + new URLSearchParams({
+  reis: reis.id,
+  bestemming: d.bestemming,
+  titel: d.titel,
+  vertrek: vertrekKort(d),
+}).toString();
 ---
 <Travel
-  titel={`${reis.titel} | Moda Travel`}
-  omschrijving={reis.samenvatting || `Reis naar ${reis.bestemming || "je droombestemming"} met Moda Travel.`}
+  titel={`${d.titel} | Moda Travel`}
+  omschrijving={d.samenvatting || `Reis naar ${d.bestemming} met Moda Travel.`}
   actief="bestemmingen">
 
   <!-- ===================== REIS IN BEELD ===================== -->
@@ -39,12 +48,13 @@ const slug = maakSlug(reis.titel, 0);
       <a class="reisdetail__terug" href="/travel/bestemmingen/">← Alle bestemmingen</a>
 
       <div class="reisdetail__kop">
-        <h1 class="reisdetail__titel">{reis.titel}</h1>
-        {reis.samenvatting && <p class="reisdetail__sub">{reis.samenvatting}</p>}
+        <h1 class="reisdetail__titel">{d.titel}</h1>
+        {d.samenvatting && <p class="reisdetail__sub">{d.samenvatting}</p>}
       </div>
 
       <div class="reisdetail__hoofdfoto">
-        <img src={fotos[0]} alt={reis.samenvatting || reis.titel} />
+        <Image src={d.fotos[0]} width={1400} loading="eager"
+               alt={`${d.bestemming} — ${d.titel}`} />
       </div>
 
       {kenmerken.length > 0 && (
@@ -64,28 +74,42 @@ const slug = maakSlug(reis.titel, 0);
       <div class="reisdetail__body">
         <div class="reisdetail__tekst">
           <h2>Over deze reis</h2>
-          {alinea.map((r) => <p>{r}</p>)}
-          {alinea.length === 0 && <p>Vraag ons gerust naar de volledige details van deze reis.</p>}
+          <Content />
+
+          {d.inbegrepen.length > 0 && (
+            <Fragment>
+              <h2>Wat is inbegrepen</h2>
+              <ul class="reisdetail__lijst">
+                {d.inbegrepen.map((punt) => <li>{punt}</li>)}
+              </ul>
+            </Fragment>
+          )}
+
+          {d.reisstijl && (
+            <p class="reisdetail__stijl">
+              Deze reis hoort bij <a href="/travel/reisstijlen/">{d.reisstijl.toLowerCase()}</a>.
+            </p>
+          )}
         </div>
 
         <aside class="reisdetail__kaart">
           <h3>Interesse in deze reis?</h3>
           <p>Wij stemmen alles af op jouw wensen: data, verblijf en vervoer naar de luchthaven.</p>
-          <a class="btn btn--primary btn--block" href={`/travel/contact/?reis=${slug}`}>Vraag deze reis aan</a>
-          <a class="btn btn--ghost btn--block" href="tel:+3211243003">📞 011 24 30 03</a>
-          {instagram && (
-            <a class="reisdetail__insta" href={instagram} target="_blank" rel="noopener">Bekijk op Instagram</a>
+          <a class="btn btn--primary btn--block" href={aanvraag}>Vraag deze reis aan</a>
+          <a class="btn btn--ghost btn--block" href={`tel:${travel.telefoon_link}`}>📞 {travel.telefoon_weergave}</a>
+          {d.instagram && (
+            <a class="reisdetail__insta" href={d.instagram} target="_blank" rel="noopener">Bekijk op Instagram</a>
           )}
         </aside>
       </div>
 
-      {fotos.length > 1 && (
+      {d.fotos.length > 1 && (
         <div class="reisdetail__fotos">
           <h2>In beeld</h2>
           <div class="reisdetail__raster">
-            {fotos.map((f, i) => (
+            {d.fotos.map((foto, i) => (
               <button type="button" class="reisfoto" data-i={i} aria-label={`Foto ${i + 1} groter bekijken`}>
-                <img src={f} alt={`${reis.titel}, foto ${i + 1}`} loading="lazy" />
+                <Image src={foto} width={700} alt={`${d.titel}, foto ${i + 1}`} />
               </button>
             ))}
           </div>
@@ -95,7 +119,7 @@ const slug = maakSlug(reis.titel, 0);
   </section>
 
   <!-- Fotovenster voor de galerij van deze reis -->
-  <div class="fotobox" id="fotobox" aria-hidden="true" data-fotos={fotos.join("|")}>
+  <div class="fotobox" id="fotobox" aria-hidden="true" data-fotos={groot.map((g) => g.src).join("|")}>
     <div class="fotobox__achtergrond" data-sluit></div>
     <div class="fotobox__paneel" role="dialog" aria-modal="true" aria-label="Foto van de reis">
       <button class="fotobox__sluit" type="button" data-sluit aria-label="Venster sluiten">&times;</button>

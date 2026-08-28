@@ -1,5 +1,6 @@
 ---
 import Travel from "../../layouts/Travel.astro";
+import travel from "../../../public/content/travel-settings.json";
 ---
 <Travel
   titel="Moda Travel | Reisbureau voor reizen zonder zorgen"
@@ -97,7 +98,7 @@ import Travel from "../../layouts/Travel.astro";
       </p>
       <div class="hero__actions" style="justify-content:center">
         <a href="/travel/contact/" class="btn btn--primary btn--lg">Vraag een reisvoorstel</a>
-        <a href="https://wa.me/32000000000?text=Hallo%2C%20ik%20wil%20graag%20een%20reisvoorstel%20van%20Moda%20Travel"
+        <a href={`https://wa.me/${travel.whatsapp_nummer}?text=${encodeURIComponent("Hallo, ik wil graag een reisvoorstel van Moda Travel")}`}
            class="btn btn--wa btn--lg" target="_blank" rel="noopener">
           <svg class="btn__wa" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><use href="#wa-icon"/></svg>
           Chat via WhatsApp

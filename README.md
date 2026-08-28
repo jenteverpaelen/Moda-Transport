@@ -3,9 +3,12 @@
 De volledige online aanwezigheid van **Moda** uit Heusden-Zolder, met één overzichtspagina
 en drie onderdelen: luchthavenvervoer, transport en travel.
 
-Gebouwd met **[Astro](https://astro.build)** en gehost op **Cloudflare Pages**. De site
-wordt vooraf omgezet naar gewone HTML-bestanden: er draait geen server, er is geen
-database en er is geen CMS. Dus niets dat kan stukgaan, en gratis te hosten.
+Gebouwd met **[Astro](https://astro.build)** en gehost op **Cloudflare**. De site wordt
+vooraf omgezet naar gewone HTML-bestanden: er draait geen server en er is geen database.
+Dus niets dat kan stukgaan, en gratis te hosten.
+
+Het reisbureau beheert zijn reizen zelf via een beheerscherm op `/admin/`, dat gewoon
+bestanden in deze repo schrijft. Zie **[CMS.md](CMS.md)**.
 
 > *"Reizen zonder zorgen"*
 
@@ -40,14 +43,15 @@ Open het adres dat in je scherm verschijnt, meestal <http://localhost:4321>.
 ## ✏️ Waar pas je wat aan?
 
 De teksten en opmaak staan in de pagina's zelf. De gegevens die het vaakst wijzigen staan
-apart in **`public/content/`**, zodat je daarvoor niet in de HTML hoeft:
+apart, zodat je daarvoor niet in de HTML hoeft:
 
-| Bestand | Wat erin staat |
-| --- | --- |
-| `public/content/settings.json` | Telefoon, e-mail, WhatsApp-nummer en adres |
-| `public/content/prices.json` | Luchthavens, tarieven, supplementen en korting |
-| `public/content/reviews.json` | Klantenreviews |
-| `public/content/travel-posts.json` | De reizen in de galerij op `/travel` |
+| Bestand of map | Wat erin staat | Ook via `/admin/` |
+| --- | --- | --- |
+| `src/content/reizen/*.md` | De reizen: één bestand per reis | ✅ |
+| `public/content/travel-settings.json` | Contactgegevens van het reisbureau | ✅ |
+| `public/content/settings.json` | Contactgegevens van vervoer en transport | ✅ |
+| `public/content/prices.json` | Luchthavens, tarieven, supplementen en korting | — |
+| `public/content/reviews.json` | Klantenreviews | — |
 
 Pas je zo'n bestand aan en push je het, dan zet Cloudflare de site vanzelf opnieuw online.
 
@@ -59,12 +63,19 @@ Pas je zo'n bestand aan en push je het, dan zet Cloudflare de site vanzelf opnie
 
 ```
 Moda-Transport/
-├── src/pages/                 ← de pagina's van de site
-│   ├── index.astro            ← het overzicht (de hoofdpagina)
-│   ├── luchthaven/index.astro ← luchthavenvervoer
-│   ├── transport/index.astro  ← transport & sneltransport
-│   └── travel/index.astro     ← Moda Travel (reisbureau)
+├── src/
+│   ├── pages/                 ← de pagina's van de site
+│   │   ├── index.astro        ← het overzicht (de hoofdpagina)
+│   │   ├── luchthaven/        ← luchthavenvervoer
+│   │   ├── transport/         ← transport & sneltransport
+│   │   └── travel/            ← Moda Travel, met reizen/[slug].astro
+│   ├── content/reizen/        ← 👈 de reizen, beheerd via /admin/
+│   ├── content.config.mjs     ← welke velden een reis heeft
+│   ├── assets/travel/reizen/  ← foto's bij de reizen (worden verkleind)
+│   ├── layouts/               ← kop, menu en footer per onderdeel
+│   └── lib/                   ← kleine hulpjes
 ├── public/                    ← wordt onaangeroerd meegekopieerd
+│   ├── admin/                 ← 👈 het beheerscherm
 │   ├── content/               ← 👈 de gegevens hierboven
 │   ├── assets/css|js|images/  ← vormgeving, scripts en foto's
 │   ├── _redirects             ← doorstuurregels
@@ -72,12 +83,16 @@ Moda-Transport/
 │   └── sitemap.xml
 ├── astro.config.mjs           ← instellingen van de bouwstap
 ├── wrangler.jsonc             ← instellingen voor Cloudflare
+├── CMS.md                     ← het beheerscherm instellen
 ├── .nvmrc                     ← Node-versie voor Cloudflare
 └── dist/                      ← het bouwresultaat (staat niet in de repo)
 ```
 
 De adressen op de site volgen de mappen in `src/pages/`:
 `/` · `/luchthaven/` · `/transport/` · `/travel/`
+
+Elke reis krijgt automatisch een eigen adres op basis van zijn bestandsnaam:
+`src/content/reizen/bon-bini.md` wordt `/travel/reizen/bon-bini/`.
 
 ## ☁️ Online zetten (Cloudflare)
 
@@ -120,10 +135,25 @@ De contact- en offerteformulieren versturen via **Web3Forms** (gratis, geen serv
 Lukt dat niet, dan opent de site automatisch het e-mailprogramma van de bezoeker als
 terugvaloptie.
 
+## 🧑‍💼 Reizen beheren
+
+Het reisbureau logt in op **`/admin/`** met een GitHub-account en beheert daar de reizen en
+de contactgegevens. Wat ze opslaan komt als bestand in deze repo terecht, waarna Cloudflare
+de site opnieuw opbouwt.
+
+Het instellen van dat scherm (één keer een inlogscriptje op Cloudflare en een GitHub-app)
+staat stap voor stap in **[CMS.md](CMS.md)**.
+
+> Nog niet ingesteld? Vul dan eerst `base_url` in bij `public/admin/config.yml`.
+
 ## 📸 Foto's vervangen
 
-Zet je nieuwe foto in `public/assets/images/` en verwijs ernaar met een pad dat begint
-met `/assets/images/…`.
+Foto's die bij een reis horen, gaan in `src/assets/travel/reizen/` — die worden bij het
+bouwen automatisch verkleind en in de juiste verhouding bijgesneden. Het beheerscherm doet
+dat vanzelf.
+
+Andere foto's zet je in `public/assets/images/` en verwijs je aan met een pad dat begint met
+`/assets/images/…`. Die blijven zoals ze zijn.
 
 ---
 
