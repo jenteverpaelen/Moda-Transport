@@ -49,9 +49,41 @@
   --section-dark: linear-gradient(180deg, #14100c, #1c1611);
 }
 
-/* De balk bovenaan warmer maken dan het neutrale zwart van de andere pagina's */
-.nav { background: linear-gradient(180deg, rgba(23,18,14,.92), rgba(23,18,14,.72)); }
-.nav.is-scrolled { background: rgba(23, 18, 14, 0.94); }
+/* =========================================================
+   Lichte balk bovenaan
+   ---------------------------------------------------------
+   De hero is hier crème in plaats van een donkere foto, dus de
+   balk wordt licht en de tekst donker. Het logo wisselt mee met
+   het thema, net zoals in de footer.
+   ========================================================= */
+.nav { background: rgba(251, 247, 241, .82); backdrop-filter: blur(12px); box-shadow: 0 1px 0 var(--line); }
+.nav.is-scrolled { background: rgba(251, 247, 241, .96); }
+.nav__links a { color: var(--text); }
+.nav__links a:not(.nav__cta):hover { color: var(--text-strong); }
+.nav__cta { color: #fff; }
+.nav__switch { color: var(--text-strong); background: rgba(61, 50, 41, .06); border-color: var(--line); }
+.nav__switch:hover { background: rgba(61, 50, 41, .12); border-color: rgba(61, 50, 41, .3); }
+.theme-toggle { color: var(--text-strong); background: rgba(61, 50, 41, .06); border-color: var(--line); }
+.theme-toggle:hover { background: rgba(61, 50, 41, .12); }
+.nav__toggle span { background: var(--text-strong); }
+.nav__logo--op-donker { display: none; }
+
+/* Donker thema: balk en logo weer omdraaien */
+:root[data-theme="dark"] .nav { background: rgba(23, 18, 14, .85); }
+:root[data-theme="dark"] .nav.is-scrolled { background: rgba(23, 18, 14, .96); }
+:root[data-theme="dark"] .nav__links a { color: var(--off); }
+:root[data-theme="dark"] .nav__links a:not(.nav__cta):hover { color: #fff; }
+:root[data-theme="dark"] .nav__switch,
+:root[data-theme="dark"] .theme-toggle { color: #fff; background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.24); }
+:root[data-theme="dark"] .nav__toggle span { background: #fff; }
+:root[data-theme="dark"] .nav__logo--op-licht { display: none; }
+:root[data-theme="dark"] .nav__logo--op-donker { display: block; }
+
+/* Uitgeklapt menu op mobiel volgt hetzelfde licht/donker */
+@media (max-width: 720px) {
+  .nav__links { background: rgba(251, 247, 241, .98); }
+  :root[data-theme="dark"] .nav__links { background: rgba(23, 18, 14, .98); }
+}
 
 /* Rustiger koppen: reisbureaus schreeuwen niet */
 .section__title { letter-spacing: -0.015em; }
@@ -273,3 +305,161 @@
 .stap p { color: var(--muted); font-size: .95rem; line-height: 1.65; }
 
 @media (max-width: 860px) { .stappen { grid-template-columns: 1fr; gap: 34px; } }
+
+/* =========================================================
+   Hero: tekst links, fotocollage rechts
+   ---------------------------------------------------------
+   Geen donkere foto over de volle breedte zoals bij taxi en
+   transport, maar een rustige crème opbouw in twee kolommen.
+   ========================================================= */
+.reishero { position: relative; padding: 148px 0 84px; overflow: hidden; }
+/* Zacht warm vlak achter de collage, geeft diepte zonder te schreeuwen */
+.reishero::after {
+  content: ''; position: absolute; top: -140px; right: -180px; width: 720px; height: 720px;
+  border-radius: 50%; z-index: 0; pointer-events: none;
+  background: radial-gradient(circle, rgba(200,135,63,.16), transparent 62%);
+}
+.reishero__grid {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 1.02fr 1fr; gap: 64px; align-items: center;
+}
+
+.reishero__eyebrow {
+  display: inline-block; margin-bottom: 20px; padding: 7px 16px; border-radius: 100px;
+  border: 1px solid rgba(200,135,63,.4); color: var(--zand);
+  font-family: var(--font-head); font-weight: 600; font-size: .78rem; letter-spacing: .14em; text-transform: uppercase;
+}
+.reishero__titel {
+  font-family: var(--font-head); font-weight: 700;
+  font-size: clamp(2.3rem, 5vw, 3.9rem); line-height: 1.06; letter-spacing: -0.02em;
+  color: var(--text-strong); margin-bottom: 20px;
+}
+.reishero__titel em { font-style: normal; color: var(--red); }
+.reishero__lead { color: var(--muted); font-size: clamp(1rem, 1.6vw, 1.1rem); line-height: 1.7; max-width: 30em; margin-bottom: 30px; }
+.reishero__acties { display: flex; flex-wrap: wrap; gap: 12px; }
+
+.reishero__cijfers {
+  display: flex; flex-wrap: wrap; gap: 14px 40px;
+  margin-top: 44px; padding-top: 26px; border-top: 1px solid var(--line);
+}
+.reishero__cijfer strong { display: block; }
+/* Enkel het label (rechtstreeks kind), zodat het cijfer erboven groot blijft */
+.reishero__cijfer > span { color: var(--muted); font-size: .84rem; }
+/* Het cijfer erft anders de centrering en de min-hoogte uit style.css */
+.reishero__cijfer .stat__num {
+  display: block; text-align: left; min-height: 0;
+  font-family: var(--font-head); font-weight: 700;
+  font-size: 1.6rem; color: var(--text-strong); line-height: 1.2;
+}
+
+/* De twee overlappende foto's */
+.reishero__beeld { position: relative; padding-bottom: 34px; }
+.reishero__foto { overflow: hidden; border-radius: 28px; box-shadow: var(--shadow); }
+.reishero__foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.reishero__foto--groot { width: 82%; margin-left: auto; aspect-ratio: 4 / 5; }
+.reishero__foto--klein {
+  position: absolute; left: 0; bottom: 0; width: 54%; aspect-ratio: 4 / 3;
+  border: 9px solid var(--bg); border-radius: 26px;
+}
+
+/* =========================================================
+   Bestemmingen als mozaïek
+   ========================================================= */
+.mozaiek { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 210px; gap: 16px; }
+.moz {
+  position: relative; display: block; overflow: hidden; border-radius: var(--radius);
+  background: var(--surface-2); box-shadow: var(--shadow-sm);
+  transition: transform .45s var(--ease), box-shadow .45s var(--ease);
+}
+.moz:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+.moz:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+.moz img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .7s var(--ease); }
+.moz:hover img { transform: scale(1.07); }
+.moz__tekst {
+  position: absolute; inset: auto 0 0 0; padding: 22px 22px 20px; color: #fff;
+  background: linear-gradient(to top, rgba(8,8,10,.88) 0%, rgba(8,8,10,.35) 60%, transparent 100%);
+}
+.moz__naam { font-family: var(--font-head); font-weight: 700; font-size: 1.25rem; letter-spacing: -0.01em; }
+.moz__regel { font-size: .88rem; color: rgba(255,255,255,.82); margin-top: 2px; }
+.moz__label {
+  position: absolute; top: 14px; left: 14px; z-index: 2;
+  background: rgba(255,255,255,.92); color: #2b2119;
+  font-family: var(--font-head); font-weight: 600; font-size: .74rem;
+  padding: 5px 11px; border-radius: 100px;
+}
+.moz--groot { grid-column: span 2; grid-row: span 2; }
+.moz--breed { grid-column: span 2; }
+.moz--groot .moz__naam { font-size: 1.7rem; }
+
+/* =========================================================
+   Zigzag: foto naast tekst
+   ========================================================= */
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 62px; align-items: center; }
+.duo + .duo { margin-top: 90px; }
+.duo__beeld { position: relative; }
+.duo__beeld img {
+  width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
+  border-radius: var(--radius); box-shadow: var(--shadow); display: block;
+}
+.duo--omgekeerd .duo__beeld { order: 2; }
+.duo__tekst .section__eyebrow,
+.duo__tekst .section__title,
+.duo__tekst .section__lead { text-align: left; }
+.duo__tekst .section__title { margin-bottom: 16px; }
+.duo__tekst .btn { margin-top: 22px; }
+
+/* Reisstijlen: lichter, zonder omkaderde blokken */
+.stijlen { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+.stijl { text-align: center; }
+.stijl__icoon {
+  width: 66px; height: 66px; margin: 0 auto 16px; border-radius: 50%;
+  display: grid; place-items: center; font-size: 1.7rem;
+  background: rgba(200,135,63,.14); border: 1px solid rgba(200,135,63,.3);
+}
+.stijl h3 { font-size: 1.12rem; margin-bottom: 7px; }
+.stijl p { color: var(--muted); font-size: .93rem; line-height: 1.6; }
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+@media (max-width: 980px) {
+  .reishero { padding: 120px 0 64px; }
+  .reishero__grid { grid-template-columns: 1fr; gap: 44px; }
+  .reishero__beeld { max-width: 520px; margin: 0 auto; width: 100%; }
+  .duo, .duo--omgekeerd { grid-template-columns: 1fr; gap: 32px; }
+  .duo--omgekeerd .duo__beeld { order: 0; }
+  .duo__tekst .section__eyebrow, .duo__tekst .section__title, .duo__tekst .section__lead { text-align: left; }
+  .stijlen { grid-template-columns: 1fr 1fr; gap: 34px; }
+  .mozaiek { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 190px; }
+  .moz--groot { grid-column: span 2; grid-row: span 2; }
+  .moz--breed { grid-column: span 2; }
+}
+@media (max-width: 620px) {
+  .reishero__foto--groot { width: 88%; aspect-ratio: 3 / 4; }
+  .reishero__foto--klein { width: 56%; border-width: 7px; }
+  .reishero__cijfers { gap: 16px 26px; }
+  .reishero__cijfer strong { font-size: 1.3rem; }
+  .stijlen { grid-template-columns: 1fr; }
+  .mozaiek { grid-template-columns: 1fr; grid-auto-rows: 200px; }
+  .moz--groot, .moz--breed { grid-column: span 1; grid-row: span 1; }
+}
+
+/* Stappen als lijst in een smalle kolom (naast de foto) in plaats van drie kaarten */
+.stappen--lijst { grid-template-columns: 1fr; gap: 18px; margin-top: 26px; }
+.stappen--lijst .stap {
+  display: grid; grid-template-columns: auto 1fr; gap: 4px 18px;
+  background: none; border: 0; border-radius: 0; padding: 0 0 18px;
+  border-bottom: 1px solid var(--line);
+}
+.stappen--lijst .stap:last-child { border-bottom: 0; padding-bottom: 0; }
+.stappen--lijst .stap:hover { transform: none; box-shadow: none; }
+.stappen--lijst .stap__nr {
+  position: static; grid-row: span 2; width: 38px; height: 38px;
+  font-size: 1rem; box-shadow: none; align-self: start;
+}
+.stappen--lijst .stap h3 { margin: 6px 0 2px; font-size: 1.05rem; }
+.stappen--lijst .stap p { font-size: .93rem; }
+
+/* Herstel: naam en ondertitel in de mozaïektegels zijn spans en moeten
+   onder elkaar staan, niet achter elkaar. */
+.moz__tekst, .moz__naam, .moz__regel { display: block; }

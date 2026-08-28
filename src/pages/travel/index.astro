@@ -107,7 +107,8 @@
   <header class="nav" id="nav">
     <div class="container nav__inner">
       <a href="#home" class="nav__brand" aria-label="Moda Travel, home">
-        <img class="nav__logo" src="/assets/images/logo-travel-licht.png" alt="Moda Travel" width="1600" height="533" />
+        <img class="nav__logo nav__logo--op-licht" src="/assets/images/logo-travel.png" alt="Moda Travel" width="1600" height="533" />
+        <img class="nav__logo nav__logo--op-donker" src="/assets/images/logo-travel-licht.png" alt="" aria-hidden="true" width="1600" height="533" />
       </a>
 
       <nav class="nav__links" id="navLinks" aria-label="Hoofdmenu">
@@ -144,177 +145,119 @@
   </header>
 
   <!-- ===================== HERO ===================== -->
-  <section class="hero" id="home">
-    <div class="hero__media" aria-hidden="true">
-      <div class="hero__img" style="background-image:url('/assets/images/travel/hero.jpg')"></div>
-      <div class="hero__overlay"></div>
-    </div>
+  <section class="reishero" id="home">
+    <div class="container reishero__grid">
+      <div class="reishero__tekst">
+        <p class="reishero__eyebrow reveal">Reisbureau in Heusden-Zolder</p>
+        <h1 class="reishero__titel reveal">Waar wil jij <em>naartoe?</em></h1>
+        <p class="reishero__lead reveal">
+          Wij stellen je reis van nul samen, afgestemd op wat jij zoekt. Geen vast
+          pakket, geen massatoerisme, maar een route die klopt met jouw tempo,
+          gezelschap en budget.
+        </p>
 
-    <div class="container hero__content">
-      <p class="hero__eyebrow reveal">✦ Reisbureau Moda Travel</p>
-      <h1 class="hero__title reveal">
-        Reizen zonder zorgen,<br />
-        van droom tot <span class="text-accent">bestemming</span>.
-      </h1>
-      <p class="hero__sub reveal">
-        Wij ontwerpen luxe reiservaringen die ontspanning, avontuur en authentieke
-        culturele ontmoetingen samenbrengen. Reisroutes volledig op maat, met
-        persoonlijke begeleiding voor én tijdens uw reis.
-      </p>
+        <div class="reishero__acties reveal">
+          <a href="#offerte" class="btn btn--primary btn--lg">Maak een afspraak</a>
+          <a href="#bestemmingen" class="btn btn--ghost btn--lg">Bekijk bestemmingen</a>
+        </div>
 
-      <div class="hero__actions reveal">
-        <a href="#offerte" class="btn btn--primary btn--lg">Maak een afspraak</a>
-        <a href="#bestemmingen" class="btn btn--ghost btn--lg">Bekijk bestemmingen</a>
-        <a href="https://wa.me/32000000000?text=Hallo%2C%20ik%20heb%20een%20vraag%20over%20een%20reis%20met%20Moda%20Travel"
-           class="btn btn--wa btn--lg" target="_blank" rel="noopener">
-          <svg class="btn__wa" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><use href="#wa-icon"/></svg>
-          Chat via WhatsApp
-        </a>
+        <div class="reishero__cijfers reveal">
+          <div class="reishero__cijfer">
+            <strong><span class="stat__num" data-count="30" data-suffix="+">0</span></strong>
+            <span>Jaar ervaring</span>
+          </div>
+          <div class="reishero__cijfer">
+            <strong><span class="stat__num" data-count="1500" data-suffix="+">0</span></strong>
+            <span>Tevreden reizigers</span>
+          </div>
+          <div class="reishero__cijfer">
+            <strong><span class="stat__num" data-count="60" data-suffix="+">0</span></strong>
+            <span>Bestemmingen</span>
+          </div>
+          <div class="reishero__cijfer">
+            <strong><span class="stat__num" data-count="100" data-suffix="%">0</span></strong>
+            <span>Aanbevolen</span>
+          </div>
+        </div>
       </div>
 
-      <div class="hero__badges reveal">
-        <span>Reizen op maat</span>
-        <span class="dot"></span>
-        <span>Persoonlijke begeleiding</span>
-        <span class="dot"></span>
-        <span>Dichtbij &amp; ver weg</span>
-      </div>
-    </div>
-
-    <a href="#bestemmingen" class="hero__scroll" aria-label="Scroll naar beneden">
-      <span class="hero__mouse"></span>
-    </a>
-  </section>
-
-  <!-- ===================== STATS / TRUST BAR ===================== -->
-  <section class="stats">
-    <div class="container stats__grid">
-      <div class="stat reveal">
-        <span class="stat__num" data-count="30" data-suffix="+">0</span>
-        <span class="stat__label">Jaar ervaring</span>
-      </div>
-      <div class="stat reveal">
-        <span class="stat__num" data-count="1500" data-suffix="+">0</span>
-        <span class="stat__label">Tevreden reizigers</span>
-      </div>
-      <div class="stat reveal">
-        <span class="stat__num" data-count="60" data-suffix="+">0</span>
-        <span class="stat__label">Bestemmingen</span>
-      </div>
-      <div class="stat reveal">
-        <span class="stat__num" data-count="100" data-suffix="%">0</span>
-        <span class="stat__label">Aanbevolen door reizigers</span>
+      <div class="reishero__beeld reveal">
+        <div class="reishero__foto reishero__foto--groot">
+          <img src="/assets/images/travel/hero.jpg" alt="Kustdorp aan de Middellandse Zee" />
+        </div>
+        <div class="reishero__foto reishero__foto--klein">
+          <img src="/assets/images/travel/lapland.jpg" alt="Besneeuwd landschap in Lapland" loading="lazy" />
+        </div>
       </div>
     </div>
   </section>
+
 
   <!-- ===================== BESTEMMINGEN ===================== -->
   <section class="section" id="bestemmingen">
     <div class="container">
       <div class="section__head reveal">
-        <p class="section__eyebrow">Onze bestemmingen</p>
-        <h2 class="section__title">Waar dromen <span class="text-accent">werkelijkheid</span> worden</h2>
+        <p class="section__eyebrow">Bestemmingen</p>
+        <h2 class="section__title">Een greep uit <span class="text-accent">onze reizen</span></h2>
         <p class="section__lead">
-          Zorgvuldig gekozen unieke locaties, van sneeuw en noorderlicht tot zon en zee.
-          Een greep uit onze reizen. Alles kan volledig op maat.
+          Zorgvuldig gekozen plekken, van sneeuw en noorderlicht tot zon en zee.
+          Alles kan volledig op maat.
         </p>
       </div>
 
-      <div class="trips">
-        <a class="trip-card reveal" href="#offerte">
-          <div class="trip-card__img">
-            <span class="trip-card__badge">Winter</span>
-            <img src="/assets/images/travel/lapland.jpg" alt="Besneeuwd Lapland" loading="lazy" />
-          </div>
-          <div class="trip-card__body">
-            <h3>Lapland</h3>
-            <p class="trip-card__tagline">Begeleide groepsreis</p>
-            <p class="trip-card__desc">Nederlandstalige groepsreis met huskies, sneeuwscooters en kans op het noorderlicht.</p>
-            <div class="trip-card__foot">
-              <span class="trip-card__price">Groepsreis</span>
-              <span class="trip-card__cta">Plan deze reis →</span>
-            </div>
-          </div>
+      <div class="mozaiek">
+        <a class="moz moz--groot reveal" href="#offerte" aria-label="Vraag een reis naar Lapland aan">
+          <span class="moz__label">Winter</span>
+          <img src="/assets/images/travel/lapland.jpg" alt="Besneeuwd bos in Lapland" loading="lazy" />
+          <span class="moz__tekst">
+            <span class="moz__naam">Lapland</span>
+            <span class="moz__regel">Noorderlicht, husky’s en sneeuwscooters</span>
+          </span>
         </a>
 
-        <a class="trip-card reveal" href="#offerte">
-          <div class="trip-card__img">
-            <span class="trip-card__badge">Rondreis</span>
-            <img src="/assets/images/travel/thailand.jpg" alt="Eilanden van Thailand" loading="lazy" />
-          </div>
-          <div class="trip-card__body">
-            <h3>Thailand</h3>
-            <p class="trip-card__tagline">Van Ko naar Ko</p>
-            <p class="trip-card__desc">Twaalf nachten priverondreis langs de juwelen van de Thaise eilanden.</p>
-            <div class="trip-card__foot">
-              <span class="trip-card__price">Priverondreis</span>
-              <span class="trip-card__cta">Plan deze reis →</span>
-            </div>
-          </div>
+        <a class="moz reveal" href="#offerte" aria-label="Vraag een reis naar Thailand aan">
+          <span class="moz__label">Rondreis</span>
+          <img src="/assets/images/travel/thailand.jpg" alt="Eilanden in Thailand" loading="lazy" />
+          <span class="moz__tekst">
+            <span class="moz__naam">Thailand</span>
+            <span class="moz__regel">Van eiland naar eiland</span>
+          </span>
         </a>
 
-        <a class="trip-card reveal" href="#offerte">
-          <div class="trip-card__img">
-            <span class="trip-card__badge">Stedentrip</span>
-            <img src="/assets/images/travel/newyork.jpg" alt="Skyline van New York" loading="lazy" />
-          </div>
-          <div class="trip-card__body">
-            <h3>New York</h3>
-            <p class="trip-card__tagline">The city that never sleeps</p>
-            <p class="trip-card__desc">De bruisende metropool ontdekken, van Times Square tot Central Park.</p>
-            <div class="trip-card__foot">
-              <span class="trip-card__price">Stedentrip</span>
-              <span class="trip-card__cta">Plan deze reis →</span>
-            </div>
-          </div>
+        <a class="moz reveal" href="#offerte" aria-label="Vraag een reis naar New York aan">
+          <span class="moz__label">Stedentrip</span>
+          <img src="/assets/images/travel/newyork.jpg" alt="Skyline van New York" loading="lazy" />
+          <span class="moz__tekst">
+            <span class="moz__naam">New York</span>
+            <span class="moz__regel">De stad die nooit slaapt</span>
+          </span>
         </a>
 
-        <a class="trip-card reveal" href="#offerte">
-          <div class="trip-card__img">
-            <span class="trip-card__badge">Weekend</span>
-            <img src="/assets/images/travel/parijs.jpg" alt="De Eiffeltoren in Parijs" loading="lazy" />
-          </div>
-          <div class="trip-card__body">
-            <h3>Citytrip Parijs</h3>
-            <p class="trip-card__tagline">Un weekend à Paris</p>
-            <p class="trip-card__desc">Eén overnachting langs de Seine met ontbijt. De stad van de liefde op zijn mooist.</p>
-            <div class="trip-card__foot">
-              <span class="trip-card__price">vanaf 79 euro p.p.</span>
-              <span class="trip-card__cta">Plan deze reis →</span>
-            </div>
-          </div>
+        <a class="moz moz--breed reveal" href="#offerte" aria-label="Vraag een reis naar Citytrip Parijs aan">
+          <span class="moz__label">Weekend</span>
+          <img src="/assets/images/travel/parijs.jpg" alt="De Eiffeltoren in Parijs" loading="lazy" />
+          <span class="moz__tekst">
+            <span class="moz__naam">Citytrip Parijs</span>
+            <span class="moz__regel">Een nacht langs de Seine</span>
+          </span>
         </a>
 
-        <a class="trip-card reveal" href="#offerte">
-          <div class="trip-card__img">
-            <span class="trip-card__badge">Zon &amp; zee</span>
-            <img src="/assets/images/travel/zakynthos.jpg" alt="Zwembad met zeezicht op Zakynthos" loading="lazy" />
-          </div>
-          <div class="trip-card__body">
-            <h3>Zakynthos</h3>
-            <p class="trip-card__tagline">Fly &amp; Go Pelagos Blue Zante</p>
-            <p class="trip-card__desc">Een oase van rust en ontspanning op het Griekse eiland Zakynthos.</p>
-            <div class="trip-card__foot">
-              <span class="trip-card__price">Zonvakantie</span>
-              <span class="trip-card__cta">Plan deze reis →</span>
-            </div>
-          </div>
+        <a class="moz moz--breed reveal" href="#offerte" aria-label="Vraag een reis naar Zakynthos aan">
+          <span class="moz__label">Zon & zee</span>
+          <img src="/assets/images/travel/zakynthos.jpg" alt="Zwembad met zeezicht op Zakynthos" loading="lazy" />
+          <span class="moz__tekst">
+            <span class="moz__naam">Zakynthos</span>
+            <span class="moz__regel">Grieks eiland, azuurblauw water</span>
+          </span>
         </a>
 
-        <a class="trip-card reveal" href="#offerte">
-          <div class="trip-card__img">
-            <span class="trip-card__badge">Op maat</span>
-            <img src="/assets/images/travel/hero.jpg" alt="Kustdorp aan de Middellandse Zee" loading="lazy" />
-          </div>
-          <div class="trip-card__body">
-            <h3>Jouw droomreis</h3>
-            <p class="trip-card__tagline">Volledig op maat</p>
-            <p class="trip-card__desc">Een andere bestemming in gedachten? Wij stellen jouw ideale reis samen, waar ook ter wereld.</p>
-            <div class="trip-card__foot">
-              <span class="trip-card__price">Overal ter wereld</span>
-              <span class="trip-card__cta">Plan deze reis →</span>
-            </div>
-          </div>
+        <a class="moz moz--breed reveal" href="#offerte" aria-label="Vraag een reis naar Jouw droomreis aan">
+          <span class="moz__label">Op maat</span>
+          <img src="/assets/images/travel/curacao.jpg" alt="Tropisch strand met palmbomen" loading="lazy" />
+          <span class="moz__tekst">
+            <span class="moz__naam">Jouw droomreis</span>
+            <span class="moz__regel">Een andere bestemming? Wij stellen ze samen</span>
+          </span>
         </a>
       </div>
     </div>
@@ -353,38 +296,34 @@
   </section>
 
   <!-- ===================== REISSTIJLEN ===================== -->
-  <section class="section" id="reisstijlen">
+  <section class="section section--alt" id="reisstijlen">
     <div class="container">
       <div class="section__head reveal">
         <p class="section__eyebrow">Reisstijlen</p>
         <h2 class="section__title">Welke reis past bij <span class="text-accent">jou?</span></h2>
         <p class="section__lead">
-          Elke reiziger is anders. Vertel ons wat je zoekt en wij stemmen de reis
-          daarop af, van het verblijf tot het ritme van je dagen.
+          Elke reiziger is anders. Vertel ons wat je zoekt en wij stemmen alles daarop af.
         </p>
       </div>
 
-      <div class="cards">
-        <article class="card reveal">
-          <div class="card__icon">✨</div>
+      <div class="stijlen">
+        <article class="stijl reveal">
+          <div class="stijl__icoon" aria-hidden="true">✨</div>
           <h3>Luxereizen</h3>
           <p>Comfort, kwaliteit en ervaringen die je niet zomaar ergens boekt.</p>
         </article>
-
-        <article class="card reveal">
-          <div class="card__icon">🧭</div>
+        <article class="stijl reveal">
+          <div class="stijl__icoon" aria-hidden="true">🧭</div>
           <h3>Avontuurlijke reizen</h3>
           <p>Voor wie verder wil gaan dan de gebaande paden en echt iets wil ontdekken.</p>
         </article>
-
-        <article class="card reveal">
-          <div class="card__icon">👨‍👩‍👧</div>
+        <article class="stijl reveal">
+          <div class="stijl__icoon" aria-hidden="true">👨‍👩‍👧</div>
           <h3>Familiereizen</h3>
           <p>Onvergetelijke momenten voor jong en oud, met een tempo dat voor iedereen klopt.</p>
         </article>
-
-        <article class="card reveal">
-          <div class="card__icon">💞</div>
+        <article class="stijl reveal">
+          <div class="stijl__icoon" aria-hidden="true">💞</div>
           <h3>Romantische reizen</h3>
           <p>Voor bijzondere momenten met z'n tweeën, van huwelijksreis tot verrassingsweekend.</p>
         </article>
@@ -392,10 +331,13 @@
     </div>
   </section>
 
-  <!-- ===================== WAAROM MODA TRAVEL ===================== -->
-  <section class="section section--alt" id="waarom">
-    <div class="container waarom__grid">
-      <div class="waarom__intro reveal">
+  <!-- ===================== OVER ONS ===================== -->
+  <section class="section" id="waarom">
+    <div class="container duo">
+      <div class="duo__beeld reveal">
+        <img src="/assets/images/travel/hero-alt.jpg" alt="Een koppel op reis bij zonsondergang" loading="lazy" />
+      </div>
+      <div class="duo__tekst reveal">
         <p class="section__eyebrow">Over ons</p>
         <h2 class="section__title">Reizen is onze passie.</h2>
         <p class="section__lead">
@@ -406,86 +348,44 @@
         <p class="section__lead">
           Daarom stellen we elke reis zelf samen: van een verborgen strand tot een
           rondreis vol cultuur of een ontspannen gezinsvakantie. Wij nemen de hele
-          organisatie uit handen en bouwen de route stap voor stap op.
+          organisatie uit handen, tot en met het vervoer naar de luchthaven.
         </p>
         <a href="#offerte" class="btn btn--primary">Maak een afspraak</a>
-      </div>
-
-      <div class="features">
-        <div class="feature reveal">
-          <div class="feature__icon">🧡</div>
-          <div>
-            <h3>Onafhankelijk</h3>
-            <p>Wij zitten aan geen enkele touroperator vast en kiezen dus wat het beste past.</p>
-          </div>
-        </div>
-        <div class="feature reveal">
-          <div class="feature__icon">🙅</div>
-          <div>
-            <h3>Weg van de massa</h3>
-            <p>Liever een plek die je bijblijft dan een bestemming waar iedereen staat.</p>
-          </div>
-        </div>
-        <div class="feature reveal">
-          <div class="feature__icon">✍️</div>
-          <div>
-            <h3>Volledig op maat</h3>
-            <p>Jouw wensen, tempo en budget bepalen de reis, niet een vast pakket.</p>
-          </div>
-        </div>
-        <div class="feature reveal">
-          <div class="feature__icon">🤝</div>
-          <div>
-            <h3>Persoonlijk contact</h3>
-            <p>Je spreekt met iemand die je kent, voor en tijdens je reis.</p>
-          </div>
-        </div>
-        <div class="feature reveal">
-          <div class="feature__icon">🏡</div>
-          <div>
-            <h3>Uit de streek</h3>
-            <p>Voor reizigers uit Heusden-Zolder, Beringen en heel Limburg.</p>
-          </div>
-        </div>
-        <div class="feature reveal">
-          <div class="feature__icon">✈️</div>
-          <div>
-            <h3>Vervoer geregeld</h3>
-            <p>Ook het vervoer naar de luchthaven kunnen wij voor je in orde brengen.</p>
-          </div>
-        </div>
       </div>
     </div>
   </section>
 
   <!-- ===================== ZO WERKT HET ===================== -->
-  <section class="section" id="werkwijze">
-    <div class="container">
-      <div class="section__head reveal">
+  <section class="section section--alt" id="werkwijze">
+    <div class="container duo duo--omgekeerd">
+      <div class="duo__beeld reveal">
+        <img src="/assets/images/travel/curacao.jpg" alt="Tropisch strand met palmbomen" loading="lazy" />
+      </div>
+      <div class="duo__tekst reveal">
         <p class="section__eyebrow">Zo werkt het</p>
         <h2 class="section__title">In drie stappen naar <span class="text-accent">jouw reis</span></h2>
         <p class="section__lead">
           Je hoeft nog niets uitgewerkt te hebben. Een idee volstaat om te beginnen.
         </p>
-      </div>
 
-      <ol class="stappen">
-        <li class="stap reveal">
-          <span class="stap__nr">1</span>
-          <h3>Vertel wat je in gedachten hebt</h3>
-          <p>De bestemming of het werelddeel, of gewoon het gevoel dat je zoekt. Nog geen idee? Ook goed.</p>
-        </li>
-        <li class="stap reveal">
-          <span class="stap__nr">2</span>
-          <h3>Kies het soort reis</h3>
-          <p>Luxe, avontuur, familie of romantisch, en met wie je op pad gaat: alleen, samen of met de kinderen.</p>
-        </li>
-        <li class="stap reveal">
-          <span class="stap__nr">3</span>
-          <h3>Wij bouwen de reis op</h3>
-          <p>Wij zoeken uit, stellen voor en regelen alles. Jij hoeft enkel nog je koffer te pakken.</p>
-        </li>
-      </ol>
+        <ol class="stappen stappen--lijst">
+          <li class="stap">
+            <span class="stap__nr">1</span>
+            <h3>Vertel wat je in gedachten hebt</h3>
+            <p>De bestemming of het werelddeel, of gewoon het gevoel dat je zoekt.</p>
+          </li>
+          <li class="stap">
+            <span class="stap__nr">2</span>
+            <h3>Kies het soort reis</h3>
+            <p>Luxe, avontuur, familie of romantisch, en met wie je op pad gaat.</p>
+          </li>
+          <li class="stap">
+            <span class="stap__nr">3</span>
+            <h3>Wij bouwen de reis op</h3>
+            <p>Wij zoeken uit, stellen voor en regelen alles. Jij pakt enkel je koffer.</p>
+          </li>
+        </ol>
+      </div>
     </div>
   </section>
 
