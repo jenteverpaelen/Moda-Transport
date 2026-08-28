@@ -1,9 +1,9 @@
 {
-  "name": "moda-website",
+  "name": "moda-sneltransport",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Website van Moda: overzicht, luchthavenvervoer, transport en travel. Statisch gebouwd met Astro.",
+  "description": "Website van Moda op moda-sneltransport.be: luchthavenvervoer en transport. Statisch gebouwd met Astro.",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -16,7 +16,6 @@
   },
   "devDependencies": {
     "astro": "^7.1.6",
-    "sharp": "^0.35.3",
     "wrangler": "^4.127.0"
   }
 }

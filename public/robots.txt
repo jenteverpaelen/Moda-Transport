@@ -1,7 +1,4 @@
 User-agent: *
 Allow: /
 
-# Het beheerscherm hoort niet in de zoekresultaten.
-Disallow: /admin/
-
-Sitemap: https://moda.be/sitemap.xml
+Sitemap: https://moda-sneltransport.be/sitemap.xml

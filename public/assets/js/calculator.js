@@ -469,7 +469,7 @@ function initCalc() {
         return;
       }
       try { sessionStorage.setItem("moda-rit", JSON.stringify(rit)); } catch (e) {}
-      location.href = "/luchthaven/reserveren/";
+      location.href = "/reserveren/";
     });
   }
 

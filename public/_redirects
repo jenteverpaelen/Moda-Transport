@@ -1,2 +1,12 @@
-# Oude preview-URL van het overzicht wijst nu naar de hoofdpagina.
-/moda   /   301
+# De site is opgesplitst over drie domeinen. Wie nog een oud adres van de
+# gezamenlijke versie gebruikt, komt hier op de juiste plek terecht.
+
+# Het luchthavenvervoer stond onder /luchthaven/ en staat nu op de wortel.
+/luchthaven                /                    301
+/luchthaven/*              /:splat              301
+
+# Het overzicht en het reisbureau hebben nu een eigen domein.
+/moda                      https://www.moda.be/                     301
+/travel                    https://modatravel.be/                   301
+/travel/reizen/*           https://modatravel.be/reizen/:splat      301
+/travel/*                  https://modatravel.be/:splat             301

@@ -1,14 +1,19 @@
-# Moda — Website
+# moda-sneltransport.be — Luchthavenvervoer & Transport
 
-De volledige online aanwezigheid van **Moda** uit Heusden-Zolder, met één overzichtspagina
-en drie onderdelen: luchthavenvervoer, transport en travel.
+De website van **Moda** uit Heusden-Zolder voor luchthavenvervoer en transport. Het
+luchthavenvervoer staat op de startpagina, transport & sneltransport op `/transport/`.
+
+Moda staat op drie adressen, elk met zijn eigen site en zijn eigen repo:
+
+| Domein | Wat erop staat | Repo |
+| --- | --- | --- |
+| www.moda.be | Het overzicht van de drie onderdelen | `jenteverpaelen/moda.be` |
+| **moda-sneltransport.be** | **Luchthavenvervoer en transport (deze repo)** | `jenteverpaelen/Moda-Transport` |
+| modatravel.be | Het reisbureau | `jenteverpaelen/modatravel` |
 
 Gebouwd met **[Astro](https://astro.build)** en gehost op **Cloudflare**. De site wordt
-vooraf omgezet naar gewone HTML-bestanden: er draait geen server en er is geen database.
-Dus niets dat kan stukgaan, en gratis te hosten.
-
-Het reisbureau beheert zijn reizen zelf via een beheerscherm op `/admin/`, dat gewoon
-bestanden in deze repo schrijft. Zie **[CMS.md](CMS.md)**.
+vooraf omgezet naar gewone HTML-bestanden: er draait geen server, er is geen database en er
+is geen CMS. Dus niets dat kan stukgaan, en gratis te hosten.
 
 > *"Reizen zonder zorgen"*
 
@@ -45,13 +50,12 @@ Open het adres dat in je scherm verschijnt, meestal <http://localhost:4321>.
 De teksten en opmaak staan in de pagina's zelf. De gegevens die het vaakst wijzigen staan
 apart, zodat je daarvoor niet in de HTML hoeft:
 
-| Bestand of map | Wat erin staat | Ook via `/admin/` |
-| --- | --- | --- |
-| `src/content/reizen/*.md` | De reizen: één bestand per reis | ✅ |
-| `public/content/travel-settings.json` | Contactgegevens van het reisbureau | ✅ |
-| `public/content/settings.json` | Contactgegevens van vervoer en transport | ✅ |
-| `public/content/prices.json` | Luchthavens, tarieven, supplementen en korting | — |
-| `public/content/reviews.json` | Klantenreviews | — |
+| Bestand | Wat erin staat |
+| --- | --- |
+| `public/content/settings.json` | Telefoon, e-mail, WhatsApp-nummer en adres |
+| `public/content/prices.json` | Luchthavens, tarieven, supplementen en korting |
+| `public/content/reviews.json` | Klantenreviews |
+| `src/lib/moda.mjs` | De adressen van de drie Moda-sites |
 
 Pas je zo'n bestand aan en push je het, dan zet Cloudflare de site vanzelf opnieuw online.
 
@@ -65,34 +69,35 @@ Pas je zo'n bestand aan en push je het, dan zet Cloudflare de site vanzelf opnie
 Moda-Transport/
 ├── src/
 │   ├── pages/                 ← de pagina's van de site
-│   │   ├── index.astro        ← het overzicht (de hoofdpagina)
-│   │   ├── luchthaven/        ← luchthavenvervoer
-│   │   ├── transport/         ← transport & sneltransport
-│   │   └── travel/            ← Moda Travel, met reizen/[slug].astro
-│   ├── content/reizen/        ← 👈 de reizen, beheerd via /admin/
-│   ├── content.config.mjs     ← welke velden een reis heeft
-│   ├── assets/travel/reizen/  ← foto's bij de reizen (worden verkleind)
+│   │   ├── index.astro        ← luchthavenvervoer (de startpagina)
+│   │   ├── diensten.astro · vloot.astro · reviews.astro
+│   │   ├── prijs.astro · reserveren.astro
+│   │   └── transport/         ← transport & sneltransport
 │   ├── layouts/               ← kop, menu en footer per onderdeel
-│   └── lib/                   ← kleine hulpjes
+│   └── lib/moda.mjs           ← 👈 de adressen van de drie sites
 ├── public/                    ← wordt onaangeroerd meegekopieerd
-│   ├── admin/                 ← 👈 het beheerscherm
 │   ├── content/               ← 👈 de gegevens hierboven
 │   ├── assets/css|js|images/  ← vormgeving, scripts en foto's
-│   ├── _redirects             ← doorstuurregels
+│   ├── _redirects             ← doorstuurregels van de oude adressen
 │   ├── robots.txt
 │   └── sitemap.xml
 ├── astro.config.mjs           ← instellingen van de bouwstap
 ├── wrangler.jsonc             ← instellingen voor Cloudflare
-├── CMS.md                     ← het beheerscherm instellen
 ├── .nvmrc                     ← Node-versie voor Cloudflare
 └── dist/                      ← het bouwresultaat (staat niet in de repo)
 ```
 
 De adressen op de site volgen de mappen in `src/pages/`:
-`/` · `/luchthaven/` · `/transport/` · `/travel/`
+`/` · `/diensten/` · `/vloot/` · `/reviews/` · `/prijs/` · `/reserveren/` · `/transport/`
 
-Elke reis krijgt automatisch een eigen adres op basis van zijn bestandsnaam:
-`src/content/reizen/bon-bini.md` wordt `/travel/reizen/bon-bini/`.
+## 🔗 Links naar de andere twee sites
+
+De drie adressen staan op **één plek**: `src/lib/moda.mjs`. De knop *Reizen* in het menu en
+de link *Alle Moda-diensten* onderaan halen hun adres daaruit. Wijst een domein nog nergens
+heen, pas ze daar dan tijdelijk aan.
+
+`public/_redirects` vangt de oude adressen op: `/luchthaven/…` gaat naar `/…`, en `/travel/…`
+gaat door naar modatravel.be.
 
 ## ☁️ Online zetten (Cloudflare)
 
@@ -127,7 +132,8 @@ Wil je vanaf je eigen computer online zetten, dan kan dat met één commando:
 npm run deploy
 ```
 
-Een eigen domein koppel je in Cloudflare bij de site onder **Domains & Routes**.
+Het domein **moda-sneltransport.be** koppel je in Cloudflare bij de site onder
+**Domains & Routes**.
 
 ## ✉️ Formulieren
 
@@ -135,25 +141,10 @@ De contact- en offerteformulieren versturen via **Web3Forms** (gratis, geen serv
 Lukt dat niet, dan opent de site automatisch het e-mailprogramma van de bezoeker als
 terugvaloptie.
 
-## 🧑‍💼 Reizen beheren
-
-Het reisbureau logt in op **`/admin/`** met een GitHub-account en beheert daar de reizen en
-de contactgegevens. Wat ze opslaan komt als bestand in deze repo terecht, waarna Cloudflare
-de site opnieuw opbouwt.
-
-Het instellen van dat scherm (één keer een inlogscriptje op Cloudflare en een GitHub-app)
-staat stap voor stap in **[CMS.md](CMS.md)**.
-
-> Nog niet ingesteld? Vul dan eerst `base_url` in bij `public/admin/config.yml`.
-
 ## 📸 Foto's vervangen
 
-Foto's die bij een reis horen, gaan in `src/assets/travel/reizen/` — die worden bij het
-bouwen automatisch verkleind en in de juiste verhouding bijgesneden. Het beheerscherm doet
-dat vanzelf.
-
-Andere foto's zet je in `public/assets/images/` en verwijs je aan met een pad dat begint met
-`/assets/images/…`. Die blijven zoals ze zijn.
+Zet je nieuwe foto in `public/assets/images/` en verwijs ernaar met een pad dat begint
+met `/assets/images/…`.
 
 ---
 

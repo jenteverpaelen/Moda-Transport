@@ -1,5 +1,9 @@
 ---
+import { MODA } from "../lib/moda.mjs";
+
 const { titel, omschrijving, actief = "", heeftHero = false } = Astro.props;
+/* Het volledige adres van déze pagina, voor Google en voor het delen op sociale media. */
+const paginaUrl = new URL(Astro.url.pathname, MODA.vervoer).href;
 ---
 <!DOCTYPE html>
 <html lang="nl">
@@ -18,7 +22,7 @@ const { titel, omschrijving, actief = "", heeftHero = false } = Astro.props;
 
   <!-- Zelf-verwijzende canonical: verwijst altijd naar de pagina zelf,
        op eender welk domein waar de site staat. -->
-  <link rel="canonical" href="/luchthaven/" />
+  <link rel="canonical" href={paginaUrl} />
   <meta name="robots" content="index, follow" />
   <meta name="author" content="Moda Transport" />
 
@@ -34,15 +38,15 @@ const { titel, omschrijving, actief = "", heeftHero = false } = Astro.props;
   <meta property="og:description" content="Exclusief luchthavenvervoer vanuit Heusden-Zolder en heel Limburg. Stipt, comfortabel en aan een vaste prijs, 24/7." />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="nl_BE" />
-  <meta property="og:url" content="https://www.moda-sneltransport.be/luchthaven/" />
-  <meta property="og:image" content="https://www.moda-sneltransport.be/assets/images/fleet.jpeg" />
+  <meta property="og:url" content={paginaUrl} />
+  <meta property="og:image" content="https://moda-sneltransport.be/assets/images/fleet.jpeg" />
   <meta property="og:image:alt" content="De luxe Mercedes-vloot van Moda Transport" />
 
   <!-- Twitter-kaart -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Moda Transport | Luchthavenvervoer Limburg" />
   <meta name="twitter:description" content="Exclusief luchthavenvervoer vanuit Heusden-Zolder en heel Limburg. Vaste prijs, stipt en 24/7." />
-  <meta name="twitter:image" content="https://www.moda-sneltransport.be/assets/images/fleet.jpeg" />
+  <meta name="twitter:image" content="https://moda-sneltransport.be/assets/images/fleet.jpeg" />
 
   <!-- Zet canonical + social-URL's op het werkelijke live-domein (welk ook),
        zodat alles zelf-verwijzend en correct is zonder handmatig aanpassen. -->
@@ -73,13 +77,13 @@ const { titel, omschrijving, actief = "", heeftHero = false } = Astro.props;
   {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "@id": "https://www.moda-sneltransport.be/#business",
+    "@id": "https://moda-sneltransport.be/#business",
     "name": "Moda Transport",
     "alternateName": "Moda Travel",
     "description": "Exclusief luchthavenvervoer vanuit Heusden-Zolder en heel Limburg met luxe Mercedes-wagens. Stipt, comfortabel en aan een vaste prijs.",
-    "url": "https://www.moda-sneltransport.be/",
-    "image": "https://www.moda-sneltransport.be/assets/images/fleet.jpeg",
-    "logo": "https://www.moda-sneltransport.be/assets/images/logo-transport.png",
+    "url": "https://moda-sneltransport.be/",
+    "image": "https://moda-sneltransport.be/assets/images/fleet.jpeg",
+    "logo": "https://moda-sneltransport.be/assets/images/logo-transport.png",
     "telephone": "+3211243003",
     "email": "info@moda-sneltransport.be",
     "priceRange": "€€",
@@ -157,24 +161,24 @@ const { titel, omschrijving, actief = "", heeftHero = false } = Astro.props;
   <!-- ===================== NAVIGATIE ===================== -->
   <header class={heeftHero ? "nav" : "nav nav--vast"} id="nav">
     <div class="container nav__inner">
-      <a href="/luchthaven/" class="nav__brand" aria-label="Moda Transport, home">
+      <a href="/" class="nav__brand" aria-label="Moda Transport, home">
         <img class="nav__logo" src="/assets/images/logo-transport-licht.png" alt="Moda Transport" width="1600" height="533" />
       </a>
 
       <nav class="nav__links" id="navLinks" aria-label="Hoofdmenu">
-        <a href="/luchthaven/diensten/" aria-current={actief === "diensten" ? "page" : undefined}>Diensten</a>
-        <a href="/luchthaven/vloot/" aria-current={actief === "vloot" ? "page" : undefined}>Onze vloot</a>
-        <a href="/luchthaven/reviews/" aria-current={actief === "reviews" ? "page" : undefined}>Reviews</a>
-        <a href="/luchthaven/prijs/" aria-current={actief === "prijs" ? "page" : undefined}>Prijs berekenen</a>
-        <a href="/luchthaven/reserveren/" aria-current={actief === "reserveren" ? "page" : undefined}>Contact</a>
-        <a href="/luchthaven/reserveren/" class="btn btn--sm btn--primary nav__cta">Reserveer</a>
+        <a href="/diensten/" aria-current={actief === "diensten" ? "page" : undefined}>Diensten</a>
+        <a href="/vloot/" aria-current={actief === "vloot" ? "page" : undefined}>Onze vloot</a>
+        <a href="/reviews/" aria-current={actief === "reviews" ? "page" : undefined}>Reviews</a>
+        <a href="/prijs/" aria-current={actief === "prijs" ? "page" : undefined}>Prijs berekenen</a>
+        <a href="/reserveren/" aria-current={actief === "reserveren" ? "page" : undefined}>Contact</a>
+        <a href="/reserveren/" class="btn btn--sm btn--primary nav__cta">Reserveer</a>
       </nav>
 
       <div class="nav__actions">
         <a href="/transport/" class="nav__switch" aria-label="Naar transport &amp; sneltransport">
           <span aria-hidden="true">🚚</span><span class="nav__switch__txt">Transport</span>
         </a>
-        <a href="/travel/" class="nav__switch" aria-label="Naar Moda Travel reisbureau">
+        <a href={MODA.travel + "/"} class="nav__switch" aria-label="Naar Moda Travel reisbureau">
           <span aria-hidden="true">🧳</span><span class="nav__switch__txt">Reizen</span>
         </a>
 
@@ -224,12 +228,12 @@ const { titel, omschrijving, actief = "", heeftHero = false } = Astro.props;
       <div class="footer__col">
         <h4>Ontdek</h4>
         <ul>
-          <li><a href="/luchthaven/diensten/">Onze diensten</a></li>
-          <li><a href="/luchthaven/vloot/">Onze vloot</a></li>
-          <li><a href="/luchthaven/reviews/">Reviews</a></li>
-          <li><a href="/luchthaven/prijs/">Prijs berekenen</a></li>
-          <li><a href="/luchthaven/diensten/">Over ons</a></li>
-          <li><a href="/luchthaven/reserveren/">Reserveren</a></li>
+          <li><a href="/diensten/">Onze diensten</a></li>
+          <li><a href="/vloot/">Onze vloot</a></li>
+          <li><a href="/reviews/">Reviews</a></li>
+          <li><a href="/prijs/">Prijs berekenen</a></li>
+          <li><a href="/diensten/">Over ons</a></li>
+          <li><a href="/reserveren/">Reserveren</a></li>
         </ul>
       </div>
 
@@ -257,7 +261,7 @@ const { titel, omschrijving, actief = "", heeftHero = false } = Astro.props;
 
     <div class="container footer__bottom">
       <p>© <span id="year"></span> Moda Transport. Alle rechten voorbehouden.</p>
-      <p class="footer__made">Reizen zonder zorgen. · <a href="/">Alle Moda-diensten</a></p>
+      <p class="footer__made">Reizen zonder zorgen. · <a href={MODA.portaal + "/"}>Alle Moda-diensten</a></p>
     </div>
   </footer>
 

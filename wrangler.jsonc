@@ -1,5 +1,5 @@
 {
-  // Moda — Cloudflare-instellingen
+  // moda-sneltransport.be — Cloudflare-instellingen
   // ---------------------------------------------------------------
   // De site is volledig statisch: `npm run build` maakt kant-en-klare
   // HTML-bestanden in dist/, en Cloudflare zet enkel die bestanden online.

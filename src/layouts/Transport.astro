@@ -1,5 +1,9 @@
 ---
+import { MODA } from "../lib/moda.mjs";
+
 const { titel, omschrijving, actief = "", heeftHero = false } = Astro.props;
+/* Het volledige adres van déze pagina, voor Google en voor het delen op sociale media. */
+const paginaUrl = new URL(Astro.url.pathname, MODA.vervoer).href;
 ---
 <!DOCTYPE html>
 <html lang="nl">
@@ -15,7 +19,7 @@ const { titel, omschrijving, actief = "", heeftHero = false } = Astro.props;
   <title>{titel}</title>
   <meta name="description" content={omschrijving} />
 
-  <link rel="canonical" href="/transport/" />
+  <link rel="canonical" href={paginaUrl} />
   <meta name="robots" content="index, follow" />
   <meta name="author" content="Moda Transport" />
 
@@ -31,15 +35,15 @@ const { titel, omschrijving, actief = "", heeftHero = false } = Astro.props;
   <meta property="og:description" content="Van pakket tot volle vracht. Sneltransport, koerier, koeltransport en ADR vanuit Heusden-Zolder, lokaal én internationaal." />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="nl_BE" />
-  <meta property="og:url" content="https://www.moda-sneltransport.be/transport/" />
-  <meta property="og:image" content="https://www.moda-sneltransport.be/assets/images/transport/hero.jpg" />
+  <meta property="og:url" content={paginaUrl} />
+  <meta property="og:image" content="https://moda-sneltransport.be/assets/images/transport/hero.jpg" />
   <meta property="og:image:alt" content="Het wagenpark van Moda Transport" />
 
   <!-- Twitter-kaart -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Moda Transport | Sneltransport Limburg" />
   <meta name="twitter:description" content="Van pakket tot volle vracht. Snel, betrouwbaar en 24/7 beschikbaar." />
-  <meta name="twitter:image" content="https://www.moda-sneltransport.be/assets/images/transport/hero.jpg" />
+  <meta name="twitter:image" content="https://moda-sneltransport.be/assets/images/transport/hero.jpg" />
 
   <!-- Canonical + social-URL's op het werkelijke live-domein zetten. -->
   <script is:inline>
@@ -69,12 +73,12 @@ const { titel, omschrijving, actief = "", heeftHero = false } = Astro.props;
   {
     "@context": "https://schema.org",
     "@type": "MovingCompany",
-    "@id": "https://www.moda-sneltransport.be/transport/#business",
+    "@id": "https://moda-sneltransport.be/transport/#business",
     "name": "Moda Transport",
     "description": "Sneltransport, koeriersdiensten en vrachtvervoer vanuit Heusden-Zolder. Van 1 pallet tot volle vracht, koeltransport en ADR, lokaal én internationaal.",
-    "url": "https://www.moda-sneltransport.be/transport/",
-    "image": "https://www.moda-sneltransport.be/assets/images/transport/hero.jpg",
-    "logo": "https://www.moda-sneltransport.be/assets/images/logo-transport.png",
+    "url": "https://moda-sneltransport.be/transport/",
+    "image": "https://moda-sneltransport.be/assets/images/transport/hero.jpg",
+    "logo": "https://moda-sneltransport.be/assets/images/logo-transport.png",
     "telephone": "+3211243003",
     "email": "info@moda-sneltransport.be",
     "priceRange": "€€",
@@ -127,7 +131,7 @@ const { titel, omschrijving, actief = "", heeftHero = false } = Astro.props;
       </nav>
 
       <div class="nav__actions">
-        <a href="/luchthaven/" class="nav__switch" aria-label="Naar luchthavenvervoer">
+        <a href="/" class="nav__switch" aria-label="Naar luchthavenvervoer">
           <span aria-hidden="true">✈️</span><span class="nav__switch__txt">Luchthavenvervoer</span>
         </a>
 
@@ -185,7 +189,7 @@ const { titel, omschrijving, actief = "", heeftHero = false } = Astro.props;
       <div class="footer__col">
         <h4>Ook bij Moda</h4>
         <ul>
-          <li><a href="/luchthaven/">Luchthavenvervoer</a></li>
+          <li><a href="/">Luchthavenvervoer</a></li>
           <li>24/7 beschikbaar</li>
           <li>Lokaal &amp; internationaal</li>
         </ul>
