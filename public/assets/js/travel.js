@@ -264,7 +264,7 @@ function initFeed() {
     fetchJson(feedUrl)
       .then((raw) => {
         const items = normalizePosts(raw);
-        if (items.length) return renderFeed(grid, items);
+        if (items.length) { UIT_EIGEN_BESTAND = false; return renderFeed(grid, items); }
         return loadFallback(grid, fallbackUrl, showStatus);
       })
       .catch(() => loadFallback(grid, fallbackUrl, showStatus));
@@ -282,7 +282,7 @@ function loadFallback(grid, url, showStatus) {
   return fetchJson(url)
     .then((raw) => {
       const items = normalizePosts(raw);
-      if (items.length) renderFeed(grid, items);
+      if (items.length) { UIT_EIGEN_BESTAND = true; renderFeed(grid, items); }
       else useInlineSamples(grid, showStatus);
     })
     .catch(() => useInlineSamples(grid, showStatus));
@@ -290,6 +290,7 @@ function loadFallback(grid, url, showStatus) {
 
 function useInlineSamples(grid, showStatus) {
   const items = normalizePosts({ posts: FALLBACK_POSTS });
+  UIT_EIGEN_BESTAND = true;
   if (items.length) renderFeed(grid, items);
   else showStatus("Binnenkort vind je hier onze laatste reizen. Volg ons alvast op Instagram.");
 }
@@ -301,8 +302,12 @@ function fetchJson(url) {
   });
 }
 
-// Alle gerenderde reizen (voor het detailvenster).
+// Alle gerenderde reizen.
 let REIZEN = [];
+// Komen ze uit content/travel-posts.json? Dan is er voor elke reis een eigen
+// pagina gebouwd. Bij een live Instagram-feed bestaat die pagina niet en
+// verwijzen we naar de post zelf.
+let UIT_EIGEN_BESTAND = false;
 
 /* Zet zowel onze eigen voorbeeld-vorm als de Behold-/Graph-vorm om naar één model:
    { images[], link, caption, + geparste velden }. Zo is de omschakeling naadloos. */
@@ -397,25 +402,35 @@ function parsePost(caption) {
   return out;
 }
 
+/** Maakt van een titel hetzelfde webadres als tijdens het bouwen (src/lib/reis.mjs). */
+function maakSlug(tekst, reserve) {
+  const t = (tekst || "")
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^\p{L}\p{N}]+/gu, "-")
+    .replace(/^-+|-+$/g, "")
+    .toLowerCase();
+  return t || ("reis-" + reserve);
+}
+
 function renderFeed(grid, items) {
   REIZEN = items;
 
   grid.innerHTML = items.map((it, i) => {
     const cover = it.images[0];
     const title = it.title || "Reis van Moda Travel";
+    // Uit ons eigen bestand? Dan bestaat er een volwaardige reispagina.
+    const doel = UIT_EIGEN_BESTAND ? "/travel/reizen/" + maakSlug(it.title, i) + "/" : it.link;
+    const extern = UIT_EIGEN_BESTAND ? "" : ' target="_blank" rel="noopener"';
     const badges = [];
     if (it.price) badges.push(`<span class="reiscard__badge">💶 ${escapeHtml(it.price)}</span>`);
     if (it.duration) badges.push(`<span class="reiscard__badge">🌙 ${escapeHtml(it.duration)}</span>`);
     else if (it.departure) badges.push(`<span class="reiscard__badge">📅 ${escapeHtml(it.departure)}</span>`);
     const sum = it.summary || it.destination || "";
     return (
-      `<article class="reiscard reveal" tabindex="0" role="button" data-idx="${i}"` +
+      `<a class="reiscard reveal" href="${escapeAttr(doel)}"${extern}` +
       ` aria-label="Bekijk reis: ${escapeAttr(title)}">` +
         `<div class="reiscard__media">` +
           `<img src="${escapeAttr(cover)}" alt="${escapeAttr(title)}" loading="lazy" />` +
-          `<span class="reiscard__ig" aria-hidden="true">` +
-            `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">` +
-            `<rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></span>` +
           (it.images.length > 1 ? `<span class="reiscard__count" aria-hidden="true">1/${it.images.length}</span>` : ``) +
           (badges.length ? `<div class="reiscard__badges">${badges.join("")}</div>` : ``) +
         `</div>` +
@@ -424,13 +439,10 @@ function renderFeed(grid, items) {
           (sum ? `<p class="reiscard__sum">${escapeHtml(sum)}</p>` : ``) +
           `<span class="reiscard__more">Bekijk reis →</span>` +
         `</div>` +
-      `</article>`
+      `</a>`
     );
   }).join("");
 
-  bindCards(grid);
-
-  // Nieuw ingevoegde kaarten mooi laten inkomen.
   if ("IntersectionObserver" in window) {
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e, i) => {
@@ -444,127 +456,78 @@ function renderFeed(grid, items) {
   } else {
     grid.querySelectorAll(".reveal").forEach((el) => el.classList.add("is-visible"));
   }
-
-  // Eventuele deeplink (#reis-N) meteen openen.
-  const m = (location.hash || "").match(/^#reis-(\d+)$/);
-  if (m) openReis(parseInt(m[1], 10));
 }
 
-// Klik/toets op een kaart opent het detailvenster (eenmalig gekoppeld, delegatie).
-function bindCards(grid) {
-  if (grid.__bound) return;
-  grid.__bound = true;
-  grid.addEventListener("click", (e) => {
-    const card = e.target.closest(".reiscard"); if (!card) return;
-    openReis(parseInt(card.dataset.idx, 10));
-  });
-  grid.addEventListener("keydown", (e) => {
-    if (e.key !== "Enter" && e.key !== " ") return;
-    const card = e.target.closest(".reiscard"); if (!card) return;
-    e.preventDefault();
-    openReis(parseInt(card.dataset.idx, 10));
-  });
-}
+/* ---------- Fotovenster op de reispagina ---------- */
+document.addEventListener("DOMContentLoaded", function () {
+  const box = document.getElementById("fotobox");
+  const foto = document.getElementById("fotoboxFoto");
+  const teller = document.getElementById("fotoboxTeller");
+  if (!box || !foto) return;
 
-/* ---------- Detailvenster (modal) ---------- */
-let MODAL_LAST_FOCUS = null;
+  const lijst = (box.dataset.fotos || "").split("|").filter(Boolean);
+  let index = 0, vorigeFocus = null;
 
-function openReis(idx) {
-  const reis = REIZEN[idx];
-  const modal = document.getElementById("reisModal");
-  const content = document.getElementById("reisModalContent");
-  if (!reis || !modal || !content) return;
-
-  const thumbs = reis.images.length > 1
-    ? `<div class="reismodal__thumbs">${reis.images.map((src, i) =>
-        `<button type="button" class="reismodal__thumb${i === 0 ? " is-active" : ""}" data-src="${escapeAttr(src)}" aria-label="Foto ${i + 1}"><img src="${escapeAttr(src)}" alt="" loading="lazy" /></button>`
-      ).join("")}</div>`
-    : "";
-
-  const badge = (icon, label, extra) => label
-    ? `<div class="reismodal__badge"><span class="reismodal__badge-ic" aria-hidden="true">${icon}</span><span><strong>${escapeHtml(label)}</strong>${extra ? `<em>${escapeHtml(extra)}</em>` : ""}</span></div>`
-    : "";
-  const badges = [
-    badge("💶", reis.price, reis.priceNote),
-    badge("📅", reis.departure ? "Vertrek " + reis.departure : "", ""),
-    badge("🌙", reis.duration, ""),
-    badge("✈️", reis.airport ? "Vanuit " + reis.airport : "", ""),
-  ].filter(Boolean).join("");
-
-  const desc = (reis.description || "")
-    .split("\n").map((l) => l.trim()).filter(Boolean)
-    .map((l) => `<p>${escapeHtml(l)}</p>`).join("");
-
-  content.innerHTML =
-    `<div class="reismodal__media">` +
-      `<img class="reismodal__img" id="reisModalImg" src="${escapeAttr(reis.images[0])}" alt="${escapeAttr(reis.title || "Reis")}" />` +
-      thumbs +
-    `</div>` +
-    `<div class="reismodal__info">` +
-      `<h3 class="reismodal__title" id="reisModalTitle">${escapeHtml(reis.title || "Onze reis")}</h3>` +
-      (reis.summary ? `<p class="reismodal__sub">${escapeHtml(reis.summary)}</p>` : "") +
-      (badges ? `<div class="reismodal__badges">${badges}</div>` : "") +
-      (desc ? `<div class="reismodal__desc">${desc}</div>` : "") +
-      `<div class="reismodal__actions">` +
-        `<button type="button" class="btn btn--primary btn--lg" id="reisAanvraag">Vraag deze reis aan</button>` +
-        `<a class="btn btn--ghost" href="${escapeAttr(reis.link)}" target="_blank" rel="noopener">Bekijk op Instagram</a>` +
-      `</div>` +
-    `</div>`;
-
-  // Thumbnails wisselen het hoofdbeeld.
-  const mainImg = content.querySelector("#reisModalImg");
-  content.querySelectorAll(".reismodal__thumb").forEach((t) => {
-    t.addEventListener("click", () => {
-      mainImg.src = t.dataset.src;
-      content.querySelectorAll(".reismodal__thumb").forEach((x) => x.classList.remove("is-active"));
-      t.classList.add("is-active");
-    });
-  });
-
-  // "Vraag deze reis aan" → formulier invullen en ernaartoe scrollen.
-  const aanvraag = content.querySelector("#reisAanvraag");
-  if (aanvraag) aanvraag.addEventListener("click", () => { prefillOfferte(reis); closeReis(); });
-
-  MODAL_LAST_FOCUS = document.activeElement;
-  modal.classList.add("is-open");
-  modal.setAttribute("aria-hidden", "false");
-  document.body.style.overflow = "hidden";
-  try { history.replaceState(null, "", "#reis-" + idx); } catch (e) {}
-  const closeBtn = modal.querySelector(".reismodal__close");
-  if (closeBtn) closeBtn.focus();
-}
-
-function closeReis() {
-  const modal = document.getElementById("reisModal");
-  if (!modal || !modal.classList.contains("is-open")) return;
-  modal.classList.remove("is-open");
-  modal.setAttribute("aria-hidden", "true");
-  document.body.style.overflow = "";
-  if (/^#reis-\d+$/.test(location.hash)) { try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {} }
-  if (MODAL_LAST_FOCUS && MODAL_LAST_FOCUS.focus) MODAL_LAST_FOCUS.focus();
-}
-
-function prefillOfferte(reis) {
-  const dest = document.getElementById("destination");
-  const notes = document.getElementById("notes");
-  const val = reis.destination || reis.title || "";
-  if (dest && val) dest.value = val;
-  if (notes) {
-    const ref = "Interesse in: " + (reis.title || val) + (reis.departure ? " (vertrek " + reis.departure + ")" : "");
-    notes.value = notes.value ? notes.value + "\n" + ref : ref;
+  function toon(i) {
+    if (!lijst.length) return;
+    index = (i + lijst.length) % lijst.length;
+    foto.src = lijst[index];
+    foto.alt = "Foto " + (index + 1) + " van " + lijst.length;
+    if (teller) teller.textContent = (index + 1) + " / " + lijst.length;
   }
-  const offerte = document.getElementById("offerte");
-  if (offerte) offerte.scrollIntoView({ behavior: "smooth", block: "start" });
-  const name = document.getElementById("name");
-  if (name) setTimeout(() => name.focus({ preventScroll: true }), 500);
-}
+  function sluiten() {
+    box.classList.remove("is-open");
+    box.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+    if (vorigeFocus && vorigeFocus.focus) vorigeFocus.focus();
+  }
 
-// Modal-sluiters (achtergrond, kruisje, ESC) eenmalig koppelen.
-document.addEventListener("DOMContentLoaded", () => {
-  const modal = document.getElementById("reisModal");
-  if (!modal) return;
-  modal.querySelectorAll("[data-close]").forEach((el) => el.addEventListener("click", closeReis));
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeReis(); });
+  document.addEventListener("click", function (e) {
+    const tegel = e.target.closest(".reisfoto");
+    if (tegel) {
+      vorigeFocus = document.activeElement;
+      toon(parseInt(tegel.dataset.i, 10) || 0);
+      box.classList.add("is-open");
+      box.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      const sluit = box.querySelector(".fotobox__sluit");
+      if (sluit) sluit.focus();
+      return;
+    }
+    if (e.target.closest("[data-sluit]")) { sluiten(); return; }
+    const stap = e.target.closest("[data-stap]");
+    if (stap && box.classList.contains("is-open")) toon(index + parseInt(stap.dataset.stap, 10));
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (!box.classList.contains("is-open")) return;
+    if (e.key === "Escape") sluiten();
+    if (e.key === "ArrowRight") toon(index + 1);
+    if (e.key === "ArrowLeft") toon(index - 1);
+  });
+});
+
+/* ---------- Komt de bezoeker van een reispagina? Dan het formulier alvast invullen ---------- */
+document.addEventListener("DOMContentLoaded", function () {
+  const veld = document.getElementById("destination");
+  if (!veld) return;
+  const slug = new URLSearchParams(location.search).get("reis");
+  if (!slug) return;
+
+  fetch("/content/travel-posts.json", { headers: { Accept: "application/json" } })
+    .then((r) => r.json())
+    .then((raw) => {
+      const posts = normalizePosts(raw);
+      const reis = posts.find((p, i) => maakSlug(p.title, i) === slug);
+      if (!reis) return;
+      veld.value = reis.destination || reis.title || "";
+      const notities = document.getElementById("notes");
+      if (notities) {
+        const ref = "Interesse in: " + (reis.title || "") + (reis.departure ? " (vertrek " + reis.departure + ")" : "");
+        notities.value = notities.value ? notities.value + "\n" + ref : ref;
+      }
+    })
+    .catch(() => {});
 });
 
 function escapeHtml(s) {

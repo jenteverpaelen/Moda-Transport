@@ -109,28 +109,7 @@
   color: #fff; font-family: var(--font-head); font-weight: 700; font-size: .95rem;
 }
 
-/* -------------------- Fotovenster -------------------- */
-.fotobox { position: fixed; inset: 0; z-index: 2000; display: none; align-items: center; justify-content: center; padding: 24px; }
-.fotobox.is-open { display: flex; }
-.fotobox__achtergrond { position: absolute; inset: 0; background: rgba(6,6,8,.88); backdrop-filter: blur(3px); }
-.fotobox__paneel { position: relative; z-index: 1; max-width: min(1100px, 100%); width: 100%; text-align: center; }
-.fotobox__foto {
-  max-width: 100%; max-height: 78vh; margin: 0 auto; display: block;
-  border-radius: var(--radius-sm); box-shadow: 0 30px 80px rgba(0,0,0,.6);
-}
-.fotobox__bijschrift { margin-top: 14px; color: #d8d8e0; font-size: .95rem; }
-.fotobox__teller { color: #8b8b96; margin-left: 8px; }
-.fotobox__sluit, .fotobox__nav {
-  position: absolute; z-index: 3; border: 0; cursor: pointer; color: #fff;
-  background: rgba(255,255,255,.12); border-radius: 50%; display: grid; place-items: center;
-  transition: background .25s, transform .25s var(--ease);
-}
-.fotobox__sluit { top: -6px; right: -6px; width: 44px; height: 44px; font-size: 1.7rem; line-height: 1; }
-.fotobox__sluit:hover { background: var(--red); transform: rotate(90deg); }
-.fotobox__nav { top: 50%; transform: translateY(-50%); width: 52px; height: 52px; font-size: 2rem; line-height: 1; }
-.fotobox__nav:hover { background: var(--red); }
-.fotobox__nav--vorige { left: -8px; }
-.fotobox__nav--volgende { right: -8px; }
+/* Het fotovenster staat in style.css, want zowel transport als travel gebruiken het. */
 
 @media (max-width: 620px) {
   .fotobox { padding: 12px; }
