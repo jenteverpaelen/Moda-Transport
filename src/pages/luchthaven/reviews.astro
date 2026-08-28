@@ -1,0 +1,34 @@
+---
+import Luchthaven from "../../layouts/Luchthaven.astro";
+---
+<Luchthaven
+  titel="Reviews | Moda luchthavenvervoer"
+  omschrijving="Wat reizigers over Moda zeggen: stipt, vriendelijk en comfortabel."
+  actief="reviews">
+
+  <section class="section section--dark" id="reviews">
+    <div class="container">
+      <div class="section__head reveal">
+        <p class="section__eyebrow">Wat klanten zeggen</p>
+        <h2 class="section__title">Beoordeeld met <span class="text-accent">★★★★★</span></h2>
+        <p class="section__lead">
+          Onze klanten waarderen vooral de stiptheid, netheid en vriendelijkheid.
+          Lees alle beoordelingen op Google onder <strong>“Moda Transport”</strong>.
+        </p>
+      </div>
+
+      <div class="reviews-marquee reveal">
+        <div class="reviews-row" id="reviews-track">
+          <!-- Reviews worden geïnjecteerd via JS (assets/js/reviews.js) -->
+        </div>
+      </div>
+
+      <div class="reviews__cta reveal">
+        <a href="https://www.google.com/search?q=Moda+Transport+reviews" target="_blank" rel="noopener" class="btn btn--ghost">
+          Bekijk alle Google-reviews
+        </a>
+      </div>
+    </div>
+  </section>
+
+</Luchthaven>

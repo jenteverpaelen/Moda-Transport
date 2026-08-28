@@ -367,11 +367,6 @@
    onder elkaar staan, niet achter elkaar. */
 .moz__tekst, .moz__naam, .moz__regel { display: block; }
 
-/* Losse pagina's: de eerste sectie moet onder de vaste balk beginnen.
-   De hero heeft zijn eigen ruimte, dus die valt hier bewust buiten. */
-.pagina > .section:first-child { padding-top: 142px; }
-@media (max-width: 720px) { .pagina > .section:first-child { padding-top: 116px; } }
-
 /* =========================================================
    Reisdetailpagina
    ========================================================= */

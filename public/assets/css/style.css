@@ -627,3 +627,18 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.12; font-weight: 
 .fotobox__nav:hover { background: var(--red); }
 .fotobox__nav--vorige { left: -8px; }
 .fotobox__nav--volgende { right: -8px; }
+
+
+/* -------------------- Losse pagina's -------------------- */
+/* De eerste sectie moet onder de vaste balk beginnen. Pagina's die met een
+   hero openen hebben hun eigen ruimte en vallen hier bewust buiten. */
+.pagina > .section:first-child { padding-top: 142px; }
+@media (max-width: 720px) { .pagina > .section:first-child { padding-top: 116px; } }
+
+/* Zonder hero is de balk doorzichtig over een lichte sectie, waardoor het menu
+   onleesbaar wordt. Op die pagina's krijgt de balk meteen een achtergrond. */
+.nav--vast {
+  background: rgba(12, 12, 14, 0.92);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 1px 0 var(--line);
+}

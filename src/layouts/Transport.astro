@@ -15,9 +15,9 @@ const { titel, omschrijving, actief = "", heeftHero = false } = Astro.props;
   <title>{titel}</title>
   <meta name="description" content={omschrijving} />
 
-  <link rel="canonical" href="/travel/" />
+  <link rel="canonical" href="/transport/" />
   <meta name="robots" content="index, follow" />
-  <meta name="author" content="Moda Travel" />
+  <meta name="author" content="Moda Transport" />
 
   <!-- Lokale SEO (geo) -->
   <meta name="geo.region" content="BE-VLI" />
@@ -26,26 +26,26 @@ const { titel, omschrijving, actief = "", heeftHero = false } = Astro.props;
   <meta name="ICBM" content="51.0271799, 5.2654197" />
 
   <!-- Social preview (Open Graph) -->
-  <meta property="og:site_name" content="Moda Travel" />
-  <meta property="og:title" content="Moda Travel | Reizen zonder zorgen" />
-  <meta property="og:description" content="Luxe reizen op maat: citytrips, zonvakanties, verre rondreizen en huwelijksreizen, met persoonlijke begeleiding van begin tot eind." />
+  <meta property="og:site_name" content="Moda Transport" />
+  <meta property="og:title" content="Moda Transport | Sneltransport &amp; koeriersdiensten Limburg" />
+  <meta property="og:description" content="Van pakket tot volle vracht. Sneltransport, koerier, koeltransport en ADR vanuit Heusden-Zolder, lokaal én internationaal." />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="nl_BE" />
-  <meta property="og:url" content="https://modatravel.be/travel/" />
-  <meta property="og:image" content="https://modatravel.be/assets/images/travel/hero.jpg" />
-  <meta property="og:image:alt" content="Reisbestemming van Moda Travel" />
+  <meta property="og:url" content="https://www.moda-sneltransport.be/transport/" />
+  <meta property="og:image" content="https://www.moda-sneltransport.be/assets/images/transport/hero.jpg" />
+  <meta property="og:image:alt" content="Het wagenpark van Moda Transport" />
 
   <!-- Twitter-kaart -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Moda Travel | Reizen zonder zorgen" />
-  <meta name="twitter:description" content="Luxe reizen op maat, met persoonlijke begeleiding van begin tot eind." />
-  <meta name="twitter:image" content="https://modatravel.be/assets/images/travel/hero.jpg" />
+  <meta name="twitter:title" content="Moda Transport | Sneltransport Limburg" />
+  <meta name="twitter:description" content="Van pakket tot volle vracht. Snel, betrouwbaar en 24/7 beschikbaar." />
+  <meta name="twitter:image" content="https://www.moda-sneltransport.be/assets/images/transport/hero.jpg" />
 
   <!-- Canonical + social-URL's op het werkelijke live-domein zetten. -->
   <script is:inline>
     (function () {
       var origin = location.origin, page = origin + location.pathname;
-      var img = origin + "/assets/images/travel/hero.jpg";
+      var img = origin + "/assets/images/transport/hero.jpg";
       var set = function (sel, attr, val) { var el = document.querySelector(sel); if (el) el.setAttribute(attr, val); };
       set('link[rel="canonical"]', "href", page);
       set('meta[property="og:url"]', "content", page);
@@ -59,29 +59,25 @@ const { titel, omschrijving, actief = "", heeftHero = false } = Astro.props;
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="/assets/css/style.css" />
-  <link rel="stylesheet" href="/assets/css/travel.css" />
+  <link rel="stylesheet" href="/assets/css/transport.css" />
 
-  <!-- Gestructureerde data: reisbureau. -->
+  <!-- Gestructureerde data: transport-/vrachtdienst. -->
   <script is:inline type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "TravelAgency",
-    "@id": "https://modatravel.be/travel/#business",
-    "name": "Moda Travel",
-    "description": "Reisbureau uit Heusden-Zolder dat luxe reizen op maat samenstelt: citytrips, zonvakanties, verre rondreizen en huwelijksreizen, met persoonlijke begeleiding voor en tijdens de reis.",
-    "url": "https://modatravel.be/travel/",
-    "image": "https://modatravel.be/assets/images/travel/hero.jpg",
-    "logo": "https://modatravel.be/assets/images/logo-travel.png",
+    "@type": "MovingCompany",
+    "@id": "https://www.moda-sneltransport.be/transport/#business",
+    "name": "Moda Transport",
+    "description": "Sneltransport, koeriersdiensten en vrachtvervoer vanuit Heusden-Zolder. Van 1 pallet tot volle vracht, koeltransport en ADR, lokaal én internationaal.",
+    "url": "https://www.moda-sneltransport.be/transport/",
+    "image": "https://www.moda-sneltransport.be/assets/images/transport/hero.jpg",
+    "logo": "https://www.moda-sneltransport.be/assets/images/logo-transport.png",
     "telephone": "+3211243003",
-    "email": "info@modatravel.be",
+    "email": "info@moda-sneltransport.be",
     "priceRange": "€€",
-    "sameAs": [
-      "https://www.instagram.com/modatravel_/",
-      "https://www.facebook.com/modatravel/"
-    ],
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Beringersteenweg 14",
@@ -91,8 +87,17 @@ const { titel, omschrijving, actief = "", heeftHero = false } = Astro.props;
       "addressCountry": "BE"
     },
     "geo": { "@type": "GeoCoordinates", "latitude": 51.0271799, "longitude": 5.2654197 },
-    "areaServed": { "@type": "Country", "name": "België" },
-    "knowsAbout": ["Reizen op maat", "Citytrips", "Groepsreizen", "Zonvakanties", "Rondreizen", "Huwelijksreizen", "Lapland", "Thailand", "New York", "Parijs", "Zakynthos"]
+    "areaServed": [
+      { "@type": "Country", "name": "België" },
+      { "@type": "Place", "name": "Europa" }
+    ],
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+      "opens": "00:00",
+      "closes": "23:59"
+    },
+    "knowsAbout": ["Sneltransport", "Expresstransport", "Koeriersdienst", "Palletvervoer", "Koeltransport", "ADR", "Vrachtvervoer"]
   }
   </script>
 </head>
@@ -110,25 +115,20 @@ const { titel, omschrijving, actief = "", heeftHero = false } = Astro.props;
   <!-- ===================== NAVIGATIE ===================== -->
   <header class={heeftHero ? "nav" : "nav nav--vast"} id="nav">
     <div class="container nav__inner">
-      <a href="/travel/" class="nav__brand" aria-label="Moda Travel, home">
-        <img class="nav__logo nav__logo--op-licht" src="/assets/images/logo-travel.png" alt="Moda Travel" width="1600" height="533" />
-        <img class="nav__logo nav__logo--op-donker" src="/assets/images/logo-travel-licht.png" alt="" aria-hidden="true" width="1600" height="533" />
+      <a href="/transport/" class="nav__brand" aria-label="Moda Transport, home">
+        <img class="nav__logo" src="/assets/images/logo-transport-licht.png" alt="Moda Transport" width="1600" height="533" />
       </a>
 
       <nav class="nav__links" id="navLinks" aria-label="Hoofdmenu">
-        <a href="/travel/bestemmingen/" aria-current={actief === "bestemmingen" ? "page" : undefined}>Bestemmingen</a>
-        <a href="/travel/reisstijlen/" aria-current={actief === "reisstijlen" ? "page" : undefined}>Reisstijlen</a>
-        <a href="/travel/over-ons/" aria-current={actief === "over-ons" ? "page" : undefined}>Over ons</a>
-        <a href="/travel/contact/" aria-current={actief === "contact" ? "page" : undefined}>Contact</a>
-        <a href="/travel/contact/" class="btn btn--sm btn--primary nav__cta">Maak een afspraak</a>
+        <a href="/transport/diensten/" aria-current={actief === "diensten" ? "page" : undefined}>Diensten</a>
+        <a href="/transport/wagenpark/" aria-current={actief === "wagenpark" ? "page" : undefined}>Wagenpark</a>
+        <a href="/transport/offerte/" aria-current={actief === "offerte" ? "page" : undefined}>Contact</a>
+        <a href="/transport/offerte/" class="btn btn--sm btn--primary nav__cta">Offerte</a>
       </nav>
 
       <div class="nav__actions">
         <a href="/luchthaven/" class="nav__switch" aria-label="Naar luchthavenvervoer">
-          <span aria-hidden="true">✈️</span><span class="nav__switch__txt">Luchthaven</span>
-        </a>
-        <a href="/transport/" class="nav__switch" aria-label="Naar transport &amp; sneltransport">
-          <span aria-hidden="true">🚚</span><span class="nav__switch__txt">Transport</span>
+          <span aria-hidden="true">✈️</span><span class="nav__switch__txt">Luchthavenvervoer</span>
         </a>
 
         <button class="theme-toggle" id="themeToggle" type="button" aria-label="Wissel tussen licht en donker" title="Licht / donker">
@@ -156,30 +156,29 @@ const { titel, omschrijving, actief = "", heeftHero = false } = Astro.props;
   <footer class="footer" id="contact">
     <div class="container footer__grid">
       <div class="footer__brand">
-        <img class="footer__logo footer__logo--op-licht" src="/assets/images/logo-travel.png" alt="Moda Travel" width="1600" height="533" />
-        <img class="footer__logo footer__logo--op-donker" src="/assets/images/logo-travel-licht.png" alt="" aria-hidden="true" width="1600" height="533" />
-        <p class="footer__slogan">“Reizen zonder zorgen”</p>
-        <p class="footer__desc">Luxe reizen op maat, met persoonlijke begeleiding van de eerste inspiratie tot de terugvlucht.</p>
-        <p class="footer__legal">Moda Travel · Beringersteenweg 14, 3550 Heusden-Zolder, België</p>
+        <img class="footer__logo footer__logo--op-licht" src="/assets/images/logo-transport.png" alt="Moda Transport" width="1600" height="533" />
+        <img class="footer__logo footer__logo--op-donker" src="/assets/images/logo-transport-licht.png" alt="" aria-hidden="true" width="1600" height="533" />
+        <p class="footer__slogan">“Van pakket tot volle vracht”</p>
+        <p class="footer__desc">Sneltransport, koeriersdiensten en vrachtvervoer met persoonlijke, professionele service.</p>
+        <p class="footer__legal">Moda Transport · Beringersteenweg 14, 3550 Heusden-Zolder, België</p>
       </div>
 
       <div class="footer__col">
         <h4>Contact</h4>
         <ul>
           <li><a href="tel:+3211243003">011 24 30 03</a></li>
-          <li><a href="mailto:info@modatravel.be">info@modatravel.be</a></li>
-          <li><a href="https://www.instagram.com/modatravel_/" target="_blank" rel="noopener">Instagram @modatravel_</a></li>
+          <li><a href="mailto:info@moda-sneltransport.be">info@moda-sneltransport.be</a></li>
           <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Beringersteenweg+14+3550+Heusden-Zolder" target="_blank" rel="noopener">Beringersteenweg 14, 3550 Heusden-Zolder</a></li>
         </ul>
       </div>
 
       <div class="footer__col">
-        <h4>Reizen</h4>
+        <h4>Transport</h4>
         <ul>
-          <li><a href="/travel/bestemmingen/">Bestemmingen</a></li>
-          <li><a href="/travel/reisstijlen/">Reisstijlen</a></li>
-          <li><a href="/travel/over-ons/">Over ons</a></li>
-          <li><a href="/travel/contact/">Reis aanvragen</a></li>
+          <li><a href="/transport/diensten/">Onze diensten</a></li>
+          <li><a href="/transport/wagenpark/">Ons wagenpark</a></li>
+          <li><a href="/transport/diensten/">Waarom Moda</a></li>
+          <li><a href="/transport/offerte/">Offerte aanvragen</a></li>
         </ul>
       </div>
 
@@ -187,8 +186,8 @@ const { titel, omschrijving, actief = "", heeftHero = false } = Astro.props;
         <h4>Ook bij Moda</h4>
         <ul>
           <li><a href="/luchthaven/">Luchthavenvervoer</a></li>
-          <li><a href="/transport/">Transport &amp; sneltransport</a></li>
-          <li>Reizen zonder zorgen</li>
+          <li>24/7 beschikbaar</li>
+          <li>Lokaal &amp; internationaal</li>
         </ul>
       </div>
     </div>
@@ -206,20 +205,18 @@ const { titel, omschrijving, actief = "", heeftHero = false } = Astro.props;
     </div>
 
     <div class="container footer__bottom">
-      <p>© <span id="year"></span> Moda Travel. Alle rechten voorbehouden.</p>
-      <p class="footer__made">Persoonlijk, op maat en zorgeloos.</p>
+      <p>© <span id="year"></span> Moda Transport. Alle rechten voorbehouden.</p>
+      <p class="footer__made">Snel, betrouwbaar en persoonlijk.</p>
     </div>
   </footer>
 
   <!-- Zwevende WhatsApp-knop (linksonder) -->
-  <a href="https://wa.me/32000000000?text=Hallo%2C%20ik%20heb%20een%20reisvraag%20voor%20Moda%20Travel"
+  <a href="https://wa.me/32000000000?text=Hallo%2C%20ik%20heb%20een%20transportvraag%20voor%20Moda%20Transport"
      class="floating-wa" target="_blank" rel="noopener" aria-label="Chat via WhatsApp">
     <svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><use href="#wa-icon"/></svg>
   </a>
 
 
-  <!-- Leeg skelet; wordt door travel.js gevuld wanneer je op een reiskaart klikt. -->
-
-  <script is:inline src="/assets/js/travel.js"></script>
+  <script is:inline src="/assets/js/transport.js"></script>
 </body>
 </html>

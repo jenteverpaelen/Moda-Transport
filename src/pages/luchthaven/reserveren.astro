@@ -1,0 +1,83 @@
+---
+import Luchthaven from "../../layouts/Luchthaven.astro";
+---
+<Luchthaven
+  titel="Reserveren | Moda luchthavenvervoer"
+  omschrijving="Reserveer uw luchthavenvervoer. Vul kort uw gegevens in, wij bevestigen zo snel mogelijk."
+  actief="reserveren">
+
+  <section class="section section--alt" id="reserveer">
+    <div class="container booking">
+      <div class="booking__intro reveal">
+        <p class="section__eyebrow">Reserveer of vraag een prijs</p>
+        <h2 class="section__title">Klaar om zorgeloos te reizen?</h2>
+        <p class="section__lead">
+          Vul kort uw gegevens in en wij bezorgen u snel <a href="/luchthaven/prijs/">een vaste prijs</a>.
+          Liever direct boeken? Bel of mail ons gerust.
+        </p>
+        <ul class="booking__contactlist">
+          <li><span>📞</span> <a href="tel:+3211243003" data-content="phone">011 24 30 03</a></li>
+          <li><span>✉️</span> <a href="mailto:info@moda-sneltransport.be" data-content="email">info@moda-sneltransport.be</a></li>
+          <li><span>📍</span> <a href="https://www.google.com/maps/search/?api=1&amp;query=Beringersteenweg+14+3550+Heusden-Zolder" target="_blank" rel="noopener" data-content="address">Beringersteenweg 14, 3550 Heusden-Zolder</a></li>
+        </ul>
+      </div>
+
+      <form class="booking__form reveal" id="bookingForm" novalidate>
+        <!-- Spam-val (onzichtbaar; enkel bots vinken dit aan) -->
+        <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none" />
+
+        <div class="field">
+          <label for="name">Naam</label>
+          <input type="text" id="name" name="name" placeholder="Uw naam" required />
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="phone">Telefoon</label>
+            <input type="tel" id="phone" name="phone" placeholder="+32 ..." required />
+          </div>
+          <div class="field">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" placeholder="u@voorbeeld.be" required />
+          </div>
+        </div>
+        <div class="field">
+          <label for="from">Ophaaladres</label>
+          <div class="autocomplete">
+            <input type="text" id="from" name="from" placeholder="Begin te typen, bv. Paalseweg 30…"
+                   autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false"
+                   aria-controls="from-ac-list" required />
+            <ul class="autocomplete__list" id="from-ac-list" role="listbox" hidden></ul>
+          </div>
+          <span class="field__hint">Kies je adres uit de lijst, dan wordt de postcode automatisch ingevuld.</span>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="postcode">Postcode</label>
+            <input type="text" id="postcode" name="postcode" placeholder="bv. 3550" inputmode="numeric" autocomplete="postal-code" />
+          </div>
+          <div class="field">
+            <label for="to">Bestemming</label>
+            <input type="text" id="to" name="to" placeholder="Bv. Brussels Airport" required />
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="date">Datum &amp; tijd</label>
+            <input type="datetime-local" id="date" name="date" required />
+          </div>
+          <div class="field">
+            <label for="pax">Aantal personen</label>
+            <input type="number" id="pax" name="pax" min="1" max="8" value="2" required />
+          </div>
+        </div>
+        <div class="field">
+          <label for="notes">Opmerkingen (optioneel)</label>
+          <textarea id="notes" name="notes" rows="3" placeholder="Vluchtnummer, bagage, ..."></textarea>
+        </div>
+        <button type="submit" class="btn btn--primary btn--lg btn--block">Vraag mijn prijs aan</button>
+        <p class="booking__note" id="formNote" role="status"></p>
+      </form>
+    </div>
+  </section>
+
+</Luchthaven>

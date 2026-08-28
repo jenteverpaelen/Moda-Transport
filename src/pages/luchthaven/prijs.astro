@@ -1,0 +1,90 @@
+---
+import Luchthaven from "../../layouts/Luchthaven.astro";
+---
+<Luchthaven
+  titel="Prijs berekenen | Moda luchthavenvervoer"
+  omschrijving="Bereken meteen een vaste richtprijs voor uw rit naar Zaventem, Charleroi, Schiphol en andere luchthavens."
+  actief="prijs">
+
+  <section class="section" id="prijs">
+    <div class="container">
+      <div class="section__head reveal">
+        <p class="section__eyebrow">Bereken je prijs</p>
+        <h2 class="section__title">Meteen je <span class="text-accent">vaste prijs</span></h2>
+        <p class="section__lead">
+          Kies je luchthaven, vul je ophaaladres in en het aantal personen.
+          Je ziet direct een richtprijs voor een enkele rit. Vaste prijs, geen verrassingen.
+        </p>
+      </div>
+
+      <div class="calc reveal">
+        <form class="calc__form" id="calcForm" novalidate>
+          <div class="field">
+            <label>Wat wil je boeken?</label>
+            <div class="calc__segment" id="calcTripType" role="radiogroup" aria-label="Type rit">
+              <input type="radio" name="triptype" id="trip-naar" value="naar" checked />
+              <label for="trip-naar">Naar de luchthaven</label>
+              <input type="radio" name="triptype" id="trip-van" value="van" />
+              <label for="trip-van">Van de luchthaven</label>
+              <input type="radio" name="triptype" id="trip-retour" value="retour" />
+              <label for="trip-retour">Heen én terug</label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="calc-airport" id="calc-airport-label">Naar welke luchthaven?</label>
+            <select id="calc-airport" name="airport" required>
+              <option value="" disabled selected>Kies een luchthaven…</option>
+              <!-- opties worden ingevuld via assets/js/calculator.js -->
+            </select>
+          </div>
+
+          <!-- Tweede luchthaven — enkel zichtbaar bij een heen-én-terugrit,
+               zodat men op de ene luchthaven kan vertrekken en op een
+               andere terugkomen. Wordt getoond/verborgen via calculator.js. -->
+          <div class="field" id="calc-airport-return-field" hidden>
+            <label for="calc-airport-return" id="calc-airport-return-label">Van welke luchthaven? (terugreis)</label>
+            <select id="calc-airport-return" name="airportReturn">
+              <option value="" disabled selected>Kies een luchthaven…</option>
+              <!-- opties worden ingevuld via assets/js/calculator.js -->
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="calc-address" id="calc-address-label">Ophaaladres</label>
+            <div class="autocomplete">
+              <input type="text" id="calc-address" name="address"
+                     placeholder="Begin te typen, bv. Paalseweg 30…" autocomplete="off"
+                     role="combobox" aria-autocomplete="list" aria-expanded="false"
+                     aria-controls="calc-ac-list" required />
+              <ul class="autocomplete__list" id="calc-ac-list" role="listbox" hidden></ul>
+            </div>
+            <span class="field__hint">Kies je adres uit de lijst. Staat je exacte huisnummer of busnummer er niet bij? Kies dan gewoon je straat, dat volstaat. Enkel binnen 20 km van Heusden-Zolder.</span>
+
+            <div class="calc__stops" id="calcStops"></div>
+            <button type="button" class="calc__addstop" id="addStop">
+              <span class="calc__addstop-icon" aria-hidden="true">✓</span>
+              Extra tussenstop toevoegen <span class="calc__addstop-fee">+€10</span>
+            </button>
+          </div>
+
+          <div class="field">
+            <label for="calc-pax">Aantal personen</label>
+            <input type="number" id="calc-pax" name="pax" min="1" max="8" value="2" required />
+            <span class="field__hint">Prijs geldt voor 2 personen. Elke extra persoon: +€5.</span>
+          </div>
+
+          <button type="submit" class="btn btn--primary btn--lg btn--block">Bereken mijn prijs</button>
+        </form>
+
+        <div class="calc__result" id="calcResult" aria-live="polite">
+          <div class="calc__placeholder">
+            <span class="calc__euro">€</span>
+            <p>Vul je gegevens in en ontdek meteen je richtprijs.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</Luchthaven>

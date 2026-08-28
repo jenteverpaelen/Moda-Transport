@@ -113,75 +113,104 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const form = document.getElementById("bookingForm");
   const note = document.getElementById("formNote");
+  // Het formulier staat enkel op de reserveringspagina; op de andere
+  // pagina's slaan we dit blok gewoon over.
+  if (form && note) {
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
 
-    if (!form.checkValidity()) {
-      note.textContent = "Vul aub alle verplichte velden correct in.";
-      note.className = "booking__note is-err";
-      form.reportValidity();
-      return;
-    }
+      if (!form.checkValidity()) {
+        note.textContent = "Vul aub alle verplichte velden correct in.";
+        note.className = "booking__note is-err";
+        form.reportValidity();
+        return;
+      }
 
-    note.textContent = "Bezig met versturen…";
-    note.className = "booking__note";
+      note.textContent = "Bezig met versturen…";
+      note.className = "booking__note";
 
-    const data = Object.fromEntries(new FormData(form).entries());
+      const data = Object.fromEntries(new FormData(form).entries());
 
-    // Nette, gestructureerde inhoud voor de e-mail (Nederlandse labels + emoji).
-    const payload = {
-      access_key: WEB3FORMS_ACCESS_KEY,
-      subject: `🚕 Nieuwe ritaanvraag van ${data.name || "de website"}`,
-      from_name: "Moda Transport website",
-      replyto: data.email || "",
-      botcheck: form.botcheck && form.botcheck.checked ? true : false,
-      "👤 Naam": data.name || "-",
-      "📞 Telefoonnummer": data.phone || "-",
-      "✉️ E-mailadres": data.email || "-",
-      "📍 Ophaaladres": data.from || "-",
-      "🏷️ Postcode": data.postcode || "-",
-      "🛫 Bestemming": data.to || "-",
-      "🗓️ Datum & tijd": data.date || "-",
-      "👥 Aantal personen": data.pax || "-",
-      "📝 Opmerkingen": data.notes || "-",
-    };
+      // Nette, gestructureerde inhoud voor de e-mail (Nederlandse labels + emoji).
+      const payload = {
+        access_key: WEB3FORMS_ACCESS_KEY,
+        subject: `🚕 Nieuwe ritaanvraag van ${data.name || "de website"}`,
+        from_name: "Moda Transport website",
+        replyto: data.email || "",
+        botcheck: form.botcheck && form.botcheck.checked ? true : false,
+        "👤 Naam": data.name || "-",
+        "📞 Telefoonnummer": data.phone || "-",
+        "✉️ E-mailadres": data.email || "-",
+        "📍 Ophaaladres": data.from || "-",
+        "🏷️ Postcode": data.postcode || "-",
+        "🛫 Bestemming": data.to || "-",
+        "🗓️ Datum & tijd": data.date || "-",
+        "👥 Aantal personen": data.pax || "-",
+        "📝 Opmerkingen": data.notes || "-",
+      };
 
-    fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
-      body: JSON.stringify(payload),
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        if (!json.success) throw new Error(json.message || "verzenden mislukt");
-        note.textContent = "Bedankt! Uw aanvraag is verstuurd, wij nemen snel contact op.";
-        note.className = "booking__note is-ok";
-        form.reset();
+      fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload),
       })
-      .catch(() => {
-        // Terugval (key nog niet ingevuld of dienst onbereikbaar): e-mailclient.
-        const subject = encodeURIComponent(`Ritaanvraag van ${data.name}`);
-        const body = encodeURIComponent(
-          `Nieuwe ritaanvraag via de website:\n\n` +
-          `Naam: ${data.name}\n` +
-          `Telefoon: ${data.phone}\n` +
-          `E-mail: ${data.email}\n` +
-          `Ophaaladres: ${data.from}\n` +
-          `Postcode: ${data.postcode || "-"}\n` +
-          `Bestemming: ${data.to}\n` +
-          `Datum & tijd: ${data.date}\n` +
-          `Aantal personen: ${data.pax}\n` +
-          `Opmerkingen: ${data.notes || "-"}\n`
-        );
-        const to = window.MODA_EMAIL || "info@moda-sneltransport.be";
-        window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
-        note.textContent = "We openen je e-mailprogramma om de aanvraag te versturen.";
-        note.className = "booking__note is-ok";
-      });
-  });
+        .then((res) => res.json())
+        .then((json) => {
+          if (!json.success) throw new Error(json.message || "verzenden mislukt");
+          note.textContent = "Bedankt! Uw aanvraag is verstuurd, wij nemen snel contact op.";
+          note.className = "booking__note is-ok";
+          form.reset();
+        })
+        .catch(() => {
+          // Terugval (key nog niet ingevuld of dienst onbereikbaar): e-mailclient.
+          const subject = encodeURIComponent(`Ritaanvraag van ${data.name}`);
+          const body = encodeURIComponent(
+            `Nieuwe ritaanvraag via de website:\n\n` +
+            `Naam: ${data.name}\n` +
+            `Telefoon: ${data.phone}\n` +
+            `E-mail: ${data.email}\n` +
+            `Ophaaladres: ${data.from}\n` +
+            `Postcode: ${data.postcode || "-"}\n` +
+            `Bestemming: ${data.to}\n` +
+            `Datum & tijd: ${data.date}\n` +
+            `Aantal personen: ${data.pax}\n` +
+            `Opmerkingen: ${data.notes || "-"}\n`
+          );
+          const to = window.MODA_EMAIL || "info@moda-sneltransport.be";
+          window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+          note.textContent = "We openen je e-mailprogramma om de aanvraag te versturen.";
+          note.className = "booking__note is-ok";
+        });
+    });
+  }
 
   /* ---------- 7. Jaartal in footer ---------- */
   const yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
+});
+
+/* =========================================================================
+   Rit overnemen uit de prijsberekenaar
+   -------------------------------------------------------------------------
+   Klikt de bezoeker daar op "Reserveer deze rit", dan komt hij op deze pagina
+   terecht met de gegevens in de browseropslag. Die vullen we hier in en
+   ruimen we meteen op, zodat een latere bezoeker een leeg formulier krijgt.
+   ========================================================================= */
+document.addEventListener("DOMContentLoaded", function () {
+  var formulier = document.getElementById("reserveer");
+  if (!formulier) return;
+  var bewaard;
+  try { bewaard = sessionStorage.getItem("moda-rit"); } catch (e) { return; }
+  if (!bewaard) return;
+  try { sessionStorage.removeItem("moda-rit"); } catch (e) {}
+
+  var rit;
+  try { rit = JSON.parse(bewaard); } catch (e) { return; }
+  Object.keys(rit).forEach(function (id) {
+    var veld = document.getElementById(id);
+    if (!veld) return;
+    if (id === "notes" && veld.value) veld.value = rit[id] + "\n" + veld.value;
+    else veld.value = rit[id];
+  });
 });

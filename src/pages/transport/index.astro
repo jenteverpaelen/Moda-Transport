@@ -1,151 +1,12 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#f5f5f8" />
+---
+import Transport from "../../layouts/Transport.astro";
+---
+<Transport
+  titel="Moda Transport | Sneltransport &amp; koeriersdiensten Limburg"
+  omschrijving="Sneltransport, koerier en vrachtvervoer vanuit Heusden-Zolder. Van 1 pallet tot volle vracht, 24/7 beschikbaar."
+  actief="home"
+  heeftHero={true}>
 
-  <!-- Zet het thema meteen (nog vóór de eerste paint) zodat de pagina
-       zonder flikkering in light mode opent. -->
-  <script is:inline>document.documentElement.setAttribute("data-theme", "light");</script>
-
-  <title>Moda Transport | Sneltransport &amp; koeriersdiensten Limburg</title>
-  <meta name="description" content="Sneltransport, koerier en vrachtvervoer vanuit Heusden-Zolder. Van 1 pallet tot volle vracht, koeltransport en ADR. Lokaal én internationaal, 24/7 beschikbaar." />
-
-  <link rel="canonical" href="/transport/" />
-  <meta name="robots" content="index, follow" />
-  <meta name="author" content="Moda Transport" />
-
-  <!-- Lokale SEO (geo) -->
-  <meta name="geo.region" content="BE-VLI" />
-  <meta name="geo.placename" content="Heusden-Zolder" />
-  <meta name="geo.position" content="51.0271799;5.2654197" />
-  <meta name="ICBM" content="51.0271799, 5.2654197" />
-
-  <!-- Social preview (Open Graph) -->
-  <meta property="og:site_name" content="Moda Transport" />
-  <meta property="og:title" content="Moda Transport | Sneltransport &amp; koeriersdiensten Limburg" />
-  <meta property="og:description" content="Van pakket tot volle vracht. Sneltransport, koerier, koeltransport en ADR vanuit Heusden-Zolder, lokaal én internationaal." />
-  <meta property="og:type" content="website" />
-  <meta property="og:locale" content="nl_BE" />
-  <meta property="og:url" content="https://www.moda-sneltransport.be/transport/" />
-  <meta property="og:image" content="https://www.moda-sneltransport.be/assets/images/transport/hero.jpg" />
-  <meta property="og:image:alt" content="Het wagenpark van Moda Transport" />
-
-  <!-- Twitter-kaart -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Moda Transport | Sneltransport Limburg" />
-  <meta name="twitter:description" content="Van pakket tot volle vracht. Snel, betrouwbaar en 24/7 beschikbaar." />
-  <meta name="twitter:image" content="https://www.moda-sneltransport.be/assets/images/transport/hero.jpg" />
-
-  <!-- Canonical + social-URL's op het werkelijke live-domein zetten. -->
-  <script is:inline>
-    (function () {
-      var origin = location.origin, page = origin + location.pathname;
-      var img = origin + "/assets/images/transport/hero.jpg";
-      var set = function (sel, attr, val) { var el = document.querySelector(sel); if (el) el.setAttribute(attr, val); };
-      set('link[rel="canonical"]', "href", page);
-      set('meta[property="og:url"]', "content", page);
-      set('meta[property="og:image"]', "content", img);
-      set('meta[name="twitter:image"]', "content", img);
-    })();
-  </script>
-
-  <link rel="icon" type="image/png" href="/assets/images/logo-embleem.png" />
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-
-  <link rel="stylesheet" href="/assets/css/style.css" />
-  <link rel="stylesheet" href="/assets/css/transport.css" />
-
-  <!-- Gestructureerde data: transport-/vrachtdienst. -->
-  <script is:inline type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "MovingCompany",
-    "@id": "https://www.moda-sneltransport.be/transport/#business",
-    "name": "Moda Transport",
-    "description": "Sneltransport, koeriersdiensten en vrachtvervoer vanuit Heusden-Zolder. Van 1 pallet tot volle vracht, koeltransport en ADR, lokaal én internationaal.",
-    "url": "https://www.moda-sneltransport.be/transport/",
-    "image": "https://www.moda-sneltransport.be/assets/images/transport/hero.jpg",
-    "logo": "https://www.moda-sneltransport.be/assets/images/logo-transport.png",
-    "telephone": "+3211243003",
-    "email": "info@moda-sneltransport.be",
-    "priceRange": "€€",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Beringersteenweg 14",
-      "postalCode": "3550",
-      "addressLocality": "Heusden-Zolder",
-      "addressRegion": "Limburg",
-      "addressCountry": "BE"
-    },
-    "geo": { "@type": "GeoCoordinates", "latitude": 51.0271799, "longitude": 5.2654197 },
-    "areaServed": [
-      { "@type": "Country", "name": "België" },
-      { "@type": "Place", "name": "Europa" }
-    ],
-    "openingHoursSpecification": {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-      "opens": "00:00",
-      "closes": "23:59"
-    },
-    "knowsAbout": ["Sneltransport", "Expresstransport", "Koeriersdienst", "Palletvervoer", "Koeltransport", "ADR", "Vrachtvervoer"]
-  }
-  </script>
-</head>
-<body>
-
-  <!-- WhatsApp-icoon, hergebruikt op meerdere plaatsen. -->
-  <svg width="0" height="0" class="svg-sprite" aria-hidden="true" focusable="false" style="position:absolute">
-
-    <symbol id="wa-icon" viewBox="0 0 24 24">
-      <path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-    </symbol>
-  </svg>
-
-  <!-- ===================== NAVIGATIE ===================== -->
-  <header class="nav" id="nav">
-    <div class="container nav__inner">
-      <a href="#home" class="nav__brand" aria-label="Moda Transport, home">
-        <img class="nav__logo" src="/assets/images/logo-transport-licht.png" alt="Moda Transport" width="1600" height="533" />
-      </a>
-
-      <nav class="nav__links" id="navLinks" aria-label="Hoofdmenu">
-        <a href="#diensten">Diensten</a>
-        <a href="#wagenpark">Wagenpark</a>
-        <a href="#waarom">Waarom Moda</a>
-        <a href="#contact">Contact</a>
-        <a href="#offerte" class="btn btn--sm btn--primary nav__cta">Offerte</a>
-      </nav>
-
-      <div class="nav__actions">
-        <a href="/luchthaven/" class="nav__switch" aria-label="Naar luchthavenvervoer">
-          <span aria-hidden="true">✈️</span><span class="nav__switch__txt">Luchthavenvervoer</span>
-        </a>
-
-        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Wissel tussen licht en donker" title="Licht / donker">
-          <svg class="theme-toggle__sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="4"></circle>
-            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
-          </svg>
-          <svg class="theme-toggle__moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-          </svg>
-        </button>
-
-        <button class="nav__toggle" id="navToggle" aria-label="Menu openen" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- ===================== HERO ===================== -->
   <section class="hero" id="home">
     <div class="hero__media" aria-hidden="true">
       <div class="hero__img" style="background-image:url('/assets/images/transport/hero.jpg')"></div>
@@ -165,7 +26,7 @@
       </p>
 
       <div class="hero__actions reveal">
-        <a href="#offerte" class="btn btn--primary btn--lg">Vraag een offerte</a>
+        <a href="/transport/offerte/" class="btn btn--primary btn--lg">Vraag een offerte</a>
         <a href="tel:+3211243003" class="btn btn--ghost btn--lg">📞 Bel 011 24 30 03</a>
         <a href="https://wa.me/32000000000?text=Hallo%2C%20ik%20heb%20een%20vraag%20over%20transport%20met%20Moda%20Transport"
            class="btn btn--wa btn--lg" target="_blank" rel="noopener">
@@ -183,12 +44,11 @@
       </div>
     </div>
 
-    <a href="#diensten" class="hero__scroll" aria-label="Scroll naar beneden">
+    <a href="/transport/diensten/" class="hero__scroll" aria-label="Scroll naar beneden">
       <span class="hero__mouse"></span>
     </a>
   </section>
 
-  <!-- ===================== STATS / TRUST BAR ===================== -->
   <section class="stats">
     <div class="container stats__grid">
       <div class="stat reveal">
@@ -210,220 +70,33 @@
     </div>
   </section>
 
-  <!-- ===================== DIENSTEN ===================== -->
-  <section class="section" id="diensten">
+  <!-- ===================== WEGWIJZER ===================== -->
+  <section class="section" id="ontdek">
     <div class="container">
       <div class="section__head reveal">
-        <p class="section__eyebrow">Onze diensten</p>
-        <h2 class="section__title">Eén partner voor <span class="text-accent">al uw transport</span></h2>
-        <p class="section__lead">
-          Bij transportfirma Moda staan wij bekend om onze persoonlijke service en oplossingsgericht
-          denken. Van een klein spoedpakket tot een volle vracht: wij regelen het.
-        </p>
+        <p class="section__eyebrow">Ontdek</p>
+        <h2 class="section__title">Wat kunnen wij voor u <span class="text-accent">vervoeren?</span></h2>
       </div>
-
       <div class="cards">
-        <article class="card reveal">
-          <div class="card__icon">⚡</div>
-          <h3>Expresstransport</h3>
-          <p>Een pakket dat vandaag nog ter plaatse moet? Wij leveren razendsnel, lokaal en internationaal.</p>
-        </article>
-
-        <article class="card reveal">
-          <div class="card__icon">📨</div>
-          <h3>Koeriersdienst</h3>
-          <p>Belangrijke documenten of kleine pakketten, snel en veilig van deur tot deur bezorgd.</p>
-        </article>
-
-        <article class="card reveal">
+        <a class="card reveal" href="/transport/diensten/">
           <div class="card__icon">📦</div>
-          <h3>Palletvervoer</h3>
-          <p>Van 1 pallet tot volle ladingen. Wij hebben voor elk gewicht de juiste wagen.</p>
-        </article>
-
-        <article class="card reveal">
-          <div class="card__icon">🧊</div>
-          <h3>Koeltransport</h3>
-          <p>Temperatuurgevoelige goederen? Onze koelwagen houdt alles stabiel tussen -26 en +26 °C.</p>
-        </article>
-
-        <article class="card reveal">
-          <div class="card__icon">🌍</div>
-          <h3>Nationaal &amp; internationaal</h3>
-          <p>In heel België en heel Europa, inclusief Frankrijk. Betrouwbaar tot op de bestemming.</p>
-        </article>
-
-        <article class="card reveal">
-          <div class="card__icon">⚠️</div>
-          <h3>ADR / gevaarlijke goederen</h3>
-          <p>Gevaarlijke stoffen veilig vervoerd, met gecertificeerde chauffeurs en het juiste materiaal.</p>
-        </article>
-
-        <article class="card reveal">
-          <div class="card__icon">🏬</div>
-          <h3>Opslag &amp; overslag</h3>
-          <p>Even stockeren of overladen? Wij bieden ook oplossingen voor opslag en overslag.</p>
-        </article>
-
-        <article class="card reveal">
-          <div class="card__icon">🤝</div>
-          <h3>Oplossingen op maat</h3>
-          <p>Een bijzondere lading of vraag? Wij denken met u mee en zoeken de beste aanpak.</p>
-        </article>
+          <h3>Onze diensten</h3>
+          <p>Van spoedpakket en koerier tot palletvervoer, koeltransport en ADR.</p>
+        </a>
+        <a class="card reveal" href="/transport/wagenpark/">
+          <div class="card__icon">🚚</div>
+          <h3>Ons wagenpark</h3>
+          <p>Van bestelwagen tot vrachtwagen, met foto's en alle afmetingen.</p>
+        </a>
+        <a class="card reveal" href="/transport/offerte/">
+          <div class="card__icon">📝</div>
+          <h3>Offerte aanvragen</h3>
+          <p>Vertel kort wat en waarheen, en u krijgt snel een prijs op maat.</p>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- ===================== WAGENPARK ===================== -->
-  <section class="section section--alt" id="wagenpark">
-    <div class="container">
-      <div class="section__head reveal">
-        <p class="section__eyebrow">Ons wagenpark</p>
-        <h2 class="section__title">Voor elke lading <span class="text-accent">de juiste wagen</span></h2>
-        <p class="section__lead">
-          Van compacte bestelwagen tot volledige vrachtwagen. Zo vervoeren wij elk volume,
-          elk gewicht en elke temperatuur.
-        </p>
-      </div>
-
-      <div class="fleet">
-        <article class="fleet-card reveal">
-          <div class="fleet-card__img fleet-card__img--contain"><img src="/assets/images/transport/vito.png" alt="Moda Transport Vito bestelwagen" loading="lazy" /></div>
-          <div class="fleet-card__body">
-            <div class="fleet-card__head"><h3>Vito</h3><span class="fleet-card__tag">Colli's of 1 pallet</span></div>
-            <ul class="fleet-card__specs">
-              <li><span class="k">Laadvermogen</span><span class="v">tot 500 kg</span></li>
-              <li><span class="k">Afmetingen L×B×H</span><span class="v">1,50 × 1,40 × 1,10 m</span></li>
-              <li><span class="k">Europaletten</span><span class="v">1</span></li>
-            </ul>
-            <p class="fleet-card__desc">Ideaal voor colli's of één pallet, tot 600 kg.</p>
-            <div class="fleet-card__fotos" data-wagen="Vito" data-fotos="/assets/images/transport/galerij/vito-1.jpg|/assets/images/transport/galerij/vito-2.jpg|/assets/images/transport/galerij/vito-3.jpg|/assets/images/transport/galerij/vito-4.jpg|/assets/images/transport/galerij/vito-5.jpg">
-              <button type="button" class="fleet-thumb" data-i="0" aria-label="Foto 1 van de Vito bekijken"><img src="/assets/images/transport/galerij/vito-1.jpg" alt="Vito bestelwagen, foto 1" loading="lazy" /></button>
-              <button type="button" class="fleet-thumb" data-i="1" aria-label="Foto 2 van de Vito bekijken"><img src="/assets/images/transport/galerij/vito-2.jpg" alt="Vito bestelwagen, foto 2" loading="lazy" /></button>
-              <button type="button" class="fleet-thumb" data-i="2" aria-label="Foto 3 van de Vito bekijken"><img src="/assets/images/transport/galerij/vito-3.jpg" alt="Vito bestelwagen, foto 3" loading="lazy" /></button>
-              <button type="button" class="fleet-thumb fleet-thumb--meer" data-i="3" aria-label="Bekijk alle 5 foto's van de Vito"><img src="/assets/images/transport/galerij/vito-4.jpg" alt="" loading="lazy" /><span>+1</span></button>
-            </div>
-          </div>
-        </article>
-
-        <article class="fleet-card reveal">
-          <div class="fleet-card__img"><img src="/assets/images/transport/sprinter.jpg" alt="Moda Transport Mercedes Sprinter" loading="lazy" /></div>
-          <div class="fleet-card__body">
-            <div class="fleet-card__head"><h3>Sprinter</h3><span class="fleet-card__tag">Zijkant laden/lossen</span></div>
-            <ul class="fleet-card__specs">
-              <li><span class="k">Laadvermogen</span><span class="v">tot 1.100 kg</span></li>
-              <li><span class="k">Afmetingen L×B×H</span><span class="v">4,30 × 1,70 × 1,90 m</span></li>
-              <li><span class="k">Europaletten</span><span class="v">6</span></li>
-            </ul>
-            <p class="fleet-card__desc">Tot 6 pallets. Laden en lossen kan ook langs de zijkant, met spanriemen en zijbindingen.</p>
-            <div class="fleet-card__fotos" data-wagen="Sprinter" data-fotos="/assets/images/transport/galerij/sprinter-1.jpg|/assets/images/transport/galerij/sprinter-2.jpg|/assets/images/transport/galerij/sprinter-3.jpg|/assets/images/transport/galerij/sprinter-4.jpg|/assets/images/transport/galerij/sprinter-5.jpg|/assets/images/transport/galerij/sprinter-6.jpg|/assets/images/transport/galerij/sprinter-7.jpg">
-              <button type="button" class="fleet-thumb" data-i="0" aria-label="Foto 1 van de Sprinter bekijken"><img src="/assets/images/transport/galerij/sprinter-1.jpg" alt="Mercedes Sprinter, foto 1" loading="lazy" /></button>
-              <button type="button" class="fleet-thumb" data-i="1" aria-label="Foto 2 van de Sprinter bekijken"><img src="/assets/images/transport/galerij/sprinter-2.jpg" alt="Mercedes Sprinter, foto 2" loading="lazy" /></button>
-              <button type="button" class="fleet-thumb" data-i="2" aria-label="Foto 3 van de Sprinter bekijken"><img src="/assets/images/transport/galerij/sprinter-3.jpg" alt="Mercedes Sprinter, foto 3" loading="lazy" /></button>
-              <button type="button" class="fleet-thumb fleet-thumb--meer" data-i="3" aria-label="Bekijk alle 7 foto's van de Sprinter"><img src="/assets/images/transport/galerij/sprinter-4.jpg" alt="" loading="lazy" /><span>+3</span></button>
-            </div>
-          </div>
-        </article>
-
-        <article class="fleet-card reveal">
-          <div class="fleet-card__img"><img src="/assets/images/transport/meubelbak.jpg" alt="Moda Transport meubelbak met laadklep" loading="lazy" /></div>
-          <div class="fleet-card__body">
-            <div class="fleet-card__head"><h3>Meubelbak</h3><span class="fleet-card__tag">Met laadklep</span></div>
-            <ul class="fleet-card__specs">
-              <li><span class="k">Laadvermogen</span><span class="v">tot 850 kg</span></li>
-              <li><span class="k">Afmetingen L×B×H</span><span class="v">4,30 × 2,10 × 2,30 m</span></li>
-              <li><span class="k">Europaletten</span><span class="v">9 + laadklep</span></li>
-            </ul>
-            <p class="fleet-card__desc">Wagen met laadklep, dus laden en lossen zonder heftruck. Ideaal voor lichte pallets of karren.</p>
-            <div class="fleet-card__fotos" data-wagen="Meubelbak" data-fotos="/assets/images/transport/galerij/meubelbak-1.jpg|/assets/images/transport/galerij/meubelbak-2.jpg|/assets/images/transport/galerij/meubelbak-3.jpg|/assets/images/transport/galerij/meubelbak-4.jpg|/assets/images/transport/galerij/meubelbak-5.jpg|/assets/images/transport/galerij/meubelbak-6.jpg|/assets/images/transport/galerij/meubelbak-7.jpg|/assets/images/transport/galerij/meubelbak-8.jpg|/assets/images/transport/galerij/meubelbak-9.jpg|/assets/images/transport/galerij/meubelbak-10.jpg|/assets/images/transport/galerij/meubelbak-11.jpg|/assets/images/transport/galerij/meubelbak-12.jpg">
-              <button type="button" class="fleet-thumb" data-i="0" aria-label="Foto 1 van de Meubelbak bekijken"><img src="/assets/images/transport/galerij/meubelbak-1.jpg" alt="meubelbak met laadklep, foto 1" loading="lazy" /></button>
-              <button type="button" class="fleet-thumb" data-i="1" aria-label="Foto 2 van de Meubelbak bekijken"><img src="/assets/images/transport/galerij/meubelbak-2.jpg" alt="meubelbak met laadklep, foto 2" loading="lazy" /></button>
-              <button type="button" class="fleet-thumb" data-i="2" aria-label="Foto 3 van de Meubelbak bekijken"><img src="/assets/images/transport/galerij/meubelbak-3.jpg" alt="meubelbak met laadklep, foto 3" loading="lazy" /></button>
-              <button type="button" class="fleet-thumb fleet-thumb--meer" data-i="3" aria-label="Bekijk alle 12 foto's van de Meubelbak"><img src="/assets/images/transport/galerij/meubelbak-4.jpg" alt="" loading="lazy" /><span>+8</span></button>
-            </div>
-          </div>
-        </article>
-
-        <article class="fleet-card reveal">
-          <div class="fleet-card__img fleet-card__img--contain"><img src="/assets/images/transport/koelwagen.png" alt="Moda Transport koelwagen" loading="lazy" /></div>
-          <div class="fleet-card__body">
-            <div class="fleet-card__head"><h3>Koelwagen</h3><span class="fleet-card__tag">Temperatuurgeregeld</span></div>
-            <ul class="fleet-card__specs">
-              <li><span class="k">Laadvermogen</span><span class="v">tot 700 kg</span></li>
-              <li><span class="k">Afmetingen L×B×H</span><span class="v">4,00 × 2,00 × 1,90 m</span></li>
-              <li><span class="k">Temperatuur</span><span class="v">-26 tot +26 °C</span></li>
-            </ul>
-            <p class="fleet-card__desc">Tot 8 pallets met stabiele temperatuurcontrole. Geschikt voor voeding en temperatuurgevoelige producten.</p>
-          </div>
-        </article>
-
-        <article class="fleet-card reveal">
-          <div class="fleet-card__img"><img src="/assets/images/transport/remorque.jpg" alt="Moda Transport remorque / aanhangwagen" loading="lazy" /></div>
-          <div class="fleet-card__body">
-            <div class="fleet-card__head"><h3>Remorque</h3><span class="fleet-card__tag">Grotere ladingen</span></div>
-            <ul class="fleet-card__specs">
-              <li><span class="k">Laadvermogen</span><span class="v">tot 4.250 kg</span></li>
-              <li><span class="k">Afmetingen L×B×H</span><span class="v">5,00 × 1,80 × 2,00 m</span></li>
-              <li><span class="k">Europaletten</span><span class="v">15</span></li>
-            </ul>
-            <p class="fleet-card__desc">Voor grotere ladingen tot 4.250 kg, tot 15 pallets.</p>
-            <div class="fleet-card__fotos" data-wagen="Remorque" data-fotos="/assets/images/transport/galerij/remorque-1.jpg|/assets/images/transport/galerij/remorque-2.jpg|/assets/images/transport/galerij/remorque-3.jpg">
-              <button type="button" class="fleet-thumb" data-i="0" aria-label="Foto 1 van de Remorque bekijken"><img src="/assets/images/transport/galerij/remorque-1.jpg" alt="remorque met oplegger, foto 1" loading="lazy" /></button>
-              <button type="button" class="fleet-thumb" data-i="1" aria-label="Foto 2 van de Remorque bekijken"><img src="/assets/images/transport/galerij/remorque-2.jpg" alt="remorque met oplegger, foto 2" loading="lazy" /></button>
-              <button type="button" class="fleet-thumb" data-i="2" aria-label="Foto 3 van de Remorque bekijken"><img src="/assets/images/transport/galerij/remorque-3.jpg" alt="remorque met oplegger, foto 3" loading="lazy" /></button>
-            </div>
-          </div>
-        </article>
-
-        <article class="fleet-card reveal">
-          <div class="fleet-card__img"><img src="/assets/images/transport/vrachtwagen.jpg" alt="Moda Transport vrachtwagen voor heel Europa" loading="lazy" /></div>
-          <div class="fleet-card__body">
-            <div class="fleet-card__head"><h3>Vrachtwagen</h3><span class="fleet-card__tag">Heel Europa</span></div>
-            <ul class="fleet-card__specs">
-              <li><span class="k">Laadvermogen</span><span class="v">tot 25.000 kg</span></li>
-              <li><span class="k">Afmetingen L×B×H</span><span class="v">13,20 × 2,50 × 2,60 m</span></li>
-              <li><span class="k">Europaletten</span><span class="v">33</span></li>
-            </ul>
-            <p class="fleet-card__desc">Voor volle ladingen tot 33 pallets. Heel Europa, inclusief Frankrijk. Tautliner en boxtrailers.</p>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== IN BEELD (vloot) ===================== -->
-  <section class="section" id="vloot">
-    <div class="container">
-      <div class="section__head reveal">
-        <p class="section__eyebrow">In beeld</p>
-        <h2 class="section__title">Onze <span class="text-accent">vloot</span> aan het werk</h2>
-        <p class="section__lead">
-          Een greep uit ons wagenpark, van bestelwagen en bakwagen tot trekker met oplegger.
-        </p>
-      </div>
-
-      <div class="gallery">
-        <figure class="gallery__item gallery__item--feature reveal">
-          <img src="/assets/images/transport/gallery-1.jpg" alt="Bakwagen en bestelwagen van Moda Transport" />
-          <figcaption>Van klein tot groot transport</figcaption>
-        </figure>
-        <figure class="gallery__item gallery__item--wide reveal">
-          <img src="/assets/images/transport/vrachtwagen.jpg" alt="Vrachtwagen met oplegger van Moda Transport" loading="lazy" />
-          <figcaption>Vrachtwagen voor heel Europa</figcaption>
-        </figure>
-        <figure class="gallery__item reveal">
-          <img src="/assets/images/transport/gallery-2.jpg" alt="Mercedes Sprinter van Moda Transport" loading="lazy" />
-          <figcaption>Onze Sprinters</figcaption>
-        </figure>
-        <figure class="gallery__item reveal">
-          <img src="/assets/images/transport/gallery-3.jpg" alt="Bakwagen van Moda Transport" loading="lazy" />
-          <figcaption>Bakwagens met laadklep</figcaption>
-        </figure>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== EXPRESSTRANSPORT ===================== -->
   <section class="section section--dark">
     <div class="container express__grid">
       <div class="express__intro reveal">
@@ -432,7 +105,7 @@
         <p class="section__lead">
           Voor spoedzendingen staan wij dag en nacht klaar. Eén telefoontje en wij vertrekken.
         </p>
-        <a href="#offerte" class="btn btn--primary">Vraag een offerte</a>
+        <a href="/transport/offerte/" class="btn btn--primary">Vraag een offerte</a>
       </div>
 
       <ul class="checklist reveal">
@@ -456,215 +129,4 @@
     </div>
   </section>
 
-  <!-- ===================== WAAROM MODA ===================== -->
-  <section class="section" id="waarom">
-    <div class="container waarom__grid">
-      <div class="waarom__intro reveal">
-        <p class="section__eyebrow">Waarom Moda Transport</p>
-        <h2 class="section__title">Uw lading, onze zorg.</h2>
-        <p class="section__lead">
-          Van kleine spoedzending tot volle vracht: wij regelen het met persoonlijke service
-          en steeds het juiste materiaal.
-        </p>
-        <a href="#offerte" class="btn btn--primary">Vraag een offerte</a>
-      </div>
-
-      <div class="features">
-        <div class="feature reveal">
-          <div class="feature__icon">🤝</div>
-          <div>
-            <h3>Persoonlijke service</h3>
-            <p>Eén vast aanspreekpunt dat met u meedenkt, van aanvraag tot levering.</p>
-          </div>
-        </div>
-        <div class="feature reveal">
-          <div class="feature__icon">💡</div>
-          <div>
-            <h3>Oplossingsgericht</h3>
-            <p>Voor elke lading de juiste wagen en de slimste aanpak.</p>
-          </div>
-        </div>
-        <div class="feature reveal">
-          <div class="feature__icon">🚛</div>
-          <div>
-            <h3>Gevarieerd wagenpark</h3>
-            <p>Van bestelwagen tot vrachtwagen, standaard of gekoeld.</p>
-          </div>
-        </div>
-        <div class="feature reveal">
-          <div class="feature__icon">⏱️</div>
-          <div>
-            <h3>Betrouwbaar &amp; stipt</h3>
-            <p>Uw zending vertrekt en komt aan precies zoals afgesproken.</p>
-          </div>
-        </div>
-        <div class="feature reveal">
-          <div class="feature__icon">🌙</div>
-          <div>
-            <h3>24/7 beschikbaar</h3>
-            <p>Ook voor spoed, 's nachts en in het weekend.</p>
-          </div>
-        </div>
-        <div class="feature reveal">
-          <div class="feature__icon">🛡️</div>
-          <div>
-            <h3>ADR-gecertificeerd</h3>
-            <p>Gevaarlijke goederen veilig en volgens de regels vervoerd.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== OFFERTE / CONTACT ===================== -->
-  <section class="section section--alt" id="offerte">
-    <div class="container booking">
-      <div class="booking__intro reveal">
-        <p class="section__eyebrow">Offerte of transport aanvragen</p>
-        <h2 class="section__title">Klaar om te verzenden?</h2>
-        <p class="section__lead">
-          Vul kort in wat en waarheen, en wij bezorgen u snel een prijs op maat.
-          Liever meteen bellen of WhatsAppen? Dat kan ook.
-        </p>
-        <ul class="booking__contactlist">
-          <li><span>📞</span> <a href="tel:+3211243003">011 24 30 03</a></li>
-          <li><span>✉️</span> <a href="mailto:info@moda-sneltransport.be">info@moda-sneltransport.be</a></li>
-          <li><span>📍</span> <a href="https://www.google.com/maps/search/?api=1&amp;query=Beringersteenweg+14+3550+Heusden-Zolder" target="_blank" rel="noopener">Beringersteenweg 14, 3550 Heusden-Zolder</a></li>
-        </ul>
-        <div class="quickcontact">
-          <a href="tel:+3211243003" class="btn btn--sm btn--primary">📞 Bel direct</a>
-          <a href="https://wa.me/32000000000?text=Hallo%2C%20ik%20heb%20een%20transportvraag%20voor%20Moda%20Transport"
-             class="btn btn--sm btn--wa" target="_blank" rel="noopener">
-            <svg class="btn__wa" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><use href="#wa-icon"/></svg>
-            WhatsApp
-          </a>
-        </div>
-      </div>
-
-      <form class="booking__form reveal" id="quoteForm" novalidate>
-        <!-- Spam-val (onzichtbaar; enkel bots vinken dit aan) -->
-        <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none" />
-
-        <div class="field">
-          <label for="name">Naam</label>
-          <input type="text" id="name" name="name" placeholder="Uw naam of bedrijf" required />
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label for="phone">Telefoon</label>
-            <input type="tel" id="phone" name="phone" placeholder="+32 ..." required />
-          </div>
-          <div class="field">
-            <label for="email">E-mail</label>
-            <input type="email" id="email" name="email" placeholder="u@voorbeeld.be" required />
-          </div>
-        </div>
-        <div class="field">
-          <label for="goods">Wat wilt u vervoeren?</label>
-          <input type="text" id="goods" name="goods" placeholder="Bv. 3 pallets, een koelzending, een spoedpakket ..." required />
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label for="pickup">Ophaaladres</label>
-            <input type="text" id="pickup" name="pickup" placeholder="Straat, gemeente" required />
-          </div>
-          <div class="field">
-            <label for="dropoff">Leveradres</label>
-            <input type="text" id="dropoff" name="dropoff" placeholder="Straat, gemeente" required />
-          </div>
-        </div>
-        <div class="field">
-          <label for="date">Gewenste datum</label>
-          <input type="date" id="date" name="date" />
-        </div>
-        <div class="field">
-          <label for="notes">Opmerkingen (optioneel)</label>
-          <textarea id="notes" name="notes" rows="3" placeholder="Gewicht, afmetingen, tijdstip, bijzonderheden ..."></textarea>
-        </div>
-        <button type="submit" class="btn btn--primary btn--lg btn--block">Vraag mijn offerte aan</button>
-        <p class="booking__note" id="formNote" role="status"></p>
-      </form>
-    </div>
-  </section>
-
-  <!-- ===================== FOOTER ===================== -->
-  <footer class="footer" id="contact">
-    <div class="container footer__grid">
-      <div class="footer__brand">
-        <img class="footer__logo footer__logo--op-licht" src="/assets/images/logo-transport.png" alt="Moda Transport" width="1600" height="533" />
-        <img class="footer__logo footer__logo--op-donker" src="/assets/images/logo-transport-licht.png" alt="" aria-hidden="true" width="1600" height="533" />
-        <p class="footer__slogan">“Van pakket tot volle vracht”</p>
-        <p class="footer__desc">Sneltransport, koeriersdiensten en vrachtvervoer met persoonlijke, professionele service.</p>
-        <p class="footer__legal">Moda Transport · Beringersteenweg 14, 3550 Heusden-Zolder, België</p>
-      </div>
-
-      <div class="footer__col">
-        <h4>Contact</h4>
-        <ul>
-          <li><a href="tel:+3211243003">011 24 30 03</a></li>
-          <li><a href="mailto:info@moda-sneltransport.be">info@moda-sneltransport.be</a></li>
-          <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Beringersteenweg+14+3550+Heusden-Zolder" target="_blank" rel="noopener">Beringersteenweg 14, 3550 Heusden-Zolder</a></li>
-        </ul>
-      </div>
-
-      <div class="footer__col">
-        <h4>Transport</h4>
-        <ul>
-          <li><a href="#diensten">Onze diensten</a></li>
-          <li><a href="#wagenpark">Ons wagenpark</a></li>
-          <li><a href="#waarom">Waarom Moda</a></li>
-          <li><a href="#offerte">Offerte aanvragen</a></li>
-        </ul>
-      </div>
-
-      <div class="footer__col">
-        <h4>Ook bij Moda</h4>
-        <ul>
-          <li><a href="/luchthaven/">Luchthavenvervoer</a></li>
-          <li>24/7 beschikbaar</li>
-          <li>Lokaal &amp; internationaal</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Ligging van de zaak. De kaart laadt pas wanneer ze in beeld komt. -->
-    <div class="container">
-      <div class="footer__kaart">
-        <iframe
-          title="Locatie van Moda op de kaart: Beringersteenweg 14, 3550 Heusden-Zolder"
-          src="https://www.google.com/maps?q=Beringersteenweg+14,+3550+Heusden-Zolder,+Belgi%C3%AB&amp;output=embed"
-          loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-      </div>
-      <a class="footer__route" href="https://www.google.com/maps/dir/?api=1&amp;destination=Beringersteenweg+14+3550+Heusden-Zolder"
-         target="_blank" rel="noopener">📍 Route berekenen</a>
-    </div>
-
-    <div class="container footer__bottom">
-      <p>© <span id="year"></span> Moda Transport. Alle rechten voorbehouden.</p>
-      <p class="footer__made">Snel, betrouwbaar en persoonlijk.</p>
-    </div>
-  </footer>
-
-  <!-- Zwevende WhatsApp-knop (linksonder) -->
-  <a href="https://wa.me/32000000000?text=Hallo%2C%20ik%20heb%20een%20transportvraag%20voor%20Moda%20Transport"
-     class="floating-wa" target="_blank" rel="noopener" aria-label="Chat via WhatsApp">
-    <svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><use href="#wa-icon"/></svg>
-  </a>
-
-
-  <!-- ===================== FOTOVENSTER (wagenpark) ===================== -->
-  <!-- Leeg skelet; wordt door transport.js gevuld bij een klik op een foto. -->
-  <div class="fotobox" id="fotobox" aria-hidden="true">
-    <div class="fotobox__achtergrond" data-sluit></div>
-    <div class="fotobox__paneel" role="dialog" aria-modal="true" aria-labelledby="fotoboxTitel">
-      <button class="fotobox__sluit" type="button" data-sluit aria-label="Venster sluiten">&times;</button>
-      <button class="fotobox__nav fotobox__nav--vorige" type="button" data-stap="-1" aria-label="Vorige foto">&#8249;</button>
-      <img class="fotobox__foto" id="fotoboxFoto" src="" alt="" />
-      <button class="fotobox__nav fotobox__nav--volgende" type="button" data-stap="1" aria-label="Volgende foto">&#8250;</button>
-      <p class="fotobox__bijschrift"><span id="fotoboxTitel"></span> <span class="fotobox__teller" id="fotoboxTeller"></span></p>
-    </div>
-  </div>
-
-  <script is:inline src="/assets/js/transport.js"></script>
-</body>
-</html>
+</Transport>

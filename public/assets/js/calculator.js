@@ -427,7 +427,14 @@ function initCalc() {
       </div>`;
 
     document.getElementById("calcToBooking").addEventListener("click", () => {
-      const set = (id, val) => { const el = document.getElementById(id); if (el) el.value = val; };
+      /* De berekening en het reserveringsformulier staan op aparte pagina's.
+         We onthouden de gegevens dus even in de browser en vullen ze daar in.
+         Staat het formulier toch op dezelfde pagina, dan vullen we meteen in. */
+      const rit = {};
+      const set = (id, val) => {
+        rit[id] = val;
+        const el = document.getElementById(id); if (el) el.value = val;
+      };
       if (triptype === "van") {
         // Ophaling op de luchthaven, afzetten op het adres
         set("from", airport.label);
@@ -451,10 +458,18 @@ function initCalc() {
       }
       if (stopTexts.length) extraNotes.push(`Tussenstop(pen): ${stopTexts.join("; ")}`);
       if (extraNotes.length) {
+        rit.notes = extraNotes.join(" · ");
         const notes = document.getElementById("notes");
-        if (notes) notes.value = extraNotes.join(" · ") + (notes.value ? `\n${notes.value}` : "");
+        if (notes) notes.value = rit.notes + (notes.value ? `\n${notes.value}` : "");
       }
-      document.getElementById("reserveer").scrollIntoView({ behavior: "smooth" });
+
+      const formulier = document.getElementById("reserveer");
+      if (formulier) {
+        formulier.scrollIntoView({ behavior: "smooth" });   // alles staat op één pagina
+        return;
+      }
+      try { sessionStorage.setItem("moda-rit", JSON.stringify(rit)); } catch (e) {}
+      location.href = "/luchthaven/reserveren/";
     });
   }
 
