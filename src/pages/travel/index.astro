@@ -56,7 +56,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="/assets/css/style.css" />
   <link rel="stylesheet" href="/assets/css/travel.css" />
@@ -113,9 +113,9 @@
       <nav class="nav__links" id="navLinks" aria-label="Hoofdmenu">
         <a href="#bestemmingen">Bestemmingen</a>
         <a href="#reisstijlen">Reisstijlen</a>
-        <a href="#waarom">Waarom Moda</a>
+        <a href="#waarom">Over ons</a>
         <a href="#contact">Contact</a>
-        <a href="#offerte" class="btn btn--sm btn--primary nav__cta">Plan je reis</a>
+        <a href="#offerte" class="btn btn--sm btn--primary nav__cta">Maak een afspraak</a>
       </nav>
 
       <div class="nav__actions">
@@ -163,7 +163,7 @@
       </p>
 
       <div class="hero__actions reveal">
-        <a href="#offerte" class="btn btn--primary btn--lg">Plan jouw reis</a>
+        <a href="#offerte" class="btn btn--primary btn--lg">Maak een afspraak</a>
         <a href="#bestemmingen" class="btn btn--ghost btn--lg">Bekijk bestemmingen</a>
         <a href="https://wa.me/32000000000?text=Hallo%2C%20ik%20heb%20een%20vraag%20over%20een%20reis%20met%20Moda%20Travel"
            class="btn btn--wa btn--lg" target="_blank" rel="noopener">
@@ -190,20 +190,20 @@
   <section class="stats">
     <div class="container stats__grid">
       <div class="stat reveal">
-        <span class="stat__num stat__num--text">Op maat</span>
-        <span class="stat__label">Elke reis uniek samengesteld</span>
+        <span class="stat__num" data-count="30" data-suffix="+">0</span>
+        <span class="stat__label">Jaar ervaring</span>
       </div>
       <div class="stat reveal">
-        <span class="stat__num stat__num--text">Persoonlijk</span>
-        <span class="stat__label">Begeleiding voor &amp; tijdens</span>
+        <span class="stat__num" data-count="1500" data-suffix="+">0</span>
+        <span class="stat__label">Tevreden reizigers</span>
       </div>
       <div class="stat reveal">
-        <span class="stat__num stat__num--text">Wereldwijd</span>
-        <span class="stat__label">Van citytrip tot verre reis</span>
+        <span class="stat__num" data-count="60" data-suffix="+">0</span>
+        <span class="stat__label">Bestemmingen</span>
       </div>
       <div class="stat reveal">
-        <span class="stat__num stat__num--text">Zorgeloos</span>
-        <span class="stat__label">Wij regelen alles van a tot z</span>
+        <span class="stat__num" data-count="100" data-suffix="%">0</span>
+        <span class="stat__label">Aanbevolen door reizigers</span>
       </div>
     </div>
   </section>
@@ -357,48 +357,36 @@
     <div class="container">
       <div class="section__head reveal">
         <p class="section__eyebrow">Reisstijlen</p>
-        <h2 class="section__title">Welke reiziger <span class="text-accent">ben jij?</span></h2>
+        <h2 class="section__title">Welke reis past bij <span class="text-accent">jou?</span></h2>
         <p class="section__lead">
-          Van een korte stedentrip tot een verre rondreis: wij stemmen elke reis af op
-          jouw wensen, tempo en budget.
+          Elke reiziger is anders. Vertel ons wat je zoekt en wij stemmen de reis
+          daarop af, van het verblijf tot het ritme van je dagen.
         </p>
       </div>
 
       <div class="cards">
         <article class="card reveal">
-          <div class="card__icon">🏙️</div>
-          <h3>Citytrips</h3>
-          <p>Een lang weekend weg naar bruisende steden als Parijs of New York.</p>
-        </article>
-
-        <article class="card reveal">
-          <div class="card__icon">👫</div>
-          <h3>Begeleide groepsreizen</h3>
-          <p>Nederlandstalige groepsreizen met een vaste begeleider, zoals onze reis naar Lapland.</p>
-        </article>
-
-        <article class="card reveal">
-          <div class="card__icon">🏝️</div>
-          <h3>Zon &amp; strand</h3>
-          <p>Ontspannen aan zee in zorgvuldig gekozen resorts, van Zakynthos tot verder weg.</p>
-        </article>
-
-        <article class="card reveal">
-          <div class="card__icon">🌏</div>
-          <h3>Verre reizen &amp; rondreizen</h3>
-          <p>Grote avonturen zoals island-hopping in Thailand, tot in de kleinste details geregeld.</p>
-        </article>
-
-        <article class="card reveal">
-          <div class="card__icon">💍</div>
-          <h3>Huwelijksreizen</h3>
-          <p>Een onvergetelijke honeymoon op maat, precies zoals jullie er samen van dromen.</p>
+          <div class="card__icon">✨</div>
+          <h3>Luxereizen</h3>
+          <p>Comfort, kwaliteit en ervaringen die je niet zomaar ergens boekt.</p>
         </article>
 
         <article class="card reveal">
           <div class="card__icon">🧭</div>
-          <h3>Avontuur &amp; natuur</h3>
-          <p>Actieve reizen vol natuur en beleving, van noorderlicht tot ongerepte eilanden.</p>
+          <h3>Avontuurlijke reizen</h3>
+          <p>Voor wie verder wil gaan dan de gebaande paden en echt iets wil ontdekken.</p>
+        </article>
+
+        <article class="card reveal">
+          <div class="card__icon">👨‍👩‍👧</div>
+          <h3>Familiereizen</h3>
+          <p>Onvergetelijke momenten voor jong en oud, met een tempo dat voor iedereen klopt.</p>
+        </article>
+
+        <article class="card reveal">
+          <div class="card__icon">💞</div>
+          <h3>Romantische reizen</h3>
+          <p>Voor bijzondere momenten met z'n tweeën, van huwelijksreis tot verrassingsweekend.</p>
         </article>
       </div>
     </div>
@@ -408,59 +396,96 @@
   <section class="section section--alt" id="waarom">
     <div class="container waarom__grid">
       <div class="waarom__intro reveal">
-        <p class="section__eyebrow">Waarom Moda Travel</p>
-        <h2 class="section__title">Reizen zonder zorgen, echt waar.</h2>
+        <p class="section__eyebrow">Over ons</p>
+        <h2 class="section__title">Reizen is onze passie.</h2>
         <p class="section__lead">
-          Wij nemen alles uit handen, van de eerste inspiratie tot de terugvlucht,
-          zodat jij enkel nog hoeft te genieten.
+          Wij zijn een onafhankelijk reisbureau uit Heusden-Zolder, met beide voeten
+          in de streek en het hoofd bij de rest van de wereld. We begonnen omdat
+          standaardpakketten zelden passen bij wat mensen echt zoeken.
         </p>
-        <a href="#offerte" class="btn btn--primary">Plan jouw reis</a>
+        <p class="section__lead">
+          Daarom stellen we elke reis zelf samen: van een verborgen strand tot een
+          rondreis vol cultuur of een ontspannen gezinsvakantie. Wij nemen de hele
+          organisatie uit handen en bouwen de route stap voor stap op.
+        </p>
+        <a href="#offerte" class="btn btn--primary">Maak een afspraak</a>
       </div>
 
       <div class="features">
         <div class="feature reveal">
-          <div class="feature__icon">🤝</div>
+          <div class="feature__icon">🧡</div>
           <div>
-            <h3>Persoonlijke begeleiding</h3>
-            <p>Eén vast aanspreekpunt dat je begeleidt, voor en tijdens je reis.</p>
+            <h3>Onafhankelijk</h3>
+            <p>Wij zitten aan geen enkele touroperator vast en kiezen dus wat het beste past.</p>
+          </div>
+        </div>
+        <div class="feature reveal">
+          <div class="feature__icon">🙅</div>
+          <div>
+            <h3>Weg van de massa</h3>
+            <p>Liever een plek die je bijblijft dan een bestemming waar iedereen staat.</p>
           </div>
         </div>
         <div class="feature reveal">
           <div class="feature__icon">✍️</div>
           <div>
-            <h3>Reisroutes op maat</h3>
-            <p>Geen standaardpakket, maar een reis die volledig bij jou past.</p>
+            <h3>Volledig op maat</h3>
+            <p>Jouw wensen, tempo en budget bepalen de reis, niet een vast pakket.</p>
           </div>
         </div>
         <div class="feature reveal">
-          <div class="feature__icon">📍</div>
+          <div class="feature__icon">🤝</div>
           <div>
-            <h3>Zorgvuldig gekozen locaties</h3>
-            <p>Unieke plekken en verblijven die wij met zorg voor je uitkiezen.</p>
-          </div>
-        </div>
-        <div class="feature reveal">
-          <div class="feature__icon">🌍</div>
-          <div>
-            <h3>Authentieke ervaringen</h3>
-            <p>Echte ontmoetingen met lokale culturen, niet enkel de gebaande paden.</p>
-          </div>
-        </div>
-        <div class="feature reveal">
-          <div class="feature__icon">😌</div>
-          <div>
-            <h3>Reizen zonder zorgen</h3>
-            <p>Wij regelen alle details, jij hoeft je nergens druk over te maken.</p>
+            <h3>Persoonlijk contact</h3>
+            <p>Je spreekt met iemand die je kent, voor en tijdens je reis.</p>
           </div>
         </div>
         <div class="feature reveal">
           <div class="feature__icon">🏡</div>
           <div>
-            <h3>Lokaal in Heusden-Zolder</h3>
-            <p>Een vertrouwd aanspreekpunt dichtbij, met persoonlijk advies.</p>
+            <h3>Uit de streek</h3>
+            <p>Voor reizigers uit Heusden-Zolder, Beringen en heel Limburg.</p>
+          </div>
+        </div>
+        <div class="feature reveal">
+          <div class="feature__icon">✈️</div>
+          <div>
+            <h3>Vervoer geregeld</h3>
+            <p>Ook het vervoer naar de luchthaven kunnen wij voor je in orde brengen.</p>
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ===================== ZO WERKT HET ===================== -->
+  <section class="section" id="werkwijze">
+    <div class="container">
+      <div class="section__head reveal">
+        <p class="section__eyebrow">Zo werkt het</p>
+        <h2 class="section__title">In drie stappen naar <span class="text-accent">jouw reis</span></h2>
+        <p class="section__lead">
+          Je hoeft nog niets uitgewerkt te hebben. Een idee volstaat om te beginnen.
+        </p>
+      </div>
+
+      <ol class="stappen">
+        <li class="stap reveal">
+          <span class="stap__nr">1</span>
+          <h3>Vertel wat je in gedachten hebt</h3>
+          <p>De bestemming of het werelddeel, of gewoon het gevoel dat je zoekt. Nog geen idee? Ook goed.</p>
+        </li>
+        <li class="stap reveal">
+          <span class="stap__nr">2</span>
+          <h3>Kies het soort reis</h3>
+          <p>Luxe, avontuur, familie of romantisch, en met wie je op pad gaat: alleen, samen of met de kinderen.</p>
+        </li>
+        <li class="stap reveal">
+          <span class="stap__nr">3</span>
+          <h3>Wij bouwen de reis op</h3>
+          <p>Wij zoeken uit, stellen voor en regelen alles. Jij hoeft enkel nog je koffer te pakken.</p>
+        </li>
+      </ol>
     </div>
   </section>
 
@@ -597,7 +622,7 @@
         <ul>
           <li><a href="#bestemmingen">Bestemmingen</a></li>
           <li><a href="#reisstijlen">Reisstijlen</a></li>
-          <li><a href="#waarom">Waarom Moda</a></li>
+          <li><a href="#waarom">Over ons</a></li>
           <li><a href="#offerte">Reis aanvragen</a></li>
         </ul>
       </div>
