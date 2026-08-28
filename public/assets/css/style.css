@@ -140,7 +140,7 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.12; font-weight: 
   padding: 10px 0;
 }
 .nav__inner { display: flex; align-items: center; justify-content: space-between; }
-.nav__logo { height: 44px; width: auto; display: block; color: #fff; transition: height .4s var(--ease); }
+.nav__logo { height: 44px; width: auto; display: block; transition: height .4s var(--ease); }
 .nav.is-scrolled .nav__logo { height: 36px; }
 
 .nav__links { display: flex; align-items: center; gap: 30px; }
@@ -507,7 +507,13 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.12; font-weight: 
 /* -------------------- Footer -------------------- */
 .footer { background: var(--footer-bg); padding: 66px 0 26px; border-top: 1px solid var(--line); }
 .footer__grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px; }
-.footer__logo { height: 64px; width: auto; display: block; color: var(--text-strong); margin-bottom: 16px; }
+.footer__logo { height: 64px; width: auto; display: block; margin-bottom: 16px; }
+/* Het logo heeft zwarte letters, dus in de footer tonen we de witte versie
+   zodra het donkere thema aanstaat. In de nav staat altijd de witte versie,
+   want die balk is sowieso donker. */
+.footer__logo--op-donker { display: none; }
+[data-theme="dark"] .footer__logo--op-licht { display: none; }
+[data-theme="dark"] .footer__logo--op-donker { display: block; }
 .footer__slogan { font-family: var(--font-head); color: var(--gold); font-style: italic; margin-bottom: 10px; }
 .footer__desc { color: var(--muted); font-size: .94rem; max-width: 320px; }
 .footer__legal { color: var(--muted); font-size: .82rem; margin-top: 12px; opacity: .85; max-width: 320px; }

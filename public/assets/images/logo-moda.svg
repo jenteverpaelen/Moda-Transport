@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Moda">
-  <!-- Zwarte sikkel (linksonder) -->
-  <path d="M 17.73 33.29 A 50 50 0 1 0 86.71 102.27 A 50 50 0 0 1 17.73 33.29 Z" fill="#141418"/>
-  <!-- Rode sikkel (rechtsboven) -->
-  <path d="M 102.27 86.71 A 50 50 0 1 0 33.29 17.73 A 50 50 0 0 1 102.27 86.71 Z" fill="#e11d2a"/>
-  <!-- Vette M in het midden -->
-  <text x="60" y="61" text-anchor="middle" dominant-baseline="central"
-        font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="46" fill="#141418">M</text>
-</svg>

@@ -59,8 +59,10 @@ a { color: inherit; text-decoration: none; }
   padding: clamp(46px, 8vh, 84px) 0 clamp(26px, 4vh, 40px);
   text-align: center;
 }
+/* Het officiële logo is een brede lockup (embleem + woordmerk), dus iets
+   breder aanhouden zodat het dezelfde aanwezigheid heeft als de titel. */
 .portal__logo {
-  width: clamp(190px, 26vw, 250px);
+  width: clamp(240px, 33vw, 330px);
   height: auto;
   margin: 0 auto clamp(20px, 3vh, 30px);
   color: var(--white);
