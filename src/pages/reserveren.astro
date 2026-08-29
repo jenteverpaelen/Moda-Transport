@@ -1,5 +1,22 @@
 ---
+import { Image } from "astro:assets";
 import Luchthaven from "../layouts/Luchthaven.astro";
+import interieurFoto from "../assets/luchthaven/interieur.jpg";
+
+const nadien = [
+  { nr: "01", titel: "U krijgt een bevestiging van ons",
+    tekst: "Geen automatische mail, maar een bericht van iemand die uw rit ook echt inplant. Meestal binnen enkele uren, 's avonds soms de volgende ochtend." },
+  { nr: "02", titel: "We spreken het ophaaluur af",
+    tekst: "Wij rekenen terug vanaf uw vluchtuur en houden rekening met de inchecktijd en de verwachte drukte onderweg. U hoeft dat zelf niet uit te zoeken." },
+  { nr: "03", titel: "De dag zelf staan we er",
+    tekst: "Op tijd voor de deur. Bij terugkomst wachten we u op in de aankomsthal, ook als uw vlucht later landt dan voorzien." },
+];
+
+const gerust = [
+  { titel: "Vrijblijvend", tekst: "Een aanvraag is nog geen boeking. U ziet eerst de vaste prijs en beslist daarna." },
+  { titel: "Vluchtnummer volstaat", tekst: "Geef het mee in de opmerkingen, dan volgen wij uw vlucht op en passen we ons aan." },
+  { titel: "Ook last minute", tekst: "Vertrekt u morgen al? Bel gewoon. Staat er een wagen vrij, dan rijden we." },
+];
 ---
 <Luchthaven
   titel="Reserveren | Moda luchthavenvervoer"
@@ -77,6 +94,58 @@ import Luchthaven from "../layouts/Luchthaven.astro";
         <button type="submit" class="btn btn--primary btn--lg btn--block">Vraag mijn prijs aan</button>
         <p class="booking__note" id="formNote" role="status"></p>
       </form>
+    </div>
+  </section>
+
+  <!-- ===================== WAT ER DAARNA GEBEURT ===================== -->
+  <section class="werkwijze" id="nadien">
+    <div class="container">
+      <div class="section__head reveal">
+        <p class="section__eyebrow">Na uw aanvraag</p>
+        <h2 class="section__title">Wat er <span class="text-accent">daarna</span> gebeurt</h2>
+      </div>
+      {nadien.map((s) => (
+        <div class="stap reveal">
+          <div class="stap__nr" aria-hidden="true">{s.nr}</div>
+          <h3 class="stap__titel">{s.titel}</h3>
+          <p class="stap__uitleg">{s.tekst}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- ===================== GERUSTSTELLING ===================== -->
+  <section class="aanboord" id="gerust">
+    <div class="container">
+      <div class="section__head reveal">
+        <p class="section__eyebrow">Goed om te weten</p>
+        <h2 class="section__title">Geen enkele <span class="text-accent">verplichting</span></h2>
+      </div>
+      <div class="aanboord__raster">
+        {gerust.map((p) => (
+          <article class="aanboord__punt reveal">
+            <h3>{p.titel}</h3>
+            <p>{p.tekst}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SLOTOPROEP ===================== -->
+  <section class="slot">
+    <div class="container">
+      <div class="slot__doos reveal">
+        <div class="slot__foto" aria-hidden="true"><Image src={interieurFoto} width={1600} alt="" /></div>
+        <h2 class="slot__titel">Liever even bellen?</h2>
+        <p class="slot__lead">
+          Dat mag altijd. Een rit vastleggen duurt aan de telefoon meestal geen twee minuten.
+        </p>
+        <div class="slot__knoppen">
+          <a href="tel:+3211243003" class="btn btn--primary btn--lg" data-content="phone-link">📞 011 24 30 03</a>
+          <a href="/prijs/" class="btn btn--ghost btn--lg">Eerst de prijs zien</a>
+        </div>
+      </div>
     </div>
   </section>
 

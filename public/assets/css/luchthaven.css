@@ -436,3 +436,73 @@
   .vergelijk__cel--moda::before { content: "Met Moda — "; color: var(--red); font-weight: 600; }
   .vergelijk__cel--zelf::before { content: "Zelf rijden — "; color: var(--muted); font-weight: 600; }
 }
+
+/* ---------------------------------------------------------
+   PAGINAKOP — voor de subpagina's
+   --------------------------------------------------------- */
+.pkop { padding: clamp(130px, 15vw, 180px) 0 clamp(34px, 4vw, 52px); }
+.pkop__titel {
+  font-family: var(--font-head); font-weight: 800;
+  font-size: clamp(2.6rem, 7vw, 5.4rem); line-height: .96; letter-spacing: -0.05em;
+  color: var(--text-strong); margin: 0 0 20px; text-transform: uppercase;
+}
+.pkop__titel em { font-style: normal; color: var(--red); display: block; }
+.pkop__lead { color: var(--muted); font-size: clamp(1rem, 1.6vw, 1.14rem); line-height: 1.72; max-width: 38rem; margin: 0; }
+
+/* ---------------------------------------------------------
+   WAGEN IN DETAIL — foto en specificaties om beurten
+   --------------------------------------------------------- */
+.detailwagen {
+  display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+  gap: clamp(28px, 5vw, 68px); align-items: center;
+  padding: clamp(44px, 6vw, 78px) 0;
+  border-top: 1px solid var(--line);
+}
+.detailwagen:last-of-type { border-bottom: 1px solid var(--line); }
+.detailwagen--gedraaid .detailwagen__beeld { order: 2; }
+.detailwagen__beeld { overflow: hidden; border-radius: var(--radius); background: var(--surface-3); }
+.detailwagen__beeld img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+.detailwagen__nr {
+  font-family: var(--font-head); font-size: .72rem; font-weight: 700;
+  letter-spacing: .22em; color: var(--red); margin-bottom: 14px; text-transform: uppercase;
+}
+.detailwagen__naam {
+  font-family: var(--font-head); font-weight: 800;
+  font-size: clamp(1.7rem, 3.6vw, 2.6rem); letter-spacing: -0.04em; line-height: 1.04;
+  color: var(--text-strong); margin: 0 0 14px;
+}
+.detailwagen__tekst { color: var(--muted); line-height: 1.78; margin: 0 0 26px; }
+
+/* ---------------------------------------------------------
+   AAN BOORD — wat er standaard in zit
+   --------------------------------------------------------- */
+.aanboord { padding: clamp(70px, 9vw, 120px) 0; background: var(--surface-soft); }
+.aanboord__raster { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: clamp(24px, 3vw, 40px); }
+.aanboord__punt { padding: clamp(22px, 2.6vw, 30px) clamp(20px, 2.4vw, 30px) 8px; border-top: 1px solid var(--line); }
+.aanboord__punt:first-child { padding-left: 0; }
+.aanboord__punt h3 {
+  font-family: var(--font-head); font-weight: 700; font-size: 1.06rem;
+  letter-spacing: -0.02em; color: var(--text-strong); margin: 0 0 9px;
+}
+.aanboord__punt p { color: var(--muted); line-height: 1.7; margin: 0; font-size: .94rem; }
+
+/* ---------------------------------------------------------
+   FOTOSTROOK
+   --------------------------------------------------------- */
+.strook { padding: clamp(70px, 9vw, 120px) 0; }
+.strook__raster { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(12px, 1.6vw, 18px); }
+.strook__item { overflow: hidden; border-radius: var(--radius-sm); background: var(--surface-3); margin: 0; }
+.strook__item img { width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; display: block; transition: transform .8s var(--ease); }
+.strook__item:hover img { transform: scale(1.05); }
+.strook__bijschrift {
+  display: block; margin-top: 10px; color: var(--muted);
+  font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .detailwagen { grid-template-columns: 1fr; gap: 22px; }
+  .detailwagen--gedraaid .detailwagen__beeld { order: 0; }
+  .aanboord__raster { grid-template-columns: 1fr; }
+  .aanboord__punt { padding: 22px 0 6px; }
+  .strook__raster { grid-template-columns: 1fr 1fr; }
+}

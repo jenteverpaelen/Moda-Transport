@@ -1,5 +1,32 @@
 ---
+import { Image } from "astro:assets";
 import Luchthaven from "../layouts/Luchthaven.astro";
+import prijzen from "../../public/content/prices.json";
+import stuurFoto from "../assets/luchthaven/stuur.jpg";
+
+const luchthavens = [...prijzen.luchthavens].sort((a, b) => a.price - b.price);
+
+const inbegrepen = [
+  { titel: "Tol en parking", tekst: "Alle tol onderweg en het parkeergeld aan de luchthaven zitten in de prijs." },
+  { titel: "Wachttijd bij vertraging", tekst: "Landt uw vlucht later, dan wachten we. Dat kost u niets extra." },
+  { titel: "Bagage", tekst: "Koffers en handbagage voor iedereen die meerijdt. Geen stukprijs." },
+  { titel: "Kinderzitjes", tekst: "Gratis, op maat van de leeftijd. Wel even op voorhand vragen." },
+  { titel: "Deur tot deur", tekst: "We halen u thuis op en zetten u af aan de juiste vertrekhal." },
+  { titel: "Btw", tekst: "De prijs die u ziet is de prijs die u betaalt. Geen bedrag dat er nog bij komt." },
+];
+
+const vragen = [
+  { v: "Is de berekende prijs ook de eindprijs?",
+    a: "Het is een richtprijs die in de meeste gevallen exact klopt. Wij bevestigen hem altijd persoonlijk voor u iets vastlegt — <strong>pas dan staat hij vast</strong>." },
+  { v: "Waarom is Charleroi duurder dan Zaventem?",
+    a: "Puur afstand en rijtijd. Zaventem ligt vanuit Limburg dichter dan Charleroi, en Schiphol ligt nog verder. De prijs volgt de kilometers, niet de populariteit van de luchthaven." },
+  { v: "Wat als we met meer dan twee zijn?",
+    a: `De basisprijs geldt tot ${prijzen.basisprijs_personen} personen. Elke extra persoon kost <strong>€ ${prijzen.supplement_per_extra_persoon}</strong>, tot acht in één wagen.` },
+  { v: "Kan er onderweg iemand bijkomen?",
+    a: `Zeker. Een tussenstop om iemand op te pikken kost <strong>€ ${prijzen.supplement_per_tussenstop}</strong> per stop. Geef de adressen mee bij uw aanvraag.` },
+  { v: "Krijg ik korting bij heen en terug?",
+    a: `Ja. Boekt u beide ritten samen, dan gaat er <strong>${prijzen.heenterug_korting_procent}%</strong> af van het totaal.` },
+];
 ---
 <Luchthaven
   titel="Prijs berekenen | Moda luchthavenvervoer"
@@ -82,6 +109,94 @@ import Luchthaven from "../layouts/Luchthaven.astro";
             <span class="calc__euro">€</span>
             <p>Vul je gegevens in en ontdek meteen je richtprijs.</p>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TARIEVEN ===================== -->
+  <section class="tarieven" id="tarieven">
+    <div class="container tarieven__grid">
+      <div class="tarieven__intro reveal">
+        <p class="section__eyebrow">Richtprijzen</p>
+        <h2 class="section__title">Wat een rit <span class="text-accent">kost</span></h2>
+        <p class="section__lead">
+          Enkele rit vanuit Heusden-Zolder, tot {prijzen.basisprijs_personen} personen,
+          binnen een straal van {prijzen.km_straal} km.
+        </p>
+        <ul class="tarieven__regels">
+          <li><span class="tarieven__vink">✓</span><span>Tol en parking <b>inbegrepen</b></span></li>
+          <li><span class="tarieven__vink">✓</span><span>Wachttijd bij vertraging <b>gratis</b></span></li>
+          <li><span class="tarieven__vink">✓</span><span>Heen en terug samen: <b>{prijzen.heenterug_korting_procent}% korting</b></span></li>
+        </ul>
+      </div>
+
+      <div class="reveal">
+        <ul class="tarieven__lijst">
+          {luchthavens.map((l) => (
+            <li>
+              <span class="tarieven__naam">{l.label}</span>
+              <span class="tarieven__prijs">€ {l.price}<sup>vanaf</sup></span>
+            </li>
+          ))}
+        </ul>
+        <p class="tarieven__noot">
+          Vertrekt u van een ander adres of vliegt u vanaf een luchthaven die er niet
+          bij staat? Vraag het gerust, dan rekenen we het exact voor u uit.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== WAT ZIT ERIN ===================== -->
+  <section class="aanboord" id="inbegrepen">
+    <div class="container">
+      <div class="section__head reveal">
+        <p class="section__eyebrow">Geen kleine lettertjes</p>
+        <h2 class="section__title">Wat er <span class="text-accent">in de prijs</span> zit</h2>
+      </div>
+      <div class="aanboord__raster">
+        {inbegrepen.map((p) => (
+          <article class="aanboord__punt reveal">
+            <h3>{p.titel}</h3>
+            <p>{p.tekst}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== VRAGEN OVER DE PRIJS ===================== -->
+  <section class="vragen" id="vragen">
+    <div class="container vragen__grid">
+      <div class="reveal">
+        <p class="section__eyebrow">Over de prijs</p>
+        <h2 class="section__title">Veelgestelde <span class="text-accent">vragen</span></h2>
+        <p class="section__lead">Twijfelt u ergens over? Bel gerust, we rekenen het samen na.</p>
+      </div>
+      <div class="reveal">
+        {vragen.map((q) => (
+          <details class="vraag">
+            <summary>{q.v}</summary>
+            <p class="vraag__antwoord" set:html={q.a}></p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SLOTOPROEP ===================== -->
+  <section class="slot">
+    <div class="container">
+      <div class="slot__doos reveal">
+        <div class="slot__foto" aria-hidden="true"><Image src={stuurFoto} width={1600} alt="" /></div>
+        <h2 class="slot__titel">Prijs gezien? Leg hem vast.</h2>
+        <p class="slot__lead">
+          Wij bevestigen uw rit persoonlijk en houden rekening met uw inchecktijd.
+        </p>
+        <div class="slot__knoppen">
+          <a href="/reserveren/" class="btn btn--primary btn--lg">Reserveer uw rit</a>
+          <a href="/vloot/" class="btn btn--ghost btn--lg">Bekijk de wagens</a>
         </div>
       </div>
     </div>
