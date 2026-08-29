@@ -1,155 +1,121 @@
 ---
 import { Image } from "astro:assets";
-import Luchthaven from "../layouts/Luchthaven.astro";
+import Moda from "../layouts/Moda.astro";
+import instellingen from "../../public/content/settings.json";
 import vlootFoto from "../assets/luchthaven/vloot.jpg";
 import interieurFoto from "../assets/luchthaven/interieur.jpg";
 import deurFoto from "../assets/luchthaven/deur.jpg";
 import stuurFoto from "../assets/luchthaven/stuur.jpg";
+import stuurNacht from "../assets/luchthaven/stuur-nacht.jpg";
 
 const wagens = [
   {
-    nr: "Wagen 01",
-    naam: "Mercedes V-Klasse",
-    foto: vlootFoto,
+    naam: "Mercedes V-Klasse", foto: vlootFoto, alt: "Mercedes V-Klasse van Moda",
     tekst: "Onze standaardwagen voor bijna elke rit. De achterbank is los verstelbaar, er is werkelijk beenruimte, en de koffer slikt de bagage van een gezin zonder dat er iets op schoot moet. Wie vroeg vertrekt, slaapt hier gewoon door.",
-    specs: [
-      ["Passagiers", "tot 7"],
-      ["Grote koffers", "tot 7"],
-      ["Handbagage", "onbeperkt bij"],
-      ["Zetels", "Leder, apart verstelbaar"],
-      ["Klimaat", "Climate control achteraan"],
-      ["Aan boord", "Water, USB-lader"],
-    ],
+    specs: [["Passagiers","tot 7"],["Grote koffers","tot 7"],["Handbagage","onbeperkt bij"],["Zetels","leder, apart verstelbaar"],["Klimaat","regeling ook achterin"],["Aan boord","water, USB-lader"]],
   },
   {
-    nr: "Wagen 02",
-    naam: "Mercedes Vito",
-    foto: interieurFoto,
-    tekst: "Zelfde comfort, nog een rij extra. Voor een gezin met veel bagage, een groep vrienden die samen vertrekt, of een team op zakenreis. Ook hier: leder, climate control en een instap waar je niet voor hoeft te bukken.",
-    specs: [
-      ["Passagiers", "tot 8"],
-      ["Grote koffers", "tot 8"],
-      ["Handbagage", "onbeperkt bij"],
-      ["Zetels", "Leder, drie rijen"],
-      ["Klimaat", "Climate control achteraan"],
-      ["Aan boord", "Kinderzitje op aanvraag"],
-    ],
+    naam: "Mercedes Vito", foto: interieurFoto, alt: "Lederen zetels achterin de Mercedes Vito",
+    tekst: "Zelfde comfort, nog een rij extra. Voor een gezin met veel bagage, een groep vrienden die samen vertrekt, of een team op zakenreis. Ook hier leder, klimaatregeling achterin en een instap waar u niet voor hoeft te bukken.",
+    specs: [["Passagiers","tot 8"],["Grote koffers","tot 8"],["Handbagage","onbeperkt bij"],["Zetels","leder, drie rijen"],["Klimaat","regeling ook achterin"],["Aan boord","kinderzitje op aanvraag"]],
   },
 ];
 
 const aanBoord = [
-  { titel: "Water en een lader", tekst: "Een flesje water staat klaar en er is een lader voor elke telefoon. Kleine dingen, maar u vertrekt vaak vroeg." },
-  { titel: "Uw eigen temperatuur", tekst: "Climate control ook achteraan, dus u regelt zelf hoe warm of koel u het achterin wil hebben." },
-  { titel: "Rust of gezelschap", tekst: "Wil u praten, dan praten we. Wil u slapen of werken, dan houden we het stil. Zeg het gerust." },
-  { titel: "Ruimte voor bagage", tekst: "Koffers, buggy's, ski's of een rolstoel: laat het weten bij uw aanvraag en we zorgen dat het past." },
-  { titel: "Kinderzitjes", tekst: "Gratis en op maat van de leeftijd, maar wel op voorhand aanvragen zodat het juiste zitje in de wagen ligt." },
-  { titel: "Verzekerd en gekeurd", tekst: "Vergund bezoldigd vervoer, verzekerd, met wagens die op tijd onderhouden en gekeurd worden." },
+  { t: "Water en een lader", u: "Een flesje water staat klaar en er is een lader voor elke telefoon. Kleine dingen, maar u vertrekt vaak vroeg." },
+  { t: "Uw eigen temperatuur", u: "Klimaatregeling ook achterin, dus u bepaalt zelf hoe warm of koel u het achterin wil hebben." },
+  { t: "Rust of gezelschap", u: "Wil u praten, dan praten we. Wil u slapen of werken, dan houden we het stil. Zeg het gerust." },
+  { t: "Ruimte voor bagage", u: "Koffers, buggy's, ski's of een rolstoel: laat het weten bij uw aanvraag en we zorgen dat het past." },
+  { t: "Kinderzitjes", u: "Gratis en op maat van de leeftijd, maar wel op voorhand aanvragen zodat het juiste zitje in de wagen ligt." },
+  { t: "Verzekerd en gekeurd", u: "Vergund bezoldigd vervoer, verzekerd, met wagens die op tijd onderhouden en gekeurd worden." },
 ];
 ---
-<Luchthaven
+<Moda
   titel="Onze vloot | Moda luchthavenvervoer"
-  omschrijving="Mercedes V-Klasse en Vito voor tot acht personen: leder, climate control en plaats voor al uw bagage. Verzorgd, verzekerd en onderhouden."
+  omschrijving="Mercedes V-Klasse en Vito voor tot acht personen: leder, klimaatregeling achterin en plaats voor al uw bagage. Verzorgd, verzekerd en onderhouden."
   actief="vloot">
 
   <section class="pkop">
     <div class="container">
-      <p class="section__eyebrow reveal">Onze vloot</p>
-      <h1 class="pkop__titel reveal">Altijd een<em>Mercedes</em></h1>
-      <p class="pkop__lead reveal">
-        Geen wisselend wagenpark en geen verrassingen aan de deur. U rijdt in een
-        verzorgde Mercedes met leder, climate control en genoeg plaats voor uw
-        bagage — welke rit u ook boekt.
-      </p>
+      <h1 class="pkop__titel reus">Altijd een Mercedes. Altijd dezelfde twee.</h1>
+      <div class="pkop__onder">
+        <p class="lood">
+          Geen wisselend wagenpark en geen verrassingen aan de deur. U rijdt in
+          een verzorgde Mercedes met leder, klimaatregeling en genoeg plaats
+          voor uw bagage — welke rit u ook boekt.
+        </p>
+        <div class="pkop__cijfers">
+          <div><span>Wagens</span><span class="getal">2</span></div>
+          <div><span>Personen</span><span class="getal">tot 8</span></div>
+          <div><span>Grote koffers</span><span class="getal">tot 8</span></div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="section" style="padding-top: 0;" id="vloot">
+  <section class="blok" style="padding-top:0">
     <div class="container">
       {wagens.map((w, i) => (
-        <article class={"detailwagen reveal" + (i % 2 === 1 ? " detailwagen--gedraaid" : "")}>
-          <div class="detailwagen__beeld">
-            <Image src={w.foto} width={1000} alt={`${w.naam} van Moda`} />
-          </div>
+        <article class={"detail toon" + (i % 2 === 1 ? " detail--gedraaid" : "")}>
+          <div class="detail__beeld"><Image src={w.foto} width={1000} alt={w.alt} /></div>
           <div>
-            <div class="detailwagen__nr">{w.nr}</div>
-            <h2 class="detailwagen__naam">{w.naam}</h2>
-            <p class="detailwagen__tekst">{w.tekst}</p>
-            <ul class="wagen__specs">
-              {w.specs.map(([label, waarde]) => (<li><span>{label}</span><span>{waarde}</span></li>))}
+            <h2 class="detail__naam">{w.naam}</h2>
+            <p class="lood">{w.tekst}</p>
+            <ul class="wagen__specs" style="margin-top:22px">
+              {w.specs.map(([a, b]) => (<li><span>{a}</span><span>{b}</span></li>))}
             </ul>
-            <a href="/reserveren/" class="btn btn--primary">Reserveer deze wagen</a>
+            <a class="knop knop--signaal" href="/reserveren/">
+              Reserveer deze wagen <svg class="ic" aria-hidden="true"><use href="#ic-rechts"/></svg>
+            </a>
           </div>
         </article>
       ))}
     </div>
   </section>
 
-  <!-- ===================== AAN BOORD ===================== -->
-  <section class="aanboord" id="aanboord">
+  <section class="blok blok--asfalt">
     <div class="container">
-      <div class="section__head reveal">
-        <p class="section__eyebrow">Aan boord</p>
-        <h2 class="section__title">Wat er <span class="text-accent">standaard</span> in zit</h2>
+      <div class="sectiekop toon">
+        <h2 class="groot">Wat er standaard in zit</h2>
+        <p class="sectiekop__noot">Niet als extra aan te vragen, gewoon aanwezig.</p>
       </div>
-
-      <div class="aanboord__raster">
+      <div class="punten toon">
         {aanBoord.map((p) => (
-          <article class="aanboord__punt reveal">
-            <h3>{p.titel}</h3>
-            <p>{p.tekst}</p>
-          </article>
+          <article class="punt"><h3>{p.t}</h3><p>{p.u}</p></article>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- ===================== IN BEELD ===================== -->
-  <section class="strook" id="in-beeld">
+  <section class="blok">
     <div class="container">
-      <div class="section__head reveal">
-        <p class="section__eyebrow">In beeld</p>
-        <h2 class="section__title">Van binnen en <span class="text-accent">van buiten</span></h2>
+      <div class="sectiekop toon">
+        <h2 class="groot">Van binnen en van buiten</h2>
+        <p class="sectiekop__noot">Onze eigen wagens, onze eigen foto's.</p>
       </div>
-
-      <div class="strook__raster">
-        <figure class="strook__item reveal">
-          <Image src={vlootFoto} width={700} alt="De Mercedes-wagens van Moda naast elkaar" />
-          <figcaption class="strook__bijschrift">De vloot</figcaption>
-        </figure>
-        <figure class="strook__item reveal">
-          <Image src={interieurFoto} width={700} alt="Lederen zetels achterin de Mercedes" />
-          <figcaption class="strook__bijschrift">Achterin</figcaption>
-        </figure>
-        <figure class="strook__item reveal">
-          <Image src={deurFoto} width={700} alt="Comfortabele instap met lederen zetels" />
-          <figcaption class="strook__bijschrift">De instap</figcaption>
-        </figure>
-        <figure class="strook__item reveal">
-          <Image src={stuurFoto} width={700} alt="Het stuur en dashboard van de Mercedes" />
-          <figcaption class="strook__bijschrift">Vooraan</figcaption>
-        </figure>
+      <div class="strook toon">
+        <figure><Image src={vlootFoto} width={700} alt="De Mercedes-wagens van Moda naast elkaar" /><figcaption>De vloot</figcaption></figure>
+        <figure><Image src={interieurFoto} width={700} alt="Lederen zetels achterin" /><figcaption>Achterin</figcaption></figure>
+        <figure><Image src={deurFoto} width={700} alt="Comfortabele instap met lederen zetels" /><figcaption>De instap</figcaption></figure>
+        <figure><Image src={stuurFoto} width={700} alt="Het stuur en dashboard van de Mercedes" /><figcaption>Vooraan</figcaption></figure>
       </div>
     </div>
   </section>
 
-  <!-- ===================== SLOTOPROEP ===================== -->
   <section class="slot">
+    <div class="slot__beeld" aria-hidden="true"><Image src={stuurNacht} width={1800} alt="" /></div>
     <div class="container">
-      <div class="slot__doos reveal">
-        <div class="slot__foto" aria-hidden="true">
-          <Image src={deurFoto} width={1600} alt="" />
-        </div>
-        <h2 class="slot__titel">Met hoeveel bent u?</h2>
-        <p class="slot__lead">
-          Geef door met hoeveel personen en hoeveel bagage u vertrekt, dan zetten
-          wij de juiste wagen klaar. Bij meer dan acht personen rijden we met twee.
-        </p>
-        <div class="slot__knoppen">
-          <a href="/reserveren/" class="btn btn--primary btn--lg">Reserveer uw rit</a>
-          <a href="/prijs/" class="btn btn--ghost btn--lg">Bereken uw prijs</a>
-        </div>
+      <h2 class="reus">Met hoeveel bent u?</h2>
+      <p class="slot__lead">
+        Geef door met hoeveel personen en hoeveel bagage u vertrekt, dan zetten
+        wij de juiste wagen klaar. Bij meer dan acht personen rijden we met twee.
+      </p>
+      <div class="slot__acties">
+        <a class="knop knop--signaal" href="/reserveren/">Reserveer uw rit</a>
+        <a class="knop" href={`tel:${instellingen.telefoon_link}`}>
+          <svg class="ic" aria-hidden="true"><use href="#ic-tel"/></svg>{instellingen.telefoon_weergave}
+        </a>
       </div>
     </div>
   </section>
-
-</Luchthaven>
+</Moda>

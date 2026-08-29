@@ -1,152 +1,161 @@
 ---
 import { Image } from "astro:assets";
-import Luchthaven from "../layouts/Luchthaven.astro";
-import interieurFoto from "../assets/luchthaven/interieur.jpg";
+import Moda from "../layouts/Moda.astro";
+import instellingen from "../../public/content/settings.json";
+import prijzen from "../../public/content/prices.json";
+import deurFoto from "../assets/luchthaven/deur.jpg";
 
-const nadien = [
-  { nr: "01", titel: "U krijgt een bevestiging van ons",
-    tekst: "Geen automatische mail, maar een bericht van iemand die uw rit ook echt inplant. Meestal binnen enkele uren, 's avonds soms de volgende ochtend." },
-  { nr: "02", titel: "We spreken het ophaaluur af",
-    tekst: "Wij rekenen terug vanaf uw vluchtuur en houden rekening met de inchecktijd en de verwachte drukte onderweg. U hoeft dat zelf niet uit te zoeken." },
-  { nr: "03", titel: "De dag zelf staan we er",
-    tekst: "Op tijd voor de deur. Bij terugkomst wachten we u op in de aankomsthal, ook als uw vlucht later landt dan voorzien." },
-];
-
-const gerust = [
-  { titel: "Vrijblijvend", tekst: "Een aanvraag is nog geen boeking. U ziet eerst de vaste prijs en beslist daarna." },
-  { titel: "Vluchtnummer volstaat", tekst: "Geef het mee in de opmerkingen, dan volgen wij uw vlucht op en passen we ons aan." },
-  { titel: "Ook last minute", tekst: "Vertrekt u morgen al? Bel gewoon. Staat er een wagen vrij, dan rijden we." },
+const daarna = [
+  { nr: "01", wat: "Wij kijken ernaar", u: "Meestal binnen het uur, en altijd door iemand van ons. Geen automatische bevestiging." },
+  { nr: "02", wat: "Wij bevestigen het uur", u: "U krijgt het ophaaluur en het bedrag, telefonisch of per mail. Klopt er iets niet, dan passen we het aan." },
+  { nr: "03", wat: "Wij staan er", u: "Op het afgesproken uur voor uw deur. Vanaf dan hoeft u nergens meer aan te denken." },
 ];
 ---
-<Luchthaven
+<Moda
   titel="Reserveren | Moda luchthavenvervoer"
-  omschrijving="Reserveer uw luchthavenvervoer. Vul kort uw gegevens in, wij bevestigen zo snel mogelijk."
+  omschrijving="Reserveer uw rit naar de luchthaven. Geef uw vluchtuur door, wij rekenen het ophaaluur uit en bevestigen de vaste prijs."
   actief="reserveren">
 
-  <section class="section section--alt" id="reserveer">
-    <div class="container booking">
-      <div class="booking__intro reveal">
-        <p class="section__eyebrow">Reserveer of vraag een prijs</p>
-        <h2 class="section__title">Klaar om zorgeloos te reizen?</h2>
-        <p class="section__lead">
-          Vul kort uw gegevens in en wij bezorgen u snel <a href="/prijs/">een vaste prijs</a>.
-          Liever direct boeken? Bel of mail ons gerust.
+  <section class="pkop">
+    <div class="container">
+      <h1 class="pkop__titel reus">Geef uw vluchtuur door. Wij doen de rest.</h1>
+      <div class="pkop__onder">
+        <p class="lood">
+          U hoeft niet uit te rekenen hoe laat we moeten aanbellen — dat doen
+          wij. Vul in wanneer u vertrekt en waarheen, en u krijgt het ophaaluur
+          en de vaste prijs terug ter bevestiging.
         </p>
-        <ul class="booking__contactlist">
-          <li><span>📞</span> <a href="tel:+3211243003" data-content="phone">011 24 30 03</a></li>
-          <li><span>✉️</span> <a href="mailto:info@moda-sneltransport.be" data-content="email">info@moda-sneltransport.be</a></li>
-          <li><span>📍</span> <a href="https://www.google.com/maps/search/?api=1&amp;query=Beringersteenweg+14+3550+Heusden-Zolder" target="_blank" rel="noopener" data-content="address">Beringersteenweg 14, 3550 Heusden-Zolder</a></li>
+        <div class="pkop__cijfers">
+          <div><span>Antwoord</span><span class="getal">meestal binnen het uur</span></div>
+          <div><span>Vrijblijvend</span><span class="getal">tot u bevestigt</span></div>
+          <div><span>Liever bellen</span><span class="getal">{instellingen.telefoon_weergave}</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blok" style="padding-top:0">
+    <div class="container aanvraag">
+      <div class="aanvraag__zij toon">
+        <h2 class="kop">Wat er daarna gebeurt</h2>
+        <ul>
+          {daarna.map((d) => (
+            <li><b>{d.nr}</b> <span><strong>{d.wat}.</strong> {d.u}</span></li>
+          ))}
+        </ul>
+
+        <h2 class="kop" style="margin-top:clamp(30px,4vw,44px)">Liever direct</h2>
+        <ul>
+          <li><b>Bellen</b> <a href={`tel:${instellingen.telefoon_link}`}>{instellingen.telefoon_weergave}</a></li>
+          <li><b>Mailen</b> <a href={`mailto:${instellingen.email}`}>{instellingen.email}</a></li>
+          <li><b>WhatsApp</b> <a href={`https://wa.me/${instellingen.whatsapp_nummer}?text=${encodeURIComponent(instellingen.whatsapp_bericht)}`} target="_blank" rel="noopener">Stuur een bericht</a></li>
+          <li><b>Adres</b> <span>{instellingen.adres}</span></li>
         </ul>
       </div>
 
-      <form class="booking__form reveal" id="bookingForm" novalidate>
-        <!-- Spam-val (onzichtbaar; enkel bots vinken dit aan) -->
+      <form class="formulier toon" data-formulier="rit" novalidate>
         <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none" />
 
-        <div class="field">
-          <label for="name">Naam</label>
-          <input type="text" id="name" name="name" placeholder="Uw naam" required />
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label for="phone">Telefoon</label>
-            <input type="tel" id="phone" name="phone" placeholder="+32 ..." required />
+        <div class="veldrij">
+          <div class="fveld">
+            <label for="naam">Naam</label>
+            <input type="text" id="naam" name="naam" placeholder="Uw naam" required autocomplete="name" />
           </div>
-          <div class="field">
-            <label for="email">E-mail</label>
-            <input type="email" id="email" name="email" placeholder="u@voorbeeld.be" required />
+          <div class="fveld">
+            <label for="telefoon">Telefoon</label>
+            <input type="tel" id="telefoon" name="telefoon" placeholder="0470 00 00 00" required autocomplete="tel" />
           </div>
         </div>
-        <div class="field">
-          <label for="from">Ophaaladres</label>
-          <div class="autocomplete">
-            <input type="text" id="from" name="from" placeholder="Begin te typen, bv. Paalseweg 30…"
-                   autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false"
-                   aria-controls="from-ac-list" required />
-            <ul class="autocomplete__list" id="from-ac-list" role="listbox" hidden></ul>
-          </div>
-          <span class="field__hint">Kies je adres uit de lijst, dan wordt de postcode automatisch ingevuld.</span>
+
+        <div class="fveld">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" placeholder="u@voorbeeld.be" required autocomplete="email" />
         </div>
-        <div class="field-row">
-          <div class="field">
-            <label for="postcode">Postcode</label>
-            <input type="text" id="postcode" name="postcode" placeholder="bv. 3550" inputmode="numeric" autocomplete="postal-code" />
-          </div>
-          <div class="field">
-            <label for="to">Bestemming</label>
-            <input type="text" id="to" name="to" placeholder="Bv. Brussels Airport" required />
-          </div>
+
+        <div class="fveld">
+          <label for="ophaaladres">Waar halen we u op</label>
+          <input type="text" id="ophaaladres" name="ophaaladres" placeholder="Straat, nummer en gemeente" required autocomplete="street-address" />
         </div>
-        <div class="field-row">
-          <div class="field">
-            <label for="date">Datum &amp; tijd</label>
-            <input type="datetime-local" id="date" name="date" required />
+
+        <div class="veldrij">
+          <div class="fveld">
+            <label for="luchthaven">Naar welke luchthaven</label>
+            <select id="luchthaven" name="luchthaven" required>
+              <option value="" disabled selected>Kies een luchthaven</option>
+              {prijzen.luchthavens.map((l) => (<option value={l.value}>{l.label}</option>))}
+            </select>
           </div>
-          <div class="field">
-            <label for="pax">Aantal personen</label>
-            <input type="number" id="pax" name="pax" min="1" max="8" value="2" required />
+          <div class="fveld">
+            <label for="richting">Heen, of heen en terug</label>
+            <select id="richting" name="richting">
+              <option value="heen">Alleen heen</option>
+              <option value="beide">Heen en terug</option>
+              <option value="terug">Alleen terug (ophalen)</option>
+            </select>
           </div>
         </div>
-        <div class="field">
-          <label for="notes">Opmerkingen (optioneel)</label>
-          <textarea id="notes" name="notes" rows="3" placeholder="Vluchtnummer, bagage, ..."></textarea>
+
+        <div class="veldrij">
+          <div class="fveld">
+            <label for="datum">Datum van vertrek</label>
+            <input type="date" id="datum" name="datum" required />
+          </div>
+          <div class="fveld">
+            <label for="vluchtuur">Uw vlucht vertrekt om</label>
+            <input type="time" id="vluchtuur" name="vluchtuur" step="300" />
+          </div>
         </div>
-        <button type="submit" class="btn btn--primary btn--lg btn--block">Vraag mijn prijs aan</button>
-        <p class="booking__note" id="formNote" role="status"></p>
+
+        <div class="veldrij">
+          <div class="fveld">
+            <label for="ophaaluur">Gewenst ophaaluur (mag leeg)</label>
+            <input type="time" id="ophaaluur" name="ophaaluur" step="300" />
+          </div>
+          <div class="fveld">
+            <label for="personen">Aantal personen</label>
+            <input type="number" id="personen" name="personen" min="1" max="16" value="2" required />
+          </div>
+        </div>
+
+        <div class="veldrij">
+          <div class="fveld">
+            <label for="vluchtnummer">Vluchtnummer (mag leeg)</label>
+            <input type="text" id="vluchtnummer" name="vluchtnummer" placeholder="Bv. SN2853" />
+          </div>
+          <div class="fveld">
+            <label for="koffers">Aantal grote koffers</label>
+            <input type="number" id="koffers" name="koffers" min="0" max="16" placeholder="2" />
+          </div>
+        </div>
+
+        <div class="fveld">
+          <label for="opmerkingen">Opmerkingen (mag leeg)</label>
+          <textarea id="opmerkingen" name="opmerkingen" rows="3" placeholder="Kinderzitje, tussenstop, meerdere ophaaladressen …"></textarea>
+        </div>
+
+        <button type="submit" class="knop knop--signaal knop--breed">
+          Verstuur mijn aanvraag <svg class="ic" aria-hidden="true"><use href="#ic-rechts"/></svg>
+        </button>
+        <p class="fnoot" data-noot role="status">
+          Vrijblijvend. Uw rit staat pas vast als wij hem bevestigd hebben.
+        </p>
       </form>
     </div>
   </section>
 
-  <!-- ===================== WAT ER DAARNA GEBEURT ===================== -->
-  <section class="werkwijze" id="nadien">
-    <div class="container">
-      <div class="section__head reveal">
-        <p class="section__eyebrow">Na uw aanvraag</p>
-        <h2 class="section__title">Wat er <span class="text-accent">daarna</span> gebeurt</h2>
-      </div>
-      {nadien.map((s) => (
-        <div class="stap reveal">
-          <div class="stap__nr" aria-hidden="true">{s.nr}</div>
-          <h3 class="stap__titel">{s.titel}</h3>
-          <p class="stap__uitleg">{s.tekst}</p>
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <!-- ===================== GERUSTSTELLING ===================== -->
-  <section class="aanboord" id="gerust">
-    <div class="container">
-      <div class="section__head reveal">
-        <p class="section__eyebrow">Goed om te weten</p>
-        <h2 class="section__title">Geen enkele <span class="text-accent">verplichting</span></h2>
-      </div>
-      <div class="aanboord__raster">
-        {gerust.map((p) => (
-          <article class="aanboord__punt reveal">
-            <h3>{p.titel}</h3>
-            <p>{p.tekst}</p>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== SLOTOPROEP ===================== -->
   <section class="slot">
+    <div class="slot__beeld" aria-hidden="true"><Image src={deurFoto} width={1800} alt="" /></div>
     <div class="container">
-      <div class="slot__doos reveal">
-        <div class="slot__foto" aria-hidden="true"><Image src={interieurFoto} width={1600} alt="" /></div>
-        <h2 class="slot__titel">Liever even bellen?</h2>
-        <p class="slot__lead">
-          Dat mag altijd. Een rit vastleggen duurt aan de telefoon meestal geen twee minuten.
-        </p>
-        <div class="slot__knoppen">
-          <a href="tel:+3211243003" class="btn btn--primary btn--lg" data-content="phone-link">📞 011 24 30 03</a>
-          <a href="/prijs/" class="btn btn--ghost btn--lg">Eerst de prijs zien</a>
-        </div>
+      <h2 class="reus">Moet het snel gaan? Bel gerust.</h2>
+      <p class="slot__lead">
+        Vertrekt u morgenvroeg en heeft u nog niets geregeld? Bel dan liever
+        dan te mailen — dan weet u meteen of het lukt.
+      </p>
+      <div class="slot__acties">
+        <a class="knop knop--signaal" href={`tel:${instellingen.telefoon_link}`}>
+          <svg class="ic" aria-hidden="true"><use href="#ic-tel"/></svg>{instellingen.telefoon_weergave}
+        </a>
       </div>
     </div>
   </section>
-
-</Luchthaven>
+</Moda>

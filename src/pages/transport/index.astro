@@ -1,132 +1,136 @@
 ---
-import Transport from "../../layouts/Transport.astro";
+import { Image } from "astro:assets";
+import Moda from "../../layouts/Moda.astro";
+import instellingen from "../../../public/content/settings.json";
+import heroFoto from "../../assets/transport/hero.jpg";
+import sprinterFoto from "../../assets/transport/sprinter.jpg";
+import vrachtFoto from "../../assets/transport/vrachtwagen.jpg";
+
+/* Ook hier is een dienst een traject van A naar B, niet een kaartje met een
+   icoontje erop. */
+const trajecten = [
+  { van: "Uw magazijn", naar: "Vandaag ter plaatse", wat: "Expresstransport",
+    u: "Een zending die niet tot morgen kan wachten. Wij rijden rechtstreeks, zonder overslag, lokaal en internationaal." },
+  { van: "Deur", naar: "Deur", wat: "Koeriersdienst",
+    u: "Documenten of kleine pakketten die veilig en snel ter plaatse moeten. Eén chauffeur, van ophaling tot aflevering." },
+  { van: "1 pallet", naar: "33 pallets", wat: "Palletvervoer",
+    u: "Van één pallet tot een volle vracht. Voor elk gewicht de juiste wagen, dus u betaalt geen vrachtwagen voor een halve lading." },
+  { van: "−26 °C", naar: "+26 °C", wat: "Koeltransport",
+    u: "Temperatuurgevoelige goederen, stabiel gehouden over de hele rit. De koelwagen houdt alles tussen −26 en +26 °C." },
+  { van: "België", naar: "Heel Europa", wat: "Nationaal en internationaal",
+    u: "In heel België en heel Europa, Frankrijk inbegrepen. Betrouwbaar tot op de bestemming, met één aanspreekpunt hier." },
+  { van: "ADR-lading", naar: "Veilig ter plaatse", wat: "Gevaarlijke goederen",
+    u: "ADR-gecertificeerde chauffeurs en het juiste materiaal. Gevaarlijke stoffen vervoerd volgens de regels, zonder omweg." },
+];
+
+const waarom = [
+  { t: "Eén aanspreekpunt", u: "Dezelfde persoon van aanvraag tot levering. U hoeft uw verhaal niet twee keer te doen." },
+  { t: "Oplossingsgericht", u: "Een bijzondere lading of een krap uur? We zeggen wat wel kan, in plaats van wat niet kan." },
+  { t: "Gevarieerd wagenpark", u: "Van bestelwagen tot vrachtwagen, standaard of gekoeld. Voor elke lading de juiste wagen." },
+  { t: "Stipt", u: "Uw zending vertrekt en komt aan zoals afgesproken. Loopt er iets mis, dan hoort u het van ons eerst." },
+  { t: "24/7 bereikbaar", u: "Ook voor spoed, 's nachts en in het weekend. Er neemt iemand op." },
+  { t: "Opslag en overslag", u: "Even stockeren of overladen kan ook. Dat scheelt u een tweede partij zoeken." },
+];
 ---
-<Transport
-  titel="Moda Transport | Sneltransport &amp; koeriersdiensten Limburg"
-  omschrijving="Sneltransport, koerier en vrachtvervoer vanuit Heusden-Zolder. Van 1 pallet tot volle vracht, 24/7 beschikbaar."
-  actief="home"
-  heeftHero={true}>
+<Moda
+  titel="Moda sneltransport | Koerier en vrachtvervoer vanuit Limburg"
+  omschrijving="Sneltransport, koerier en vrachtvervoer vanuit Heusden-Zolder. Van één pallet tot volle vracht, gekoeld of ADR, nationaal en internationaal. 24/7 bereikbaar."
+  actief="transport" deel="transport" opHero={true}
+  balkKnop={{ url: "/transport/offerte/", tekst: "Vraag een offerte" }}>
 
-  <section class="hero" id="home">
-    <div class="hero__media" aria-hidden="true">
-      <div class="hero__img" style="background-image:url('/assets/images/transport/hero.jpg')"></div>
-      <div class="hero__overlay"></div>
+  <section class="hero" id="hero">
+    <div class="hero__doek" aria-hidden="true">
+      <div class="hero__laag hero__laag--dag"><Image src={heroFoto} alt="" width={1800} loading="eager" fetchpriority="high" /></div>
     </div>
-
-    <div class="container hero__content">
-      <p class="hero__eyebrow reveal">✦ Sneltransport &amp; koeriersdiensten</p>
-      <h1 class="hero__title reveal">
-        Razendsnel transport,<br />
-        van pakket tot <span class="text-accent">volle vracht</span>.
-      </h1>
-      <p class="hero__sub reveal">
-        Persoonlijke service en oplossingsgericht denken. Met een gevarieerd wagenpark,
-        van bestelwagen tot vrachtwagen, vervoeren wij lokaal én internationaal.
-        Snel, betrouwbaar en 24/7 beschikbaar.
-      </p>
-
-      <div class="hero__actions reveal">
-        <a href="/transport/offerte/" class="btn btn--primary btn--lg">Vraag een offerte</a>
-        <a href="tel:+3211243003" class="btn btn--ghost btn--lg">📞 Bel 011 24 30 03</a>
-        <a href="https://wa.me/32000000000?text=Hallo%2C%20ik%20heb%20een%20vraag%20over%20transport%20met%20Moda%20Transport"
-           class="btn btn--wa btn--lg" target="_blank" rel="noopener">
-          <svg class="btn__wa" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><use href="#wa-icon"/></svg>
-          Chat via WhatsApp
-        </a>
-      </div>
-
-      <div class="hero__badges reveal">
-        <span>Lokaal &amp; internationaal</span>
-        <span class="dot"></span>
-        <span>Van 1 pallet tot 33</span>
-        <span class="dot"></span>
-        <span>24/7 beschikbaar</span>
-      </div>
-    </div>
-
-    <a href="/transport/diensten/" class="hero__scroll" aria-label="Scroll naar beneden">
-      <span class="hero__mouse"></span>
-    </a>
-  </section>
-
-  <section class="stats">
-    <div class="container stats__grid">
-      <div class="stat reveal">
-        <span class="stat__num stat__num--text">24/7</span>
-        <span class="stat__label">Altijd beschikbaar</span>
-      </div>
-      <div class="stat reveal">
-        <span class="stat__num" data-count="33">0</span>
-        <span class="stat__label">Pallets in één rit</span>
-      </div>
-      <div class="stat reveal">
-        <span class="stat__num stat__num--text">Europa</span>
-        <span class="stat__label">Lokaal &amp; internationaal</span>
-      </div>
-      <div class="stat reveal">
-        <span class="stat__num stat__num--text">ADR</span>
-        <span class="stat__label">Gevaarlijke goederen</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== WEGWIJZER ===================== -->
-  <section class="section" id="ontdek">
     <div class="container">
-      <div class="section__head reveal">
-        <p class="section__eyebrow">Ontdek</p>
-        <h2 class="section__title">Wat kunnen wij voor u <span class="text-accent">vervoeren?</span></h2>
-      </div>
-      <div class="cards">
-        <a class="card reveal" href="/transport/diensten/">
-          <div class="card__icon">📦</div>
-          <h3>Onze diensten</h3>
-          <p>Van spoedpakket en koerier tot palletvervoer, koeltransport en ADR.</p>
+      <h1 class="reus" style="max-width:16ch">Vandaag besteld. Vandaag ter plaatse.</h1>
+      <p class="lood" style="margin-top:22px; max-width:52ch">
+        Sneltransport vanuit Heusden-Zolder, van één pakket tot een volle
+        vracht. Rechtstreeks gereden, zonder overslag, met één aanspreekpunt
+        dat u kunt bellen zolang de zending onderweg is.
+      </p>
+      <div class="slot__acties" style="margin-top:clamp(24px,3vw,36px)">
+        <a class="knop knop--signaal" href="/transport/offerte/">
+          Vraag een offerte <svg class="ic" aria-hidden="true"><use href="#ic-rechts"/></svg>
         </a>
-        <a class="card reveal" href="/transport/wagenpark/">
-          <div class="card__icon">🚚</div>
-          <h3>Ons wagenpark</h3>
-          <p>Van bestelwagen tot vrachtwagen, met foto's en alle afmetingen.</p>
-        </a>
-        <a class="card reveal" href="/transport/offerte/">
-          <div class="card__icon">📝</div>
-          <h3>Offerte aanvragen</h3>
-          <p>Vertel kort wat en waarheen, en u krijgt snel een prijs op maat.</p>
+        <a class="knop" href={`tel:${instellingen.telefoon_link}`}>
+          <svg class="ic" aria-hidden="true"><use href="#ic-tel"/></svg>{instellingen.telefoon_weergave}
         </a>
       </div>
     </div>
   </section>
 
-  <section class="section section--dark">
-    <div class="container express__grid">
-      <div class="express__intro reveal">
-        <p class="section__eyebrow">Expresstransport</p>
-        <h2 class="section__title">Moet uw pakket vandaag nog op bestemming zijn?</h2>
-        <p class="section__lead">
-          Voor spoedzendingen staan wij dag en nacht klaar. Eén telefoontje en wij vertrekken.
+  <hr class="baan" />
+
+  <section class="blok">
+    <div class="container">
+      <div class="sectiekop toon">
+        <h2 class="groot">Wat wij rijden</h2>
+        <p class="sectiekop__noot">Elke dienst is een traject: waar het vertrekt en waar het aankomt.</p>
+      </div>
+      <div class="trajecten">
+        {trajecten.map((t) => (
+          <article class="traject toon">
+            <div class="traject__weg">
+              <span class="traject__punt">{t.van}</span>
+              <svg class="ic" aria-hidden="true"><use href="#ic-rechts"/></svg>
+              <span class="traject__punt traject__punt--doel">{t.naar}</span>
+            </div>
+            <div>
+              <h3 class="traject__wat">{t.wat}</h3>
+              <p class="traject__uitleg">{t.u}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="blok blok--asfalt">
+    <div class="container">
+      <div class="sectiekop toon">
+        <h2 class="groot">Waarom bedrijven bij ons blijven</h2>
+        <p class="sectiekop__noot">Zes dingen die elke week terugkomen in de gesprekken.</p>
+      </div>
+      <div class="punten toon">
+        {waarom.map((w) => (<article class="punt"><h3>{w.t}</h3><p>{w.u}</p></article>))}
+      </div>
+    </div>
+  </section>
+
+  <section class="blok">
+    <div class="container detail">
+      <div class="detail__beeld toon"><Image src={sprinterFoto} width={900} alt="Mercedes Sprinter van Moda" /></div>
+      <div class="toon">
+        <h2 class="detail__naam">Voor elke lading de juiste wagen</h2>
+        <p class="lood">
+          Van bestelwagen tot vrachtwagen met laadklep, standaard of gekoeld.
+          Dat betekent dat u geen vrachtwagen betaalt voor een halve lading, en
+          niet moet wachten tot er toevallig iets past.
         </p>
-        <a href="/transport/offerte/" class="btn btn--primary">Vraag een offerte</a>
+        <div class="slot__acties" style="margin-top:24px">
+          <a class="knop knop--stil" href="/transport/wagenpark/">
+            Bekijk het wagenpark <svg class="ic" aria-hidden="true"><use href="#ic-rechts"/></svg>
+          </a>
+        </div>
       </div>
-
-      <ul class="checklist reveal">
-        <li>
-          <span class="checklist__check" aria-hidden="true">✓</span>
-          <span><strong>Supersnelle levering.</strong> Rechtstreeks van deur tot deur, zonder omwegen.</span>
-        </li>
-        <li>
-          <span class="checklist__check" aria-hidden="true">✓</span>
-          <span><strong>Lokaal en internationaal.</strong> In heel België en ver daarbuiten.</span>
-        </li>
-        <li>
-          <span class="checklist__check" aria-hidden="true">✓</span>
-          <span><strong>Betrouwbaar en altijd op tijd.</strong> Afspraak is afspraak.</span>
-        </li>
-        <li>
-          <span class="checklist__check" aria-hidden="true">✓</span>
-          <span><strong>24/7 beschikbaar voor noodgevallen.</strong> Ook 's nachts en in het weekend.</span>
-        </li>
-      </ul>
     </div>
   </section>
 
-</Transport>
+  <section class="slot">
+    <div class="slot__beeld" aria-hidden="true"><Image src={vrachtFoto} width={1800} alt="" /></div>
+    <div class="container">
+      <h2 class="reus">Zeg wat er weg moet en wanneer.</h2>
+      <p class="slot__lead">
+        U krijgt een prijs terug, meestal dezelfde werkdag. Spoed? Bel dan
+        liever — dan weet u meteen of het lukt.
+      </p>
+      <div class="slot__acties">
+        <a class="knop knop--signaal" href="/transport/offerte/">Vraag een offerte</a>
+        <a class="knop" href={`tel:${instellingen.telefoon_link}`}>
+          <svg class="ic" aria-hidden="true"><use href="#ic-tel"/></svg>{instellingen.telefoon_weergave}
+        </a>
+      </div>
+    </div>
+  </section>
+</Moda>

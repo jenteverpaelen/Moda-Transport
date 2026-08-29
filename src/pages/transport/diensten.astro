@@ -1,131 +1,94 @@
 ---
-import Transport from "../../layouts/Transport.astro";
+import { Image } from "astro:assets";
+import Moda from "../../layouts/Moda.astro";
+import instellingen from "../../../public/content/settings.json";
+import koelFoto from "../../assets/transport/koelwagen.png";
+import vrachtFoto from "../../assets/transport/vrachtwagen.jpg";
+
+const diensten = [
+  { wat: "Expresstransport", u: "Een zending die vandaag nog ter plaatse moet. Wij rijden rechtstreeks, zonder overslag onderweg, lokaal en internationaal.", detail: ["Rechtstreeks gereden","Geen overslag","Lokaal en internationaal"] },
+  { wat: "Koeriersdienst", u: "Belangrijke documenten of kleine pakketten, snel en veilig van deur tot deur. Eén chauffeur van ophaling tot aflevering.", detail: ["Van deur tot deur","Eén chauffeur","Bewijs van levering"] },
+  { wat: "Palletvervoer", u: "Van één pallet tot een volle lading van 33. Voor elk gewicht de juiste wagen, dus u betaalt niet voor ruimte die u niet gebruikt.", detail: ["1 tot 33 pallets","Juiste wagen per lading","Laadklep beschikbaar"] },
+  { wat: "Koeltransport", u: "Temperatuurgevoelige goederen, stabiel gehouden over de hele rit. De koelwagen houdt alles tussen −26 en +26 °C.", detail: ["−26 tot +26 °C","Stabiel over de hele rit","Ook diepvries"] },
+  { wat: "ADR en gevaarlijke goederen", u: "Gevaarlijke stoffen veilig vervoerd, met gecertificeerde chauffeurs en het juiste materiaal aan boord.", detail: ["ADR-gecertificeerd","Juist materiaal","Volgens de regels"] },
+  { wat: "Opslag en overslag", u: "Even stockeren of overladen kan ook bij ons. Dat scheelt u het zoeken naar een tweede partij die het moet overnemen.", detail: ["Tijdelijke opslag","Overslag","In overleg"] },
+];
 ---
-<Transport
-  titel="Diensten | Moda Transport"
-  omschrijving="Expresstransport, koeriersdienst, palletvervoer, koeltransport, ADR en opslag. Eén partner voor al uw transport."
-  actief="diensten">
+<Moda
+  titel="Diensten | Moda sneltransport"
+  omschrijving="Expresstransport, koeriersdienst, palletvervoer, koeltransport, ADR en opslag. Eén partner voor al uw transport, vanuit Limburg."
+  actief="t-diensten" deel="transport"
+  balkKnop={{ url: "/transport/offerte/", tekst: "Vraag een offerte" }}>
 
-  <section class="section" id="diensten">
+  <section class="pkop">
     <div class="container">
-      <div class="section__head reveal">
-        <p class="section__eyebrow">Onze diensten</p>
-        <h2 class="section__title">Eén partner voor <span class="text-accent">al uw transport</span></h2>
-        <p class="section__lead">
-          Bij transportfirma Moda staan wij bekend om onze persoonlijke service en oplossingsgericht
-          denken. Van een klein spoedpakket tot een volle vracht: wij regelen het.
+      <h1 class="pkop__titel reus">Eén partner voor alles wat weg moet.</h1>
+      <div class="pkop__onder">
+        <p class="lood">
+          Van een klein spoedpakket tot een volle vracht, gekoeld of gevaarlijk,
+          binnenland of Europa. Wij zeggen liever wat wel kan dan wat niet kan.
         </p>
-      </div>
-
-      <div class="cards">
-        <article class="card reveal">
-          <div class="card__icon">⚡</div>
-          <h3>Expresstransport</h3>
-          <p>Een pakket dat vandaag nog ter plaatse moet? Wij leveren razendsnel, lokaal en internationaal.</p>
-        </article>
-
-        <article class="card reveal">
-          <div class="card__icon">📨</div>
-          <h3>Koeriersdienst</h3>
-          <p>Belangrijke documenten of kleine pakketten, snel en veilig van deur tot deur bezorgd.</p>
-        </article>
-
-        <article class="card reveal">
-          <div class="card__icon">📦</div>
-          <h3>Palletvervoer</h3>
-          <p>Van 1 pallet tot volle ladingen. Wij hebben voor elk gewicht de juiste wagen.</p>
-        </article>
-
-        <article class="card reveal">
-          <div class="card__icon">🧊</div>
-          <h3>Koeltransport</h3>
-          <p>Temperatuurgevoelige goederen? Onze koelwagen houdt alles stabiel tussen -26 en +26 °C.</p>
-        </article>
-
-        <article class="card reveal">
-          <div class="card__icon">🌍</div>
-          <h3>Nationaal &amp; internationaal</h3>
-          <p>In heel België en heel Europa, inclusief Frankrijk. Betrouwbaar tot op de bestemming.</p>
-        </article>
-
-        <article class="card reveal">
-          <div class="card__icon">⚠️</div>
-          <h3>ADR / gevaarlijke goederen</h3>
-          <p>Gevaarlijke stoffen veilig vervoerd, met gecertificeerde chauffeurs en het juiste materiaal.</p>
-        </article>
-
-        <article class="card reveal">
-          <div class="card__icon">🏬</div>
-          <h3>Opslag &amp; overslag</h3>
-          <p>Even stockeren of overladen? Wij bieden ook oplossingen voor opslag en overslag.</p>
-        </article>
-
-        <article class="card reveal">
-          <div class="card__icon">🤝</div>
-          <h3>Oplossingen op maat</h3>
-          <p>Een bijzondere lading of vraag? Wij denken met u mee en zoeken de beste aanpak.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="waarom">
-    <div class="container waarom__grid">
-      <div class="waarom__intro reveal">
-        <p class="section__eyebrow">Waarom Moda Transport</p>
-        <h2 class="section__title">Uw lading, onze zorg.</h2>
-        <p class="section__lead">
-          Van kleine spoedzending tot volle vracht: wij regelen het met persoonlijke service
-          en steeds het juiste materiaal.
-        </p>
-        <a href="/transport/offerte/" class="btn btn--primary">Vraag een offerte</a>
-      </div>
-
-      <div class="features">
-        <div class="feature reveal">
-          <div class="feature__icon">🤝</div>
-          <div>
-            <h3>Persoonlijke service</h3>
-            <p>Eén vast aanspreekpunt dat met u meedenkt, van aanvraag tot levering.</p>
-          </div>
-        </div>
-        <div class="feature reveal">
-          <div class="feature__icon">💡</div>
-          <div>
-            <h3>Oplossingsgericht</h3>
-            <p>Voor elke lading de juiste wagen en de slimste aanpak.</p>
-          </div>
-        </div>
-        <div class="feature reveal">
-          <div class="feature__icon">🚛</div>
-          <div>
-            <h3>Gevarieerd wagenpark</h3>
-            <p>Van bestelwagen tot vrachtwagen, standaard of gekoeld.</p>
-          </div>
-        </div>
-        <div class="feature reveal">
-          <div class="feature__icon">⏱️</div>
-          <div>
-            <h3>Betrouwbaar &amp; stipt</h3>
-            <p>Uw zending vertrekt en komt aan precies zoals afgesproken.</p>
-          </div>
-        </div>
-        <div class="feature reveal">
-          <div class="feature__icon">🌙</div>
-          <div>
-            <h3>24/7 beschikbaar</h3>
-            <p>Ook voor spoed, 's nachts en in het weekend.</p>
-          </div>
-        </div>
-        <div class="feature reveal">
-          <div class="feature__icon">🛡️</div>
-          <div>
-            <h3>ADR-gecertificeerd</h3>
-            <p>Gevaarlijke goederen veilig en volgens de regels vervoerd.</p>
-          </div>
+        <div class="pkop__cijfers">
+          <div><span>Pallets in één rit</span><span class="getal">tot 33</span></div>
+          <div><span>Koeltransport</span><span class="getal">−26 tot +26 °C</span></div>
+          <div><span>Bereikbaar</span><span class="getal">24/7</span></div>
         </div>
       </div>
     </div>
   </section>
 
-</Transport>
+  <section class="blok" style="padding-top:0">
+    <div class="container">
+      <div class="trajecten">
+        {diensten.map((d) => (
+          <article class="traject toon">
+            <div>
+              <h2 class="traject__wat">{d.wat}</h2>
+              <div class="plaatsen" style="margin-top:12px">
+                {d.detail.map((x) => (<span class="plaats">{x}</span>))}
+              </div>
+            </div>
+            <p class="traject__uitleg">{d.u}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="blok blok--asfalt">
+    <div class="container detail">
+      <div class="detail__beeld toon"><Image src={koelFoto} width={900} alt="Koelwagen van Moda" /></div>
+      <div class="toon">
+        <h2 class="detail__naam">Koeltransport dat de hele rit koud blijft</h2>
+        <p class="lood">
+          Niet alleen bij vertrek, maar tot bij de klant. De koelwagen houdt
+          alles stabiel tussen −26 en +26 °C, ook als de rit langer duurt dan
+          gepland. Geef bij uw aanvraag door welke temperatuur de lading nodig
+          heeft, dan zetten we de wagen goed.
+        </p>
+        <div class="slot__acties" style="margin-top:24px">
+          <a class="knop knop--signaal" href="/transport/offerte/">
+            Vraag een offerte <svg class="ic" aria-hidden="true"><use href="#ic-rechts"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slot">
+    <div class="slot__beeld" aria-hidden="true"><Image src={vrachtFoto} width={1800} alt="" /></div>
+    <div class="container">
+      <h2 class="reus">Een bijzondere lading? Vertel het gewoon.</h2>
+      <p class="slot__lead">
+        Ook als u niet zeker weet of het kan. We zoeken het uit en zeggen
+        eerlijk of we het aankunnen.
+      </p>
+      <div class="slot__acties">
+        <a class="knop knop--signaal" href="/transport/offerte/">Vraag een offerte</a>
+        <a class="knop" href={`tel:${instellingen.telefoon_link}`}>
+          <svg class="ic" aria-hidden="true"><use href="#ic-tel"/></svg>{instellingen.telefoon_weergave}
+        </a>
+      </div>
+    </div>
+  </section>
+</Moda>

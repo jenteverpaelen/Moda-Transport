@@ -8,42 +8,59 @@
     {
       "value": "zaventem",
       "label": "Brussels Airport (Zaventem)",
-      "price": 110
+      "price": 110,
+      "km": 72,
+      "rijtijd_min": 65
     },
     {
       "value": "luik",
       "label": "Luik (Liège)",
-      "price": 100
+      "price": 100,
+      "km": 55,
+      "rijtijd_min": 50
     },
     {
       "value": "antwerpen",
       "label": "Antwerpen",
-      "price": 100
+      "price": 100,
+      "km": 65,
+      "rijtijd_min": 60
     },
     {
       "value": "eindhoven",
       "label": "Eindhoven",
-      "price": 100
+      "price": 100,
+      "km": 55,
+      "rijtijd_min": 50
     },
     {
       "value": "charleroi",
       "label": "Brussels South (Charleroi)",
-      "price": 160
+      "price": 160,
+      "km": 110,
+      "rijtijd_min": 85
     },
     {
       "value": "dusseldorf",
       "label": "Düsseldorf",
-      "price": 160
+      "price": 160,
+      "km": 120,
+      "rijtijd_min": 90
     },
     {
       "value": "amsterdam",
       "label": "Amsterdam (Schiphol)",
-      "price": 240
+      "price": 240,
+      "km": 175,
+      "rijtijd_min": 120
     },
     {
       "value": "weeze",
       "label": "Luchthaven Weeze",
-      "price": 140
+      "price": 140,
+      "km": 110,
+      "rijtijd_min": 85
     }
-  ]
+  ],
+  "_toelichting_rijtijd": "Afstand en rijtijd vanaf Heusden-Zolder, bij normaal verkeer. Schatting, geen live routegegevens."
 }

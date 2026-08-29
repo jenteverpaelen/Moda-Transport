@@ -1,79 +1,152 @@
 ---
-import Transport from "../../layouts/Transport.astro";
----
-<Transport
-  titel="Offerte aanvragen | Moda Transport"
-  omschrijving="Vraag vrijblijvend een prijs op maat voor uw transport. Bellen of WhatsAppen kan ook."
-  actief="offerte">
+import { Image } from "astro:assets";
+import Moda from "../../layouts/Moda.astro";
+import instellingen from "../../../public/content/settings.json";
+import sprinterFoto from "../../assets/transport/sprinter.jpg";
 
-  <section class="section section--alt" id="offerte">
-    <div class="container booking">
-      <div class="booking__intro reveal">
-        <p class="section__eyebrow">Offerte of transport aanvragen</p>
-        <h2 class="section__title">Klaar om te verzenden?</h2>
-        <p class="section__lead">
-          Vul kort in wat en waarheen, en wij bezorgen u snel een prijs op maat.
-          Liever meteen bellen of WhatsAppen? Dat kan ook.
+const daarna = [
+  { nr: "01", wat: "Wij kijken ernaar", u: "Meestal dezelfde werkdag, door iemand van ons. Is er iets onduidelijk, dan bellen we." },
+  { nr: "02", wat: "U krijgt een prijs", u: "Eén bedrag, met daarbij welke wagen we sturen en wanneer we ophalen." },
+  { nr: "03", wat: "Wij rijden", u: "Rechtstreeks, zonder overslag. U kunt ons bellen zolang de zending onderweg is." },
+];
+---
+<Moda
+  titel="Offerte aanvragen | Moda sneltransport"
+  omschrijving="Vraag vrijblijvend een offerte voor uw transport. Zeg wat er weg moet en wanneer, en u krijgt meestal dezelfde werkdag een prijs."
+  actief="t-offerte" deel="transport"
+  balkKnop={{ url: "/transport/offerte/", tekst: "Vraag een offerte" }}>
+
+  <section class="pkop">
+    <div class="container">
+      <h1 class="pkop__titel reus">Zeg wat er weg moet en wanneer.</h1>
+      <div class="pkop__onder">
+        <p class="lood">
+          U hoeft niet te weten welke wagen het wordt of hoe het technisch moet.
+          Vertel wat er vervoerd moet worden, waarheen en tegen wanneer — de
+          rest zoeken wij uit.
         </p>
-        <ul class="booking__contactlist">
-          <li><span>📞</span> <a href="tel:+3211243003">011 24 30 03</a></li>
-          <li><span>✉️</span> <a href="mailto:info@moda-sneltransport.be">info@moda-sneltransport.be</a></li>
-          <li><span>📍</span> <a href="https://www.google.com/maps/search/?api=1&amp;query=Beringersteenweg+14+3550+Heusden-Zolder" target="_blank" rel="noopener">Beringersteenweg 14, 3550 Heusden-Zolder</a></li>
-        </ul>
-        <div class="quickcontact">
-          <a href="tel:+3211243003" class="btn btn--sm btn--primary">📞 Bel direct</a>
-          <a href="https://wa.me/32000000000?text=Hallo%2C%20ik%20heb%20een%20transportvraag%20voor%20Moda%20Transport"
-             class="btn btn--sm btn--wa" target="_blank" rel="noopener">
-            <svg class="btn__wa" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><use href="#wa-icon"/></svg>
-            WhatsApp
-          </a>
+        <div class="pkop__cijfers">
+          <div><span>Antwoord</span><span class="getal">meestal dezelfde werkdag</span></div>
+          <div><span>Vrijblijvend</span><span class="getal">tot u bevestigt</span></div>
+          <div><span>Spoed</span><span class="getal">{instellingen.telefoon_weergave}</span></div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <form class="booking__form reveal" id="quoteForm" novalidate>
-        <!-- Spam-val (onzichtbaar; enkel bots vinken dit aan) -->
+  <section class="blok" style="padding-top:0">
+    <div class="container aanvraag">
+      <div class="aanvraag__zij toon">
+        <h2 class="kop">Wat er daarna gebeurt</h2>
+        <ul>
+          {daarna.map((d) => (<li><b>{d.nr}</b> <span><strong>{d.wat}.</strong> {d.u}</span></li>))}
+        </ul>
+
+        <h2 class="kop" style="margin-top:clamp(30px,4vw,44px)">Moet het vandaag nog weg?</h2>
+        <p class="klein" style="margin-top:12px">
+          Bel dan liever dan te mailen. Dan weet u binnen de minuut of het lukt.
+        </p>
+        <ul>
+          <li><b>Bellen</b> <a href={`tel:${instellingen.telefoon_link}`}>{instellingen.telefoon_weergave}</a></li>
+          <li><b>Mailen</b> <a href={`mailto:${instellingen.email}`}>{instellingen.email}</a></li>
+          <li><b>Adres</b> <span>{instellingen.adres}</span></li>
+        </ul>
+      </div>
+
+      <form class="formulier toon" data-formulier="offerte" novalidate>
         <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none" />
 
-        <div class="field">
-          <label for="name">Naam</label>
-          <input type="text" id="name" name="name" placeholder="Uw naam of bedrijf" required />
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label for="phone">Telefoon</label>
-            <input type="tel" id="phone" name="phone" placeholder="+32 ..." required />
+        <div class="veldrij">
+          <div class="fveld">
+            <label for="bedrijf">Bedrijf</label>
+            <input type="text" id="bedrijf" name="bedrijf" placeholder="Naam van uw bedrijf" autocomplete="organization" />
           </div>
-          <div class="field">
+          <div class="fveld">
+            <label for="naam">Contactpersoon</label>
+            <input type="text" id="naam" name="naam" placeholder="Uw naam" required autocomplete="name" />
+          </div>
+        </div>
+
+        <div class="veldrij">
+          <div class="fveld">
+            <label for="telefoon">Telefoon</label>
+            <input type="tel" id="telefoon" name="telefoon" placeholder="0470 00 00 00" required autocomplete="tel" />
+          </div>
+          <div class="fveld">
             <label for="email">E-mail</label>
-            <input type="email" id="email" name="email" placeholder="u@voorbeeld.be" required />
+            <input type="email" id="email" name="email" placeholder="u@bedrijf.be" required autocomplete="email" />
           </div>
         </div>
-        <div class="field">
-          <label for="goods">Wat wilt u vervoeren?</label>
-          <input type="text" id="goods" name="goods" placeholder="Bv. 3 pallets, een koelzending, een spoedpakket ..." required />
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label for="pickup">Ophaaladres</label>
-            <input type="text" id="pickup" name="pickup" placeholder="Straat, gemeente" required />
+
+        <div class="veldrij">
+          <div class="fveld">
+            <label for="ophaaladres">Ophaaladres</label>
+            <input type="text" id="ophaaladres" name="ophaaladres" placeholder="Straat, gemeente, land" required />
           </div>
-          <div class="field">
-            <label for="dropoff">Leveradres</label>
-            <input type="text" id="dropoff" name="dropoff" placeholder="Straat, gemeente" required />
+          <div class="fveld">
+            <label for="leveradres">Leveradres</label>
+            <input type="text" id="leveradres" name="leveradres" placeholder="Straat, gemeente, land" required />
           </div>
         </div>
-        <div class="field">
-          <label for="date">Gewenste datum</label>
-          <input type="date" id="date" name="date" />
+
+        <div class="veldrij">
+          <div class="fveld">
+            <label for="soort">Soort transport</label>
+            <select id="soort" name="soort" required>
+              <option value="" disabled selected>Kies een soort</option>
+              <option>Expresstransport</option>
+              <option>Koeriersdienst</option>
+              <option>Palletvervoer</option>
+              <option>Koeltransport</option>
+              <option>ADR / gevaarlijke goederen</option>
+              <option>Opslag of overslag</option>
+              <option>Weet ik nog niet</option>
+            </select>
+          </div>
+          <div class="fveld">
+            <label for="wanneer">Wanneer moet het weg</label>
+            <input type="date" id="wanneer" name="wanneer" />
+          </div>
         </div>
-        <div class="field">
-          <label for="notes">Opmerkingen (optioneel)</label>
-          <textarea id="notes" name="notes" rows="3" placeholder="Gewicht, afmetingen, tijdstip, bijzonderheden ..."></textarea>
+
+        <div class="veldrij">
+          <div class="fveld">
+            <label for="lading">Wat vervoeren we</label>
+            <input type="text" id="lading" name="lading" placeholder="Bv. 4 pallets, 600 kg" required />
+          </div>
+          <div class="fveld">
+            <label for="temperatuur">Temperatuur (bij koeltransport)</label>
+            <input type="text" id="temperatuur" name="temperatuur" placeholder="Bv. 2 tot 7 °C" />
+          </div>
         </div>
-        <button type="submit" class="btn btn--primary btn--lg btn--block">Vraag mijn offerte aan</button>
-        <p class="booking__note" id="formNote" role="status"></p>
+
+        <div class="fveld">
+          <label for="opmerkingen">Opmerkingen (mag leeg)</label>
+          <textarea id="opmerkingen" name="opmerkingen" rows="3" placeholder="Laadklep nodig, openingsuren van de losplaats, bijzonderheden …"></textarea>
+        </div>
+
+        <button type="submit" class="knop knop--signaal knop--breed">
+          Verstuur mijn aanvraag <svg class="ic" aria-hidden="true"><use href="#ic-rechts"/></svg>
+        </button>
+        <p class="fnoot" data-noot role="status">
+          Vrijblijvend. U zit nergens aan vast tot u de offerte bevestigt.
+        </p>
       </form>
     </div>
   </section>
 
-</Transport>
+  <section class="slot">
+    <div class="slot__beeld" aria-hidden="true"><Image src={sprinterFoto} width={1800} alt="" /></div>
+    <div class="container">
+      <h2 class="reus">Spoed gaat sneller per telefoon.</h2>
+      <p class="slot__lead">
+        Moet het binnen het uur weg? Bel, dan zetten we meteen een chauffeur klaar.
+      </p>
+      <div class="slot__acties">
+        <a class="knop knop--signaal" href={`tel:${instellingen.telefoon_link}`}>
+          <svg class="ic" aria-hidden="true"><use href="#ic-tel"/></svg>{instellingen.telefoon_weergave}
+        </a>
+      </div>
+    </div>
+  </section>
+</Moda>

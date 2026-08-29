@@ -1,339 +1,349 @@
 ---
 import { Image } from "astro:assets";
-import Luchthaven from "../layouts/Luchthaven.astro";
+import Moda from "../layouts/Moda.astro";
+import instellingen from "../../public/content/settings.json";
 import prijzen from "../../public/content/prices.json";
+import beoordelingen from "../../public/content/reviews.json";
+
+import stuurNacht from "../assets/luchthaven/stuur-nacht.jpg";
+import vertrekbord from "../assets/luchthaven/vertrekbord.jpg";
 import vlootFoto from "../assets/luchthaven/vloot.jpg";
 import interieurFoto from "../assets/luchthaven/interieur.jpg";
-import stuurFoto from "../assets/luchthaven/stuur.jpg";
-import vleugelFoto from "../assets/luchthaven/vleugel.jpg";
-import stuurNachtFoto from "../assets/luchthaven/stuur-nacht.jpg";
-import vertrekbordFoto from "../assets/luchthaven/vertrekbord.jpg";
+import deurFoto from "../assets/luchthaven/deur.jpg";
 
-/* De luchthavens en tarieven komen uit public/content/prices.json, hetzelfde
-   bestand als de prijsberekenaar. Pas je de prijzen daar aan, dan verandert
-   deze tabel mee. Duurste laatst, zodat de rij oploopt. */
-const luchthavens = [...prijzen.luchthavens].sort((a, b) => a.price - b.price);
+/* ---------- De terugrekening, ook al zonder JavaScript ----------
+   De startwaarden worden hier al uitgerekend, zodat het bord meteen klopt en
+   ook leesbaar is als het scriptje niet draait. De rekenregels staan één keer
+   uitgelegd in public/assets/js/moda.js. */
+const CHECKIN = 120, MARGE = 15, INLADEN = 5, OPSTAAN = 45;
+const startVlucht = "10:35";
+const startLucht = prijzen.luchthavens.find((l) => l.value === "zaventem");
 
-/* De band die onder de hero doorloopt. */
-const band = ["Zaventem", "Charleroi", "Schiphol", "Eindhoven", "Düsseldorf", "Luik", "Antwerpen", "Weeze"];
+const minuten = (t) => Number(t.slice(0, 2)) * 60 + Number(t.slice(3, 5));
+const tijd = (m) => {
+  const x = ((m % 1440) + 1440) % 1440;
+  return String(Math.floor(x / 60)).padStart(2, "0") + ":" + String(x % 60).padStart(2, "0");
+};
+const duur = (m) => {
+  const u = Math.floor(m / 60), r = m % 60;
+  return u ? `${u}u${String(r).padStart(2, "0")}` : `${r} min`;
+};
 
-const feiten = [
-  { kop: "Live vluchtopvolging", uitleg: "Vertraagt uw vlucht? Dan schuift uw rit mee." },
-  { kop: "24/7 beschikbaar", uitleg: "Ook 's nachts, in het weekend en op feestdagen." },
-  { kop: "Vaste prijs vooraf", uitleg: "Bevestigd voor u boekt. Geen meter, geen verrassingen." },
-  { kop: "★★★★★", uitleg: "19 beoordelingen op Google, allemaal vijf sterren.", sterren: true },
+const v = minuten(startVlucht);
+const balie = v - CHECKIN;
+const wegrijden = balie - startLucht.rijtijd_min - MARGE;
+const aanbellen = wegrijden - INLADEN;
+const wekker = aanbellen - OPSTAAN;
+
+const bordRijen = [
+  { sleutel: "wekker",     wat: "Uw wekker gaat",     min: wekker },
+  { sleutel: "aanbellen",  wat: "Wij bellen aan",     min: aanbellen, kern: true },
+  { sleutel: "wegrijden",  wat: "Wij rijden weg",     min: wegrijden },
+  { sleutel: "balie",      wat: "U staat aan de balie", min: balie },
+  { sleutel: "balieDicht", wat: "De balie sluit",     min: v - 60 },
+  { sleutel: "vlucht",     wat: "Uw vlucht vertrekt", min: v },
 ];
 
+/* ---------- Reviews: echte Google-reviews, echte cijfers ---------- */
+const alleReviews = beoordelingen.reviews;
+const gemiddelde = (alleReviews.reduce((t, r) => t + r.stars, 0) / alleReviews.length).toFixed(1).replace(".", ",");
+const uitgelicht = alleReviews.filter((r) => r.text && r.text.length > 30).slice(0, 6);
+const datumKort = (d) => {
+  const [j, m, dg] = d.split("-");
+  return `${dg}.${m}.${j}`;
+};
+
+/* ---------- Wat er gebeurt terwijl u slaapt ---------- */
 const stappen = [
-  { nr: "01", titel: "U vraagt uw rit aan",
-    tekst: "Bereken uw prijs of vul het formulier in. U krijgt een <strong>vaste prijs</strong> te zien voor u iets vastlegt, inclusief tol en parking." },
-  { nr: "02", titel: "Wij bevestigen persoonlijk",
-    tekst: "Geen automatische mail, maar een bevestiging van ons. We spreken het ophaaluur af en houden rekening met uw <strong>inchecktijd</strong>." },
-  { nr: "03", titel: "Wij staan er, ook als de vlucht schuift",
-    tekst: "We volgen uw vlucht live op. Landt u vroeger of later, dan passen we ons aan. <strong>Wachttijd rekenen we niet aan.</strong>" },
-];
-
-const wagens = [
-  { foto: vlootFoto, naam: "Mercedes V-Klasse", tag: "Onze standaard",
-    zin: "Ruime achterbank, apart zitcomfort en genoeg plaats om onderweg te werken of te slapen.",
-    specs: [["Passagiers", "tot 7"], ["Koffers", "tot 7 grote"], ["Comfort", "Leder, climate control"], ["Extra", "Water en lader aan boord"]] },
-  { foto: interieurFoto, naam: "Mercedes Vito", tag: "Voor grotere groepen",
-    zin: "Zelfde comfort, meer plaats. Ideaal voor een gezin met bagage of een team dat samen vertrekt.",
-    specs: [["Passagiers", "tot 8"], ["Koffers", "tot 8 grote"], ["Comfort", "Leder, climate control"], ["Extra", "Kinderzitje op aanvraag"]] },
-];
-
-const vergelijking = [
-  { punt: "Wat het kost", moda: "Eén vaste prijs, vooraf bevestigd.", zelf: "Brandstof, tol én parking — vaak meer dan u denkt." },
-  { punt: "Parkeren", moda: "Niet nodig. We zetten u af aan de vertrekhal.", zelf: "Zoeken, shuttlebus en dagtarief zolang u weg bent." },
-  { punt: "Bij vertraging", moda: "We volgen de vlucht en passen ons aan.", zelf: "Uw wagen staat er, maar u niet." },
-  { punt: "Na een nachtvlucht", moda: "U stapt in en valt in slaap.", zelf: "Nog anderhalf uur rijden, moe." },
-  { punt: "Wie er rijdt", moda: "Een ervaren chauffeur die de route kent.", zelf: "U, ook om vier uur 's ochtends." },
+  { nr: "01", wat: "U geeft uw vluchtuur door", uitleg: "Meer hebben we niet nodig. Wij rekenen terug wanneer we moeten aanbellen en bevestigen dat uur — telefonisch of per mail, niet met een automatische bevestiging waar niemand naar gekeken heeft." },
+  { nr: "02", wat: "Wij volgen uw vlucht op", uitleg: "Vertrekt u later of landt u vroeger, dan schuift het ophaaluur mee. U hoeft ons niet te bellen; we hebben het meestal al gezien." },
+  { nr: "03", wat: "Wij staan voor de deur", uitleg: "Vijf minuten voor we wegrijden staan we er. De koffers gaan achterin, u stapt in, en er hoeft niets meer geregeld te worden." },
+  { nr: "04", wat: "Wij halen u weer op", uitleg: "Bij terugkomst staat dezelfde chauffeur in de aankomsthal. Loopt de bagageband uit, dan wachten we. Daar rekenen we niets extra voor." },
 ];
 
 const vragen = [
-  { v: "Hoe lang op voorhand moet ik reserveren?",
-    a: "Liefst een paar dagen, maar we lossen ook last minute veel op. Bel gerust — staat er een wagen vrij, dan rijden we." },
-  { v: "Wat als mijn vlucht vertraging heeft?",
-    a: "Dan schuift uw rit gewoon mee. We volgen uw vlucht <strong>live op</strong> aan de hand van uw vluchtnummer, dus u hoeft niets te laten weten. Wachttijd door vertraging rekenen we niet aan." },
-  { v: "Zit alles in de prijs?",
-    a: "Ja. De prijs die u vooraf krijgt is de prijs die u betaalt: <strong>tol, parking en wachttijd inbegrepen</strong>. Enkel extra tussenstops of extra personen boven twee komen erbij, en dat weet u op voorhand." },
-  { v: "Halen jullie mij ook weer op?",
-    a: "Zeker. Boekt u heen en terug samen, dan krijgt u <strong>10% korting</strong> op het geheel. Bij terugkomst wachten we u op in de aankomsthal." },
-  { v: "Rijden jullie ook 's nachts?",
-    a: "Dag en nacht, ook in het weekend en op feestdagen. Een vlucht om zes uur 's ochtends betekent bij ons gewoon een vroeg ophaaluur, geen toeslag voor het uur." },
-  { v: "Met hoeveel personen kunnen we mee?",
-    a: "Tot acht personen met bagage in één wagen. Zijn jullie met meer, dan zetten we een tweede wagen in — laat het weten bij uw aanvraag." },
-  { v: "Vanwaar rijden jullie?",
-    a: `We vertrekken vanuit Heusden-Zolder en halen u op in een straal van ongeveer ${prijzen.km_straal} km daarrond. Woont u verder, vraag het gerust — meestal lukt het.` },
-  { v: "Hoe betaal ik?",
-    a: "Contant of via overschrijving, wat u het beste uitkomt. Voor bedrijven maken we een factuur op." },
+  { v: "Hoe lang op voorhand moet ik reserveren?", a: "Liefst een paar dagen, maar bel gerust ook als het morgenvroeg is. Lukt het bij ons niet meer, dan zeggen we dat meteen in plaats van u te laten wachten." },
+  { v: "Wat als mijn vlucht vertraging heeft?", a: "Wij volgen het vluchtnummer op en passen het ophaaluur aan. U betaalt niets extra voor die wachttijd." },
+  { v: "Rijden jullie ook 's nachts?", a: "Ja. De meeste ritten vertrekken tussen drie en zes uur 's ochtends. Daar rekenen we geen nachttoeslag voor." },
+  { v: "Met hoeveel personen kunnen we mee?", a: "Tot acht personen met bagage, in één wagen. Met meer rijden we met twee wagens; geef het door bij uw aanvraag." },
+  { v: "Kan ik met kinderen meerijden?", a: "Ja. Kinderzitjes zijn gratis, maar vraag ze wel op voorhand aan zodat het juiste zitje in de wagen ligt." },
+  { v: "Staat de prijs echt op voorhand vast?", a: "Ja. U krijgt één bedrag bij de bevestiging en dat verandert niet, ook niet bij file of omleiding." },
 ];
 ---
-<Luchthaven
-  titel="Moda | Luchthavenvervoer Limburg | Vaste prijs, live vluchtopvolging"
-  omschrijving="Exclusief luchthavenvervoer vanuit Heusden-Zolder en heel Limburg. Vaste prijs vooraf, live vluchtopvolging en 24/7 beschikbaar. Naar Zaventem, Charleroi, Schiphol, Eindhoven en Düsseldorf."
+<Moda
+  titel="Moda luchthavenvervoer | Vaste prijs vanuit Limburg naar de luchthaven"
+  omschrijving="Luchthavenvervoer vanuit Heusden-Zolder en heel Limburg. Vaste prijs vooraf, eigen Mercedes-wagens, vluchtopvolging en een chauffeur die er staat. Reken hier uit hoe laat wij aanbellen."
   actief="home"
-  heeftHero={true}>
+  opHero={true}>
 
-  <!-- ===================== HERO ===================== -->
-  <section class="lhero" id="home">
+  <!-- =====================================================================
+       DE TERUGREKENING
+       De startpagina opent niet met een banner maar met de vraag waarmee
+       iedereen binnenkomt: ga ik mijn vlucht halen? Het bord rekent terug.
+       ===================================================================== -->
+  <section class="hero" id="hero">
+    <div class="hero__doek" aria-hidden="true">
+      <div class="hero__laag hero__laag--nacht"><Image src={stuurNacht} alt="" width={1800} loading="eager" fetchpriority="high" /></div>
+      <div class="hero__laag hero__laag--dag"><Image src={vertrekbord} alt="" width={1800} loading="lazy" /></div>
+    </div>
+
     <div class="container">
-      <p class="lhero__merk">Moda · Luchthavenvervoer sinds jaar en dag</p>
+      <h1 class="hero__zin reus">Wij bellen aan om <span class="getal" data-bord-zin>{tijd(aanbellen)}</span>.</h1>
 
-      <!-- De opening is een zin, geen foto. Grijs, met in inkt
-           de woorden waar het werkelijk om draait. -->
-      <h1 class="lhero__zin">Waar anderen u <b>een taxi</b> sturen, brengen wij u <b>zonder één zorg</b> naar de luchthaven — aan een prijs die <b>vooraf vaststaat</b>.</h1>
+      <div class="bord" id="bord">
+        <div class="bord__stel">
+          <div class="veld">
+            <label for="bordVlucht">Uw vlucht vertrekt om</label>
+            <input type="time" id="bordVlucht" value={startVlucht} step="300" />
+          </div>
+          <div class="veld">
+            <label for="bordLuchthaven">Naar welke luchthaven</label>
+            <select id="bordLuchthaven">
+              {prijzen.luchthavens.map((l) => (
+                <option value={l.value} selected={l.value === "zaventem"}
+                        data-prijs={l.price} data-km={l.km} data-rijtijd={l.rijtijd_min}>{l.label}</option>
+              ))}
+            </select>
+          </div>
+        </div>
 
-      <div class="lhero__knoppen">
-        <a href="/reserveren/" class="btn btn--primary btn--lg">Reserveer uw rit</a>
-        <a href="/prijs/" class="btn btn--ghost btn--lg">Bereken uw prijs</a>
-      </div>
-
-      <div class="lhero__beelden">
-        <figure class="lhero__beeld lhero__beeld--groot">
-          <Image src={vlootFoto} width={1400} loading="eager" fetchpriority="high"
-                 alt="De Mercedes-wagens van Moda" />
-          <figcaption class="lhero__bijschrift">
-            <span>Onze vloot</span><span>Heusden-Zolder</span>
-          </figcaption>
-        </figure>
-
-        <figure class="lhero__beeld lhero__beeld--klein">
-          <Image src={vleugelFoto} width={800} alt="Een vliegtuigvleugel boven de wolken" />
-          <figcaption class="lhero__bijschrift">
-            <span>Zaventem · Charleroi · Schiphol</span><span>24/7</span>
-          </figcaption>
-        </figure>
-      </div>
-
-      <div class="lhero__balk">
-        <dl class="lhero__feiten">
-          {feiten.map((f) => (
-            <div class="lhero__feit">
-              <dt class={f.sterren ? "lhero__sterren" : ""}>{f.kop}</dt>
-              <dd>{f.uitleg}</dd>
+        <div class="bord__rijen">
+          {bordRijen.map((r) => (
+            <div class={"bordrij" + (r.kern ? " bordrij--kern" : "")} data-rij={r.sleutel}>
+              <span class="bordrij__wat">{r.wat}</span>
+              <span class="bordrij__tijd" data-tijd>{tijd(r.min)}</span>
+              <span class="bordrij__delta" data-delta>{r.min < v ? "−" + duur(v - r.min) : ""}</span>
             </div>
           ))}
-        </dl>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== LOPENDE BAND ===================== -->
-  <div class="lband" aria-hidden="true">
-    <div class="lband__rij">
-      {[0, 1].map(() => band.map((naam) => (
-        <>
-          <span class="lband__item">{naam}</span>
-          <span class="lband__ster">✦</span>
-        </>
-      )))}
-    </div>
-  </div>
-
-  <!-- ===================== BELOFTE ===================== -->
-  <section class="section belofte" id="ontdek">
-    <div class="container">
-      <h2 class="belofte__kop reveal">
-        Een taxi brengt u ergens heen.<br />
-        <span>Wij zorgen dat u er ontspannen aankomt.</span>
-      </h2>
-
-      <div class="belofte__drie">
-        <article class="belofte__punt reveal">
-          <h3>Persoonlijk</h3>
-          <p>Geen callcenter en geen app die u aan een onbekende koppelt. U spreekt met de mensen die ook rijden, en u krijgt elke keer dezelfde verzorgde wagen en dezelfde manier van werken.</p>
-        </article>
-        <article class="belofte__punt reveal">
-          <h3>Transparant</h3>
-          <p>De prijs staat vast voor u boekt. Tol, parking en wachttijd zitten erin. Geen meter die verder tikt in de file, geen toeslag achteraf waar u niet om gevraagd hebt.</p>
-        </article>
-        <article class="belofte__punt reveal">
-          <h3>Vertrouwd</h3>
-          <p>Ervaren chauffeurs, verzekerd vervoer en wagens die onderhouden worden zoals het hoort. Al jaren de vaste keuze van gezinnen en bedrijven uit de streek.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== TARIEVEN ===================== -->
-  <section class="tarieven" id="tarieven">
-    <div class="container tarieven__grid">
-      <div class="tarieven__intro reveal">
-        <p class="section__eyebrow">Tarieven</p>
-        <h2 class="section__title">Wat het <span class="text-accent">kost</span></h2>
-        <p class="section__lead">
-          Vanuit Heusden-Zolder, enkele rit, tot {prijzen.basisprijs_personen} personen.
-        </p>
-
-        <ul class="tarieven__regels">
-          <li><span class="tarieven__vink">✓</span><span>Tol en parking <b>inbegrepen</b></span></li>
-          <li><span class="tarieven__vink">✓</span><span>Wachttijd bij vertraging <b>gratis</b></span></li>
-          <li><span class="tarieven__vink">✓</span><span>Heen en terug samen: <b>{prijzen.heenterug_korting_procent}% korting</b></span></li>
-          <li><span class="tarieven__vink">✓</span><span>Extra persoon: <b>€ {prijzen.supplement_per_extra_persoon}</b> · tussenstop: <b>€ {prijzen.supplement_per_tussenstop}</b></span></li>
-        </ul>
-
-        <a href="/prijs/" class="btn btn--primary">Bereken uw eigen prijs</a>
-      </div>
-
-      <div class="reveal">
-        <ul class="tarieven__lijst">
-          {luchthavens.map((l) => (
-            <li>
-              <span class="tarieven__naam">{l.label}</span>
-              <span class="tarieven__prijs">€ {l.price}<sup>vanaf</sup></span>
-            </li>
-          ))}
-        </ul>
-        <p class="tarieven__noot">
-          Richtprijzen vanuit Heusden-Zolder binnen een straal van {prijzen.km_straal} km.
-          Woont u verder of vertrekt u elders? Vraag het gerust, dan rekenen we het exact voor u uit.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== ZO WERKT HET ===================== -->
-  <section class="werkwijze" id="werkwijze">
-    <div class="container">
-      <div class="section__head reveal">
-        <p class="section__eyebrow">Zo werkt het</p>
-        <h2 class="section__title">Van aanvraag tot <span class="text-accent">vertrek</span></h2>
-      </div>
-      {stappen.map((s) => (
-        <div class="stap reveal">
-          <div class="stap__nr" aria-hidden="true">{s.nr}</div>
-          <h3 class="stap__titel">{s.titel}</h3>
-          <p class="stap__uitleg" set:html={s.tekst}></p>
         </div>
+
+        <div class="bord__slot">
+          <div class="bord__feiten">
+            <span class="bord__prijs" data-bord-prijs>€ {startLucht.price}</span>
+            <span class="bord__bij" data-bord-bij>{startLucht.km} km · rit {duur(startLucht.rijtijd_min)} · tot 8 personen</span>
+          </div>
+          <div class="bord__acties">
+            <a class="knop knop--signaal" href="/reserveren/" data-bord-knop>
+              Reserveer deze rit
+              <svg class="ic" aria-hidden="true"><use href="#ic-rechts"/></svg>
+            </a>
+            <a class="knop knop--stil" href={`tel:${instellingen.telefoon_link}`}>
+              <svg class="ic" aria-hidden="true"><use href="#ic-tel"/></svg>
+              {instellingen.telefoon_weergave}
+            </a>
+          </div>
+        </div>
+
+        <p class="bord__noot">
+          Gerekend met twee uur inchecktijd en een kwartier marge voor verkeer.
+          Rijtijden zijn schattingen bij normaal verkeer — bij uw bevestiging
+          leggen we het uur samen vast.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="baan" />
+
+  <!-- =====================================================================
+       TERWIJL U SLAAPT
+       ===================================================================== -->
+  <section class="blok" id="werkwijze">
+    <div class="container">
+      <div class="sectiekop toon">
+        <h2 class="groot">Wat er gebeurt terwijl u nog slaapt</h2>
+        <p class="sectiekop__noot">
+          Vier dingen, en u hoeft er zelf maar één van te doen.
+        </p>
+      </div>
+
+      {stappen.map((s) => (
+        <article class="stap toon">
+          <span class="stap__nr getal">{s.nr}</span>
+          <h3 class="stap__wat">{s.wat}</h3>
+          <p class="stap__uitleg">{s.uitleg}</p>
+        </article>
       ))}
     </div>
   </section>
 
-  <!-- ===================== VLOOT ===================== -->
-  <section class="section vloot2" id="vloot">
+  <!-- =====================================================================
+       DE ROUTES — werkgebied en tarief in één tabel
+       ===================================================================== -->
+  <section class="blok blok--asfalt" id="tarieven">
     <div class="container">
-      <div class="section__head reveal">
-        <p class="section__eyebrow">Onze wagens</p>
-        <h2 class="section__title">Altijd een <span class="text-accent">Mercedes</span></h2>
-        <p class="section__lead">
-          Geen wisselend wagenpark: u rijdt in een verzorgde Mercedes met leder,
-          climate control en plaats voor uw bagage.
+      <div class="sectiekop toon">
+        <h2 class="groot">Waar we rijden, en wat het kost</h2>
+        <p class="sectiekop__noot">
+          Vanuit Heusden-Zolder. De prijs is voor de hele wagen, tot acht
+          personen — niet per persoon.
         </p>
       </div>
 
-      <div class="vloot2__raster">
-        {wagens.map((w) => (
-          <article class="wagen reveal">
-            <div class="wagen__beeld"><Image src={w.foto} width={900} alt={`${w.naam} van Moda`} /></div>
-            <div class="wagen__body">
-              <div class="wagen__kop">
-                <h3 class="wagen__naam">{w.naam}</h3>
-                <span class="wagen__tag">{w.tag}</span>
-              </div>
-              <p class="wagen__zin">{w.zin}</p>
-              <ul class="wagen__specs">
-                {w.specs.map(([label, waarde]) => (<li><span>{label}</span><span>{waarde}</span></li>))}
-              </ul>
-              <a href="/vloot/" class="btn btn--ghost btn--block">Bekijk de vloot</a>
+      <div class="routes toon">
+        <div class="routes__kop">
+          <span>Bestemming</span><span>Afstand</span><span>Rit</span><span>Vaste prijs</span><span></span>
+        </div>
+        {prijzen.luchthavens.map((l) => (
+          <a class="route" href={`/reserveren/?luchthaven=${l.value}`}>
+            <span class="route__naam">{l.label}</span>
+            <span class="route__km">{l.km} km</span>
+            <span class="route__duur">{duur(l.rijtijd_min)}</span>
+            <span class="route__prijs">€ {l.price}</span>
+            <span class="route__pijl"><svg class="ic" aria-hidden="true"><use href="#ic-rechts"/></svg></span>
+          </a>
+        ))}
+      </div>
+
+      <p class="klein toon" style="margin-top:22px">
+        Heen en terug samen geboekt? Dan gaat er {prijzen.heenterug_korting_procent}% af.
+        Meer dan {prijzen.basisprijs_personen} personen: € {prijzen.supplement_per_extra_persoon} per extra persoon.
+        Een tussenstop kost € {prijzen.supplement_per_tussenstop}.
+      </p>
+
+      <h3 class="sub toon" style="margin-top:clamp(30px,4vw,48px)">Wij halen op in heel Limburg</h3>
+      <div class="plaatsen toon">
+        {["Heusden-Zolder","Hasselt","Genk","Beringen","Lommel","Houthalen","Sint-Truiden","Tongeren","Bilzen","Diepenbeek","Zonhoven","Leopoldsburg","Maasmechelen","Peer","Bree","Diest"].map((p) => (
+          <span class="plaats">{p}</span>
+        ))}
+        <span class="plaats plaats--meer">en de rest van de provincie</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       DE WAGENS
+       ===================================================================== -->
+  <section class="blok" id="vloot">
+    <div class="container">
+      <div class="sectiekop toon">
+        <h2 class="groot">U rijdt altijd in een Mercedes</h2>
+        <p class="sectiekop__noot">
+          Geen wisselend wagenpark. Twee wagens, allebei van ons, allebei
+          onderhouden en gekeurd.
+        </p>
+      </div>
+
+      <div class="wagens">
+        <article class="wagen toon">
+          <div class="wagen__beeld"><Image src={vlootFoto} width={900} alt="Mercedes V-Klasse van Moda" /></div>
+          <div class="wagen__lijf">
+            <h3 class="wagen__naam">Mercedes V-Klasse</h3>
+            <p class="wagen__tekst">De standaardwagen. Losse verstelbare zetels, echte beenruimte, en een koffer die de bagage van een gezin slikt zonder dat er iets op schoot moet.</p>
+            <ul class="wagen__specs">
+              <li><span>Passagiers</span><span>tot 7</span></li>
+              <li><span>Grote koffers</span><span>tot 7</span></li>
+              <li><span>Zetels</span><span>leder, apart verstelbaar</span></li>
+              <li><span>Achterin</span><span>eigen klimaatregeling</span></li>
+            </ul>
+            <a class="knop knop--stil knop--klein" href="/vloot/">
+              Bekijk de vloot <svg class="ic" aria-hidden="true"><use href="#ic-rechts"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <article class="wagen toon">
+          <div class="wagen__beeld"><Image src={interieurFoto} width={900} alt="Lederen zetels achterin de Mercedes Vito" /></div>
+          <div class="wagen__lijf">
+            <h3 class="wagen__naam">Mercedes Vito</h3>
+            <p class="wagen__tekst">Zelfde comfort, één rij extra. Voor een gezin met veel bagage, een groep vrienden die samen vertrekt, of een team op zakenreis.</p>
+            <ul class="wagen__specs">
+              <li><span>Passagiers</span><span>tot 8</span></li>
+              <li><span>Grote koffers</span><span>tot 8</span></li>
+              <li><span>Zetels</span><span>leder, drie rijen</span></li>
+              <li><span>Kinderzitje</span><span>gratis, op aanvraag</span></li>
+            </ul>
+            <a class="knop knop--stil knop--klein" href="/vloot/">
+              Bekijk de vloot <svg class="ic" aria-hidden="true"><use href="#ic-rechts"/></svg>
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       DE RITTEN — wat mensen achteraf schreven
+       ===================================================================== -->
+  <section class="blok blok--asfalt" id="reviews">
+    <div class="container">
+      <div class="sectiekop toon">
+        <h2 class="groot">Wat mensen achteraf schreven</h2>
+        <div class="sectiekop__noot">
+          <div class="google">
+            <span class="google__score">{gemiddelde}</span>
+            <span class="rit__sterren" aria-hidden="true">
+              {[1,2,3,4,5].map(() => (<svg class="ic ic--vol" aria-hidden="true"><use href="#ic-ster"/></svg>))}
+            </span>
+            <span class="google__uit">gemiddeld uit {alleReviews.length} Google-reviews</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="ritten toon">
+        {uitgelicht.map((r) => (
+          <article class="rit">
+            <div class="rit__kop">
+              <span class="rit__datum">{datumKort(r.date)}</span>
+              <span class="rit__sterren" aria-label={`${r.stars} van de 5 sterren`}>
+                {Array.from({ length: r.stars }).map(() => (<svg class="ic ic--vol" aria-hidden="true"><use href="#ic-ster"/></svg>))}
+              </span>
             </div>
+            <p class="rit__tekst">{r.text}</p>
+            <p class="rit__naam">{r.name}</p>
           </article>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- ===================== VERGELIJKING ===================== -->
-  <section class="vergelijk" id="vergelijk">
-    <div class="container">
-      <div class="section__head reveal">
-        <p class="section__eyebrow">De afweging</p>
-        <h2 class="section__title">Met ons of <span class="text-accent">zelf rijden?</span></h2>
-        <p class="section__lead">
-          Eerlijk naast elkaar, zodat u zelf kunt beslissen.
-        </p>
+  <!-- =====================================================================
+       VRAGEN
+       ===================================================================== -->
+  <section class="blok" id="vragen">
+    <div class="container smal">
+      <div class="sectiekop toon">
+        <h2 class="groot">Vragen die we vaak krijgen</h2>
+        <p class="sectiekop__noot">Staat het er niet bij? Bel gerust, we nemen zelf op.</p>
       </div>
 
-      <div class="vergelijk__tabel reveal">
-        <div class="vergelijk__hoofd"></div>
-        <div class="vergelijk__hoofd vergelijk__hoofd--moda">Met Moda</div>
-        <div class="vergelijk__hoofd">Zelf rijden</div>
-
-        {vergelijking.map((r) => (
-          <>
-            <div class="vergelijk__rij">{r.punt}</div>
-            <div class="vergelijk__cel vergelijk__cel--moda"><span class="vergelijk__ja" aria-hidden="true">✓</span>{r.moda}</div>
-            <div class="vergelijk__cel vergelijk__cel--zelf"><span class="vergelijk__nee" aria-hidden="true">—</span>{r.zelf}</div>
-          </>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== REVIEWS ===================== -->
-  <section class="googlewall" id="reviews">
-    <div class="container googlewall__kop reveal">
-      <div class="googlewall__score">
-        <b>★★★★★</b> <span>5,0</span> · 19 beoordelingen op Google
-      </div>
-      <h2 class="section__title">Wat reizigers <span class="text-accent">zeggen</span></h2>
-    </div>
-
-    <div class="googlewall__rijen">
-      <div class="reviews-marquee">
-        <div class="reviews-row" data-reviews-track data-vanaf="0"></div>
-      </div>
-      <div class="reviews-marquee">
-        <div class="reviews-row reviews-row--terug" data-reviews-track data-vanaf="9"></div>
-      </div>
-    </div>
-
-    <div class="container googlewall__meer reveal">
-      <a href="https://www.google.com/search?q=Moda+Transport+Heusden-Zolder+reviews"
-         target="_blank" rel="noopener" class="btn btn--ghost">Bekijk alle Google-reviews</a>
-    </div>
-  </section>
-
-  <!-- ===================== VEELGESTELDE VRAGEN ===================== -->
-  <section class="vragen" id="vragen">
-    <div class="container vragen__grid">
-      <div class="reveal">
-        <p class="section__eyebrow">Goed om te weten</p>
-        <h2 class="section__title">Veelgestelde <span class="text-accent">vragen</span></h2>
-        <p class="section__lead">
-          Staat uw vraag er niet bij? Bel gerust, we leggen het graag even uit.
-        </p>
-      </div>
-
-      <div class="reveal">
+      <div class="vragen toon">
         {vragen.map((q) => (
           <details class="vraag">
-            <summary>{q.v}</summary>
-            <p class="vraag__antwoord" set:html={q.a}></p>
+            <summary>
+              {q.v}
+              <span class="vraag__teken"><svg class="ic" aria-hidden="true"><use href="#ic-plus"/></svg></span>
+            </summary>
+            <p class="vraag__antwoord">{q.a}</p>
           </details>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- ===================== SLOTOPROEP ===================== -->
+  <!-- =====================================================================
+       SLOTOPROEP
+       ===================================================================== -->
   <section class="slot">
+    <div class="slot__beeld" aria-hidden="true"><Image src={deurFoto} width={1800} alt="" /></div>
     <div class="container">
-      <div class="slot__doos reveal">
-        <div class="slot__foto" aria-hidden="true">
-          <Image src={stuurNachtFoto} width={1600} alt="" />
-        </div>
-        <h2 class="slot__titel">Wanneer moet u vertrekken?</h2>
-        <p class="slot__lead">
-          Geef ons uw vlucht en uw adres door, dan rekenen wij terug tot het juiste
-          ophaaluur en bevestigen we uw vaste prijs.
-        </p>
-        <div class="slot__knoppen">
-          <a href="/reserveren/" class="btn btn--primary btn--lg">Reserveer uw rit</a>
-          <a href="/prijs/" class="btn btn--ghost btn--lg">Eerst de prijs zien</a>
-        </div>
+      <h2 class="reus">Zeg ons uw vluchtuur. De rest is voor ons.</h2>
+      <p class="slot__lead">
+        U krijgt een vaste prijs en een vast ophaaluur, allebei op voorhand.
+        Daarna hoeft u er niet meer aan te denken.
+      </p>
+      <div class="slot__acties">
+        <a class="knop knop--signaal" href="/reserveren/">
+          Reserveer uw rit <svg class="ic" aria-hidden="true"><use href="#ic-rechts"/></svg>
+        </a>
+        <a class="knop" href={`tel:${instellingen.telefoon_link}`}>
+          <svg class="ic" aria-hidden="true"><use href="#ic-tel"/></svg>
+          {instellingen.telefoon_weergave}
+        </a>
       </div>
     </div>
   </section>
 
-</Luchthaven>
+</Moda>

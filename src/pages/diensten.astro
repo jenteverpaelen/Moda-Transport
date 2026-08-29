@@ -1,121 +1,165 @@
 ---
-import Luchthaven from "../layouts/Luchthaven.astro";
+import { Image } from "astro:assets";
+import Moda from "../layouts/Moda.astro";
+import instellingen from "../../public/content/settings.json";
+import prijzen from "../../public/content/prices.json";
+import vertrekbord from "../assets/luchthaven/vertrekbord.jpg";
+import stuurNacht from "../assets/luchthaven/stuur-nacht.jpg";
+
+/* Een dienst is een traject van A naar B. Zo staan ze hier ook. */
+const trajecten = [
+  {
+    van: "Uw deur", naar: "De vertrekhal",
+    wat: "De heenrit",
+    uitleg: "Wij rekenen terug vanaf uw vluchtuur en bellen aan op het uur dat we samen vastleggen. De koffers gaan achterin, u stapt in. Twee uur voor vertrek staat u aan de balie, ook als het onderweg tegenzit — die marge zit al in de berekening.",
+  },
+  {
+    van: "De aankomsthal", naar: "Uw deur",
+    wat: "De terugrit",
+    uitleg: "Wij volgen uw vluchtnummer. Landt u vroeger of later, dan schuift het ophaaluur mee. Loopt de bagageband uit, dan wachten we — daar rekenen we niets extra voor. De chauffeur staat in de hal, niet op een parking waar u hem moet zoeken.",
+  },
+  {
+    van: "Kantoor", naar: "De gate", tussen: "Meeting",
+    wat: "Zakelijk vervoer",
+    uitleg: "Vaste chauffeurs, discreet, en een factuur die klopt. Voor wie regelmatig vertrekt maken we vaste afspraken, zodat u niet elke keer opnieuw hoeft door te geven waar u woont en hoe laat u weg wil.",
+  },
+  {
+    van: "Vier deuren", naar: "Eén luchthaven",
+    wat: "Groepen en families",
+    uitleg: "Tot acht personen met bagage in één wagen. Vertrekt u met meer, dan rijden we met twee wagens die samen aankomen. Meerdere ophaaladressen kunnen: geef ze door bij uw aanvraag, dan plannen wij de volgorde.",
+  },
+];
+
+const inbegrepen = [
+  "Vaste prijs, vooraf afgesproken",
+  "Vluchtopvolging bij vertraging",
+  "Wachttijd in de aankomsthal",
+  "Kinderzitjes, op aanvraag",
+  "Hulp met de bagage",
+  "Water aan boord",
+];
+const nietInbegrepen = [
+  "Parkeerkosten bij een afwijkend adres",
+  "Tolwegen buiten de gebruikelijke route",
+  "Extra tussenstops die niet vooraf zijn doorgegeven",
+];
 ---
-<Luchthaven
+<Moda
   titel="Diensten | Moda luchthavenvervoer"
-  omschrijving="Luchthavenvervoer van deur tot deur, zakelijk vervoer en ritten op maat. Stipt, comfortabel en aan een vaste prijs."
+  omschrijving="Heenrit en terugrit naar elke luchthaven, zakelijk vervoer en groepen. Vaste prijs vooraf, vluchtopvolging en eigen chauffeurs."
   actief="diensten">
 
-  <section class="section" id="diensten">
+  <section class="pkop">
     <div class="container">
-      <div class="section__head reveal">
-        <p class="section__eyebrow">Onze diensten</p>
-        <h2 class="section__title">Één specialiteit: <span class="text-accent">luchthavenvervoer</span></h2>
-        <p class="section__lead">
-          Wij doen niets half. Moda Transport richt zich volledig op transfers van en naar de luchthaven,
-          zodat u altijd op tijd en ontspannen aan uw reis begint.
+      <h1 class="pkop__titel reus">Wij rijden maar één soort rit: de uwe.</h1>
+      <div class="pkop__onder">
+        <p class="lood">
+          Of u nu alleen vertrekt of met acht, om drie uur 's nachts of op een
+          dinsdagmiddag: het is telkens dezelfde afspraak. Eén prijs, één uur,
+          één chauffeur die er staat.
         </p>
-      </div>
-
-      <div class="cards">
-        <article class="card reveal">
-          <div class="card__icon">🛫</div>
-          <h3>Heenrit naar de luchthaven</h3>
-          <p>Wij halen u thuis of op kantoor op en brengen u ruim op tijd naar de vertrekhal. Geen stress, geen parkeerkosten.</p>
-        </article>
-
-        <article class="card reveal">
-          <div class="card__icon">🛬</div>
-          <h3>Ophaling bij aankomst</h3>
-          <p>Uw chauffeur volgt uw vluchtnummer en staat klaar in de aankomsthal, ook bij vertraging. Meet &amp; greet inbegrepen.</p>
-        </article>
-
-        <article class="card reveal">
-          <div class="card__icon">👔</div>
-          <h3>Zakelijk vervoer</h3>
-          <p>Discreet, representatief en op factuur. Ideaal voor bedrijven die hun gasten of team stijlvol laten reizen.</p>
-        </article>
-
-        <article class="card reveal">
-          <div class="card__icon">👨‍👩‍👧‍👦</div>
-          <h3>Groepen &amp; families</h3>
-          <p>Ruime <a href="/vloot/">Mercedes V-Klasse en Vito</a> met plaats voor de hele groep, koffers en al. Comfortabel samen op weg.</p>
-        </article>
-      </div>
-
-      <div class="destinations reveal">
-        <p class="destinations__label">Wij rijden onder meer naar:</p>
-        <ul class="destinations__list">
-          <li>Brussels Airport (Zaventem)</li>
-          <li>Brussels South (Charleroi)</li>
-          <li>Amsterdam (Schiphol)</li>
-          <li>Eindhoven Airport</li>
-          <li>Lille</li>
-          <li>Paris CDG &amp; Orly</li>
-          <li>Düsseldorf &amp; Köln</li>
-          <li>Luxembourg</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--alt" id="waarom">
-    <div class="container waarom__grid">
-      <div class="waarom__intro reveal">
-        <p class="section__eyebrow">Waarom Moda Transport</p>
-        <h2 class="section__title">Uw comfort, onze zorg.</h2>
-        <p class="section__lead">
-          Vanaf het moment dat u boekt tot u veilig op uw bestemming bent, nemen wij alles uit handen.
-          Dat is de belofte achter <em>“reizen zonder zorgen”</em>.
-        </p>
-        <a href="/reserveren/" class="btn btn--primary">Plan uw rit</a>
-      </div>
-
-      <div class="features">
-        <div class="feature reveal">
-          <div class="feature__icon">💶</div>
-          <div>
-            <h3>Vaste prijs vooraf</h3>
-            <p>U weet exact wat u betaalt. Geen verrassingen, geen wachttarieven, geen kleine lettertjes.</p>
-          </div>
-        </div>
-        <div class="feature reveal">
-          <div class="feature__icon">⏱️</div>
-          <div>
-            <h3>Altijd stipt op tijd</h3>
-            <p>Wij plannen ruime marges en volgen het verkeer live, zodat u nooit een vlucht mist.</p>
-          </div>
-        </div>
-        <div class="feature reveal">
-          <div class="feature__icon">🚐</div>
-          <div>
-            <h3>Luxe Mercedes-vloot</h3>
-            <p>Verzorgde, comfortabele wagens met lederen zetels en ruimte voor bagage.</p>
-          </div>
-        </div>
-        <div class="feature reveal">
-          <div class="feature__icon">🧑‍✈️</div>
-          <div>
-            <h3>Ervaren chauffeurs</h3>
-            <p>Vriendelijke, professionele chauffeurs die de weg én de luchthaven kennen.</p>
-          </div>
-        </div>
-        <div class="feature reveal">
-          <div class="feature__icon">🌙</div>
-          <div>
-            <h3>24/7 beschikbaar</h3>
-            <p>Vroege ochtendvlucht of late landing? Wij rijden dag en nacht, het hele jaar door.</p>
-          </div>
-        </div>
-        <div class="feature reveal">
-          <div class="feature__icon">✈️</div>
-          <div>
-            <h3>Vluchtopvolging</h3>
-            <p>Wij monitoren uw vlucht en passen de ophaaltijd automatisch aan bij vertraging.</p>
-          </div>
+        <div class="pkop__cijfers">
+          <div><span>Bestemmingen</span><span class="getal">{prijzen.luchthavens.length} luchthavens</span></div>
+          <div><span>Personen per wagen</span><span class="getal">tot 8</span></div>
+          <div><span>Beschikbaar</span><span class="getal">24/7</span></div>
         </div>
       </div>
     </div>
   </section>
 
-</Luchthaven>
+  <section class="blok" style="padding-top:0">
+    <div class="container">
+      <div class="trajecten">
+        {trajecten.map((t) => (
+          <article class="traject toon">
+            <div>
+              <div class="traject__weg">
+                <span class="traject__punt">{t.van}</span>
+                <svg class="ic" aria-hidden="true"><use href="#ic-rechts"/></svg>
+                {t.tussen && (<>
+                  <span class="traject__punt">{t.tussen}</span>
+                  <svg class="ic" aria-hidden="true"><use href="#ic-rechts"/></svg>
+                </>)}
+                <span class="traject__punt traject__punt--doel">{t.naar}</span>
+              </div>
+            </div>
+            <div>
+              <h2 class="traject__wat">{t.wat}</h2>
+              <p class="traject__uitleg">{t.uitleg}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="blok blok--asfalt">
+    <div class="container">
+      <div class="sectiekop toon">
+        <h2 class="groot">Wat er in de prijs zit</h2>
+        <p class="sectiekop__noot">En wat niet, want dat hoort er ook bij te staan.</p>
+      </div>
+
+      <div class="lijstduo toon">
+        <div>
+          <h3>Inbegrepen</h3>
+          <ul>
+            {inbegrepen.map((i) => (
+              <li><svg class="ic" aria-hidden="true"><use href="#ic-vink"/></svg><span>{i}</span></li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h3>Niet inbegrepen</h3>
+          <ul class="lijstduo--nee">
+            {nietInbegrepen.map((i) => (
+              <li><svg class="ic" aria-hidden="true"><use href="#ic-kruis"/></svg><span>{i}</span></li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blok">
+    <div class="container detail">
+      <div class="detail__beeld toon"><Image src={vertrekbord} width={900} alt="Vertrekbord in een luchthaven" /></div>
+      <div class="toon">
+        <h2 class="detail__naam">Wij kijken naar uw vlucht, niet naar de klok</h2>
+        <p class="lood">
+          Een vertraging van drie uur is voor u vervelend en voor ons gewoon een
+          ander ophaaluur. Wij volgen het vluchtnummer op dat u doorgeeft en
+          passen aan. U hoeft ons niet te bellen vanuit de aankomsthal.
+        </p>
+        <p class="klein" style="margin-top:16px">
+          Er is geen automatische koppeling met een vluchtdienst: een mens kijkt
+          ernaar. Dat is trager dan een computer en betrouwbaarder dan een
+          computer die de verkeerde luchthaven bekijkt.
+        </p>
+        <div class="slot__acties" style="margin-top:26px">
+          <a class="knop knop--signaal" href="/reserveren/">
+            Reserveer uw rit <svg class="ic" aria-hidden="true"><use href="#ic-rechts"/></svg>
+          </a>
+          <a class="knop knop--stil" href="/prijs/">Bekijk de tarieven</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slot">
+    <div class="slot__beeld" aria-hidden="true"><Image src={stuurNacht} width={1800} alt="" /></div>
+    <div class="container">
+      <h2 class="reus">Vertrekt u 's nachts? Dan rijden wij 's nachts.</h2>
+      <p class="slot__lead">
+        De meeste ritten vertrekken tussen drie en zes uur 's ochtends. Daar
+        rekenen we geen toeslag voor.
+      </p>
+      <div class="slot__acties">
+        <a class="knop knop--signaal" href="/reserveren/">Reserveer uw rit</a>
+        <a class="knop" href={`tel:${instellingen.telefoon_link}`}>
+          <svg class="ic" aria-hidden="true"><use href="#ic-tel"/></svg>{instellingen.telefoon_weergave}
+        </a>
+      </div>
+    </div>
+  </section>
+</Moda>
