@@ -786,3 +786,107 @@ a:not(.knop):not(.merk) { text-underline-offset: .22em; text-decoration-thicknes
 .lijstduo .ic { width: 17px; height: 17px; margin-top: .18em; color: var(--signaal-op); }
 .lijstduo--nee .ic, .lijstduo--nee li { color: var(--mist); }
 @media (max-width: 760px) { .lijstduo { grid-template-columns: 1fr; } }
+
+/* =========================================================================
+   23. DE PRIJSREKENAAR
+   -------------------------------------------------------------------------
+   Het bord op de startpagina beantwoordt "hoe laat". Dit beantwoordt "wat
+   kost het voor mij" — met mijn adres, mijn gezelschap en mijn tussenstops.
+
+   Het adres wordt opgezocht bij OpenStreetMap om de afstand tot Heusden-Zolder
+   te kunnen tonen. Valt die dienst weg, dan blijft het veld gewoon een
+   tekstveld en blijft de prijs kloppen; alleen de afstandscontrole vervalt.
+   ========================================================================= */
+.rekenaar { border: 1px solid var(--lijn-hard); border-radius: 2px; background: var(--asfalt); }
+.rekenaar__velden { display: grid; grid-template-columns: 1fr 1fr; }
+.rekenaar__velden > .veld { border-bottom: 1px solid var(--lijn); }
+.rekenaar__velden > .veld:nth-child(odd) { border-right: 1px solid var(--lijn); }
+.rekenaar__velden > .veld--vol { grid-column: 1 / -1; border-right: 0; }
+
+/* Keuze uit drie richtingen: als segmenten, niet als radiorondjes. */
+.richting { display: flex; gap: 0; margin-top: 4px; border: 1px solid var(--lijn-hard); border-radius: 2px; overflow: hidden; }
+.richting label {
+  flex: 1; text-align: center; cursor: pointer;
+  padding: 9px 6px; font-size: .78rem;
+  font-variation-settings: "wdth" 92, "wght" 560;
+  color: #B4BEC6; border-right: 1px solid var(--lijn);
+  transition: background .3s var(--ease), color .3s var(--ease);
+}
+.richting label:last-child { border-right: 0; }
+/* De radioknop zelf blijft bereikbaar voor toetsenbord en schermlezer, maar
+   neemt geen plaats in — anders ligt hij onder het label van de buur en vangt
+   hij diens klik af. */
+.richting input {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0;
+}
+.richting input:checked + label { background: var(--signaal); color: #fff; }
+.richting input:focus-visible + label { outline: 2px solid var(--signaal-op); outline-offset: -2px; }
+.richting label:hover { color: var(--markering); }
+
+/* Adressuggesties */
+.zoekveld { position: relative; }
+.suggesties {
+  position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 30;
+  margin: 0; padding: 4px; list-style: none;
+  background: #10151A; border: 1px solid var(--lijn-hard); border-radius: 2px;
+  max-height: 260px; overflow-y: auto;
+  box-shadow: 0 18px 40px rgba(0,0,0,.55);
+}
+.suggesties li { padding: 9px 11px; cursor: pointer; border-radius: 2px; font-size: .9rem; }
+.suggesties li small { display: block; color: var(--mist); font-size: .78rem; margin-top: 2px; }
+.suggesties li:hover, .suggesties li[aria-selected="true"] { background: rgba(233,231,225,.09); }
+
+/* Tussenstops */
+.stops { display: grid; gap: 8px; margin-top: 6px; }
+.stoprij { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; }
+.stoprij input { border: 0; border-bottom: 1px solid var(--lijn); background: none; color: var(--markering); padding: 6px 0; font-family: var(--tekst); font-size: .95rem; width: 100%; }
+.stoprij input:focus { outline: none; border-bottom-color: var(--markering); }
+.stopweg {
+  width: 30px; height: 30px; display: grid; place-items: center; cursor: pointer;
+  border: 1px solid var(--lijn-hard); border-radius: 2px; background: none; color: var(--mist);
+  transition: color .3s var(--ease), border-color .3s var(--ease);
+}
+.stopweg:hover { color: var(--signaal-op); border-color: var(--signaal-op); }
+.stopbij {
+  margin-top: 10px; background: none; border: 0; cursor: pointer; padding: 0;
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--cijfer); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase;
+  font-variation-settings: "wdth" 88, "wght" 450; color: var(--mist);
+}
+.stopbij:hover { color: var(--signaal-op); }
+.stopbij .ic { width: 15px; height: 15px; }
+
+/* De uitkomst: een opbouw, geen enkel getal dat je moet geloven. */
+.uitkomst { border-top: 1px solid var(--lijn); padding: clamp(16px, 2vw, 24px); }
+.uitkomst__regels { display: grid; gap: 0; margin-bottom: 14px; }
+.uitkomst__regel {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px;
+  padding-block: 8px; border-bottom: 1px solid var(--lijn);
+  font-size: .92rem; color: #B4BEC6;
+}
+.uitkomst__regel span:last-child { font-family: var(--cijfer); font-variant-numeric: tabular-nums; font-variation-settings: "wdth" 92, "wght" 450; color: var(--markering); }
+.uitkomst__regel--korting span:last-child { color: var(--signaal-op); }
+.uitkomst__totaal {
+  display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px;
+  padding-top: 12px;
+}
+.uitkomst__totaal dt { font-variation-settings: "wdth" 92, "wght" 620; font-size: .9rem; letter-spacing: .05em; text-transform: uppercase; }
+.uitkomst__totaal dd {
+  font-family: var(--cijfer); font-variant-numeric: tabular-nums;
+  font-variation-settings: "wdth" 100, "wght" 600;
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem); letter-spacing: -0.03em;
+}
+.uitkomst__melding {
+  margin-top: 12px; padding: 11px 13px; border-radius: 2px;
+  font-size: .87rem; border: 1px solid var(--lijn-hard); color: #B4BEC6;
+}
+.uitkomst__melding--let { border-color: rgba(225,29,42,.45); background: rgba(225,29,42,.08); }
+.uitkomst__afstand { font-family: var(--cijfer); font-size: .7rem; color: var(--mist); font-variation-settings: "wdth" 88, "wght" 400; margin-top: 10px; }
+.uitkomst__acties { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+
+@media (max-width: 700px) {
+  .rekenaar__velden { grid-template-columns: 1fr; }
+  .rekenaar__velden > .veld:nth-child(odd) { border-right: 0; }
+  .uitkomst__acties .knop { flex: 1; justify-content: center; }
+}

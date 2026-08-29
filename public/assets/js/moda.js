@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
   terugrekening();
   verschijnen();
   ritBalk();
-  tarieven();
+  rekenaar();
   formulieren();
   voorinvullen();
   const jaar = document.getElementById("jaartal");
@@ -263,41 +263,275 @@ function ritBalk() {
   pas();
 }
 
-/* -------------------------------------------------------------------------
-   4b. De tarieventabel rekent mee
+/* =========================================================================
+   4b. DE PRIJSREKENAAR
    -------------------------------------------------------------------------
-   Aantal personen en heen-en-terug passen alle prijzen tegelijk aan. De
-   regels staan in public/content/prices.json en worden hier gespiegeld:
-   de eerste twee personen zitten in de basisprijs, daarna een supplement,
-   en heen en terug samen geeft korting op het totaal.
-   ------------------------------------------------------------------------- */
-const BASIS_PERSONEN = 2, PER_EXTRA = 5, HEENTERUG_KORTING = 10;
+   Het bord op de startpagina zegt hoe laat we aanbellen. Dit zegt wat het
+   kost — met jouw adres, jouw gezelschap en jouw tussenstops.
 
-function tarieven() {
-  const tabel = document.querySelector("[data-tarieven]");
-  const personenEl = document.getElementById("tarPersonen");
-  const richtingEl = document.getElementById("tarRichting");
-  if (!tabel || !personenEl || !richtingEl) return;
+   De prijsregels komen uit public/content/prices.json en staan hieronder
+   gespiegeld. Het adres wordt opgezocht bij OpenStreetMap, alleen om de
+   afstand tot Heusden-Zolder te kunnen tonen. Valt die dienst weg, dan blijft
+   het veld een gewoon tekstveld en blijft de prijs kloppen: enkel de
+   afstandscontrole vervalt dan, en dat zeggen we ook.
+   ========================================================================= */
+const ZAAK = { lat: 51.0271799, lon: 5.2654197 };   /* Beringersteenweg 14 */
 
-  const rijen = Array.prototype.slice.call(tabel.querySelectorAll("[data-basis]"));
+function rekenaar() {
+  const doos = document.getElementById("rekenaar");
+  if (!doos) return;
 
-  function pas() {
+  const regels = JSON.parse(doos.dataset.regels);
+  const adresVeld = document.getElementById("rekAdres");
+  const lijstEl = document.getElementById("rekSuggesties");
+  const luchtEl = document.getElementById("rekLuchthaven");
+  const terugEl = document.getElementById("rekTerugLuchthaven");
+  const terugVak = document.getElementById("rekTerugVak");
+  const personenEl = document.getElementById("rekPersonen");
+  const stopsEl = document.getElementById("rekStops");
+  const stopBijEl = document.getElementById("rekStopBij");
+  const uit = document.getElementById("rekUitkomst");
+  const knop = document.getElementById("rekKnop");
+
+  let adresCoord = null;      /* gevuld zodra een suggestie gekozen of gevonden is */
+  let adresAfstand = null;    /* km tot de zaak */
+  let dienstStuk = false;     /* de adresdienst is onbereikbaar */
+
+  const richting = () => (document.querySelector('input[name="rekRichting"]:checked') || {}).value || "heen";
+
+  /* ---------- de rekensom ---------- */
+  function bereken() {
+    const heen = regels.luchthavens.find((l) => l.value === luchtEl.value) || regels.luchthavens[0];
+    const r = richting();
+    const terug = r === "beide"
+      ? (regels.luchthavens.find((l) => l.value === terugEl.value) || heen)
+      : null;
+
     let personen = parseInt(personenEl.value, 10);
     if (!Number.isFinite(personen) || personen < 1) personen = 1;
     if (personen > 8) personen = 8;
-    const beide = richtingEl.value === "beide";
 
-    rijen.forEach(function (rij) {
-      const basis = parseInt(rij.dataset.basis, 10);
-      let prijs = basis + Math.max(0, personen - BASIS_PERSONEN) * PER_EXTRA;
-      if (beide) prijs = Math.round(prijs * 2 * (1 - HEENTERUG_KORTING / 100));
-      rij.querySelector("[data-prijs]").textContent = "€ " + prijs;
+    const stops = Array.prototype.slice.call(stopsEl.querySelectorAll("input"))
+      .filter(function (i) { return i.value.trim(); }).length;
+
+    const posten = [];
+    let totaal = 0;
+
+    /* Bij "heen en terug" tellen we twee ritten, elk met hun eigen luchthaven. */
+    const ritten = r === "beide" ? [heen, terug] : [heen];
+    ritten.forEach(function (l, i) {
+      const naam = r === "beide"
+        ? (i === 0 ? "Heenrit naar " + l.label : "Terugrit van " + l.label)
+        : (r === "van" ? "Ophalen aan " + l.label : "Rit naar " + l.label);
+      posten.push({ wat: naam, bedrag: l.price });
+      totaal += l.price;
+    });
+
+    const extra = Math.max(0, personen - regels.basisprijs_personen);
+    if (extra > 0) {
+      const bedrag = extra * regels.supplement_per_extra_persoon * ritten.length;
+      posten.push({ wat: extra + (extra === 1 ? " extra persoon" : " extra personen") +
+        " (" + extra * ritten.length + " × € " + regels.supplement_per_extra_persoon + ")", bedrag: bedrag });
+      totaal += bedrag;
+    }
+
+    if (stops > 0) {
+      const bedrag = stops * regels.supplement_per_tussenstop;
+      posten.push({ wat: stops + (stops === 1 ? " tussenstop" : " tussenstops") +
+        " (× € " + regels.supplement_per_tussenstop + ")", bedrag: bedrag });
+      totaal += bedrag;
+    }
+
+    let korting = 0;
+    if (r === "beide" && regels.heenterug_korting_procent > 0) {
+      korting = Math.round(totaal * regels.heenterug_korting_procent / 100);
+      posten.push({ wat: "Heen en terug samen (−" + regels.heenterug_korting_procent + "%)", bedrag: -korting, korting: true });
+      totaal -= korting;
+    }
+
+    return { posten: posten, totaal: totaal, heen: heen, terug: terug, personen: personen, stops: stops, richting: r };
+  }
+
+  /* ---------- de uitkomst tonen ---------- */
+  function toon() {
+    const u = bereken();
+
+    let html = '<div class="uitkomst__regels">';
+    u.posten.forEach(function (p) {
+      html += '<div class="uitkomst__regel' + (p.korting ? " uitkomst__regel--korting" : "") + '">' +
+        "<span>" + veilig(p.wat) + "</span><span>" +
+        (p.bedrag < 0 ? "− € " + Math.abs(p.bedrag) : "€ " + p.bedrag) + "</span></div>";
+    });
+    html += "</div>";
+    html += '<dl class="uitkomst__totaal"><dt>Uw vaste prijs</dt><dd>€ ' + u.totaal + "</dd></dl>";
+
+    /* De afstandscontrole: binnen de straal geldt de vaste prijs zonder meer. */
+    if (adresAfstand !== null) {
+      const binnen = adresAfstand <= regels.km_straal;
+      html += '<p class="uitkomst__melding' + (binnen ? "" : " uitkomst__melding--let") + '">' +
+        (binnen
+          ? "Uw adres ligt binnen onze vaste-prijszone. Dit bedrag is wat u betaalt."
+          : "Uw adres ligt buiten de zone van " + regels.km_straal + " km waarin deze prijs vast staat. " +
+            "Bel even, dan spreken we de prijs vooraf samen af — u hoort ze nog altijd voor u vertrekt.") +
+        "</p>";
+      html += '<p class="uitkomst__afstand">' + adresAfstand.toFixed(1).replace(".", ",") +
+        " km hemelsbreed vanaf Heusden-Zolder</p>";
+    } else if (dienstStuk && adresVeld.value.trim()) {
+      html += '<p class="uitkomst__melding">Het opzoeken van adressen lukt even niet, ' +
+        "dus we kunnen de afstand niet nakijken. De prijs hierboven klopt wel.</p>";
+    }
+
+    html += '<div class="uitkomst__acties">' +
+      '<a class="knop knop--signaal" id="rekKnopIn" href="/reserveren/">Reserveer deze rit' +
+      '<svg class="ic" aria-hidden="true"><use href="#ic-rechts"/></svg></a>' +
+      '<a class="knop knop--stil" href="tel:+3211243003">' +
+      '<svg class="ic" aria-hidden="true"><use href="#ic-tel"/></svg>011 24 30 03</a></div>';
+
+    uit.innerHTML = html;
+
+    /* De knop neemt mee wat hier ingevuld is, zodat het formulier al klopt. */
+    const naar = document.getElementById("rekKnopIn");
+    if (naar) {
+      naar.href = "/reserveren/?" + new URLSearchParams({
+        luchthaven: u.heen.value,
+        richting: u.richting,
+        personen: String(u.personen),
+        adres: adresVeld.value.trim(),
+      }).toString();
+    }
+  }
+
+  /* ---------- afstand tussen twee punten, hemelsbreed ---------- */
+  function afstandKm(a, b) {
+    const R = 6371, rad = function (d) { return (d * Math.PI) / 180; };
+    const dLat = rad(b.lat - a.lat), dLon = rad(b.lon - a.lon);
+    const h = Math.sin(dLat / 2) ** 2 +
+      Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dLon / 2) ** 2;
+    return 2 * R * Math.asin(Math.sqrt(h));
+  }
+
+  /* ---------- adressuggesties (OpenStreetMap via Photon) ---------- */
+  let wacht = null, keuzes = [], actief = -1;
+
+  function sluitLijst() { lijstEl.hidden = true; lijstEl.innerHTML = ""; actief = -1; }
+
+  function toonLijst(items) {
+    keuzes = items;
+    if (!items.length) return sluitLijst();
+    lijstEl.innerHTML = items.map(function (s, i) {
+      return '<li role="option" id="reksug' + i + '" aria-selected="false">' +
+        veilig(s.regel1) + (s.regel2 ? "<small>" + veilig(s.regel2) + "</small>" : "") + "</li>";
+    }).join("");
+    lijstEl.hidden = false;
+    Array.prototype.slice.call(lijstEl.children).forEach(function (li, i) {
+      li.addEventListener("mousedown", function (e) { e.preventDefault(); kies(i); });
     });
   }
 
-  personenEl.addEventListener("input", pas);
-  richtingEl.addEventListener("change", pas);
-  pas();
+  function kies(i) {
+    const s = keuzes[i];
+    if (!s) return;
+    adresVeld.value = s.volledig;
+    adresCoord = { lat: s.lat, lon: s.lon };
+    adresAfstand = afstandKm(ZAAK, adresCoord);
+    sluitLijst();
+    toon();
+  }
+
+  function zetActief(i) {
+    Array.prototype.slice.call(lijstEl.children).forEach(function (li, n) {
+      li.setAttribute("aria-selected", String(n === i));
+    });
+    adresVeld.setAttribute("aria-activedescendant", i >= 0 ? "reksug" + i : "");
+  }
+
+  function zoek(vraag) {
+    const url = "https://photon.komoot.io/api/?limit=6&lang=default&lat=" + ZAAK.lat +
+      "&lon=" + ZAAK.lon + "&location_bias_scale=0.5&q=" + encodeURIComponent(vraag);
+    return fetch(url)
+      .then(function (r) { if (!r.ok) throw new Error("net"); return r.json(); })
+      .then(function (data) {
+        dienstStuk = false;
+        return (data.features || [])
+          .filter(function (f) { return (f.properties.countrycode || "").toUpperCase() === "BE"; })
+          .map(function (f) {
+            const p = f.properties;
+            const regel1 = [p.name || p.street || "", p.housenumber].filter(Boolean).join(" ") || (p.city || "");
+            const regel2 = [p.postcode, p.city].filter(Boolean).join(" ");
+            return {
+              regel1: regel1, regel2: regel2,
+              volledig: [regel1, regel2].filter(Boolean).join(", "),
+              lat: f.geometry.coordinates[1], lon: f.geometry.coordinates[0],
+            };
+          })
+          .filter(function (s) { return s.volledig; })
+          .filter(function (s, i, arr) { return arr.findIndex(function (x) { return x.volledig === s.volledig; }) === i; });
+      })
+      .catch(function () { dienstStuk = true; return []; });
+  }
+
+  adresVeld.addEventListener("input", function () {
+    adresCoord = null; adresAfstand = null;
+    clearTimeout(wacht);
+    const vraag = adresVeld.value.trim();
+    if (vraag.length < 3) { sluitLijst(); toon(); return; }
+    wacht = setTimeout(function () {
+      zoek(vraag).then(function (items) {
+        toonLijst(items);
+        /* Opnieuw tonen: pas nu weten we of de adresdienst antwoordde, en dat
+           bepaalt of er een melding onder de prijs hoort. */
+        toon();
+      });
+    }, 320);
+    toon();
+  });
+
+  adresVeld.addEventListener("keydown", function (e) {
+    if (lijstEl.hidden) return;
+    if (e.key === "ArrowDown") { e.preventDefault(); actief = Math.min(actief + 1, keuzes.length - 1); zetActief(actief); }
+    if (e.key === "ArrowUp")   { e.preventDefault(); actief = Math.max(actief - 1, 0); zetActief(actief); }
+    if (e.key === "Enter" && actief >= 0) { e.preventDefault(); kies(actief); }
+    if (e.key === "Escape") sluitLijst();
+  });
+  adresVeld.addEventListener("blur", function () { setTimeout(sluitLijst, 140); });
+
+  /* ---------- richting: bij heen en terug komt er een tweede luchthaven bij ---------- */
+  document.querySelectorAll('input[name="rekRichting"]').forEach(function (r) {
+    r.addEventListener("change", function () {
+      const beide = richting() === "beide";
+      terugVak.hidden = !beide;
+      toon();
+    });
+  });
+
+  /* ---------- tussenstops ---------- */
+  function stopErbij() {
+    const rij = document.createElement("div");
+    rij.className = "stoprij";
+    const nr = stopsEl.children.length + 1;
+    rij.innerHTML = '<input type="text" aria-label="Tussenstop ' + nr + '" placeholder="Adres van de tussenstop" />' +
+      '<button type="button" class="stopweg" aria-label="Tussenstop ' + nr + ' verwijderen">' +
+      '<svg class="ic" aria-hidden="true"><use href="#ic-kruis"/></svg></button>';
+    stopsEl.appendChild(rij);
+    rij.querySelector("input").addEventListener("input", toon);
+    rij.querySelector("button").addEventListener("click", function () { rij.remove(); toon(); });
+    rij.querySelector("input").focus();
+    toon();
+  }
+  stopBijEl.addEventListener("click", stopErbij);
+
+  [luchtEl, terugEl, personenEl].forEach(function (el) {
+    el.addEventListener("input", toon);
+    el.addEventListener("change", toon);
+  });
+
+  toon();
+}
+
+function veilig(t) {
+  return String(t == null ? "" : t).replace(/[&<>"']/g, function (c) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+  });
 }
 
 /* -------------------------------------------------------------------------
@@ -369,6 +603,9 @@ function voorinvullen() {
     if (el && waarde) el.value = waarde;
   };
   zet("luchthaven", q.get("luchthaven"));
+  zet("ophaaladres", q.get("adres"));
+  zet("richting", q.get("richting"));
+  zet("personen", q.get("personen"));
   zet("vluchtuur", q.get("vlucht"));
   zet("ophaaluur", q.get("ophalen"));
 

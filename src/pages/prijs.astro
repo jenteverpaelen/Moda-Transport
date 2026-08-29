@@ -41,49 +41,127 @@ const vragen = [
     </div>
   </section>
 
-  <!-- De tabel rekent mee met het aantal personen en met heen en terug. -->
-  <section class="blok" style="padding-top:0" id="tarieven">
+  <!-- =====================================================================
+       DE REKENAAR
+       Het bord op de startpagina zegt hoe laat we aanbellen; dit zegt wat het
+       kost voor jouw adres, jouw gezelschap en jouw tussenstops.
+       ===================================================================== -->
+  <section class="blok" style="padding-top:0" id="rekenen">
     <div class="container">
-      <div class="bord" style="max-width:none; margin-bottom:clamp(22px,3vw,34px)">
-        <div class="bord__stel">
-          <div class="veld">
-            <label for="tarPersonen">Met hoeveel personen</label>
-            <input type="number" id="tarPersonen" min="1" max="8" step="1" value="2" />
-          </div>
-          <div class="veld">
-            <label for="tarRichting">Heen, of heen en terug</label>
-            <select id="tarRichting">
-              <option value="heen" selected>Alleen heen</option>
-              <option value="beide">Heen en terug (−{prijzen.heenterug_korting_procent}%)</option>
-            </select>
-          </div>
-        </div>
-        <p class="bord__noot" style="padding-top:12px">
-          De tabel hieronder past zich meteen aan. Dit is de prijs voor de hele
-          wagen, niet per persoon.
+      <div class="sectiekop toon">
+        <h2 class="groot">Reken uw eigen prijs uit</h2>
+        <p class="sectiekop__noot">
+          Vul uw ophaaladres in, dan kijken we meteen na of u binnen onze
+          vaste-prijszone van {prijzen.km_straal} km valt.
         </p>
       </div>
 
-      <div class="routes" data-tarieven>
+      <div class="rekenaar toon" id="rekenaar" data-regels={JSON.stringify({
+        luchthavens: prijzen.luchthavens.map((l) => ({ value: l.value, label: l.label, price: l.price })),
+        basisprijs_personen: prijzen.basisprijs_personen,
+        supplement_per_extra_persoon: prijzen.supplement_per_extra_persoon,
+        supplement_per_tussenstop: prijzen.supplement_per_tussenstop,
+        heenterug_korting_procent: prijzen.heenterug_korting_procent,
+        km_straal: prijzen.km_straal,
+      })}>
+        <div class="rekenaar__velden">
+          <div class="veld veld--vol">
+            <label for="rekAdres">Waar halen we u op</label>
+            <div class="zoekveld">
+              <input type="text" id="rekAdres" placeholder="Straat en nummer, gemeente"
+                     autocomplete="off" role="combobox" aria-expanded="false"
+                     aria-controls="rekSuggesties" aria-autocomplete="list"
+                     style="font-family:var(--tekst); font-size:1.05rem; letter-spacing:0" />
+              <ul class="suggesties" id="rekSuggesties" role="listbox" aria-label="Adressuggesties" hidden></ul>
+            </div>
+          </div>
+
+          <div class="veld veld--vol">
+            <label id="rekRichtingLabel">Wat wilt u boeken</label>
+            <div class="richting" role="radiogroup" aria-labelledby="rekRichtingLabel">
+              <input type="radio" name="rekRichting" id="rekHeen" value="heen" checked />
+              <label for="rekHeen">Naar de luchthaven</label>
+              <input type="radio" name="rekRichting" id="rekVan" value="van" />
+              <label for="rekVan">Van de luchthaven</label>
+              <input type="radio" name="rekRichting" id="rekBeide" value="beide" />
+              <label for="rekBeide">Heen én terug</label>
+            </div>
+          </div>
+
+          <div class="veld">
+            <label for="rekLuchthaven">Welke luchthaven</label>
+            <select id="rekLuchthaven">
+              {prijzen.luchthavens.map((l) => (
+                <option value={l.value} selected={l.value === "zaventem"}>{l.label}</option>
+              ))}
+            </select>
+          </div>
+
+          <div class="veld">
+            <label for="rekPersonen">Aantal personen</label>
+            <input type="number" id="rekPersonen" min="1" max="8" step="1" value="2" />
+          </div>
+
+          <div class="veld veld--vol" id="rekTerugVak" hidden>
+            <label for="rekTerugLuchthaven">Van welke luchthaven komt u terug</label>
+            <select id="rekTerugLuchthaven">
+              {prijzen.luchthavens.map((l) => (
+                <option value={l.value} selected={l.value === "zaventem"}>{l.label}</option>
+              ))}
+            </select>
+          </div>
+
+          <div class="veld veld--vol">
+            <label>Tussenstops (mag leeg)</label>
+            <div class="stops" id="rekStops"></div>
+            <button type="button" class="stopbij" id="rekStopBij">
+              <svg class="ic" aria-hidden="true"><use href="#ic-plus"/></svg>
+              Tussenstop toevoegen — € {prijzen.supplement_per_tussenstop} per stop
+            </button>
+          </div>
+        </div>
+
+        <!-- Wordt door moda.js ingevuld. Zonder JavaScript staat hier de
+             prijslijst eronder, en die klopt ook. -->
+        <div class="uitkomst" id="rekUitkomst" aria-live="polite">
+          <p class="klein">Vul hierboven in wat u nodig heeft, dan verschijnt de prijs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DE PRIJSLIJST ===================== -->
+  <section class="blok" style="padding-top:0" id="tarieven">
+    <div class="container">
+      <div class="sectiekop toon">
+        <h2 class="groot">De vaste prijzen</h2>
+        <p class="sectiekop__noot">
+          Enkele rit vanuit Heusden-Zolder, voor de hele wagen tot
+          {prijzen.basisprijs_personen} personen.
+        </p>
+      </div>
+
+      <div class="routes">
         <div class="routes__kop">
-          <span>Bestemming</span><span>Afstand</span><span>Rit</span><span>Prijs</span><span></span>
+          <span>Bestemming</span><span>Afstand</span><span>Rit</span><span>Vaste prijs</span><span></span>
         </div>
         {prijzen.luchthavens.map((l) => (
-          <a class="route" href={`/reserveren/?luchthaven=${l.value}`}
-             data-basis={l.price}>
+          <a class="route" href={`/reserveren/?luchthaven=${l.value}`}>
             <span class="route__naam">{l.label}</span>
             <span class="route__km">{l.km} km</span>
             <span class="route__duur">{duur(l.rijtijd_min)}</span>
-            <span class="route__prijs" data-prijs>€ {l.price}</span>
+            <span class="route__prijs">€ {l.price}</span>
             <span class="route__pijl"><svg class="ic" aria-hidden="true"><use href="#ic-rechts"/></svg></span>
           </a>
         ))}
       </div>
 
       <p class="klein" style="margin-top:20px">
-        Een tussenstop kost € {prijzen.supplement_per_tussenstop}. Rijden we naar een
-        adres verder dan {prijzen.km_straal} km buiten Heusden-Zolder, dan spreken we
-        de prijs vooraf samen af — ook dan hoort u het bedrag voor u vertrekt.
+        Vanaf de derde persoon komt er € {prijzen.supplement_per_extra_persoon} per persoon bij.
+        Een tussenstop kost € {prijzen.supplement_per_tussenstop}.
+        Heen en terug samen geboekt geeft {prijzen.heenterug_korting_procent}% korting.
+        Ligt uw adres verder dan {prijzen.km_straal} km buiten Heusden-Zolder, dan
+        spreken we de prijs vooraf samen af — ook dan hoort u het bedrag voor u vertrekt.
       </p>
     </div>
   </section>
