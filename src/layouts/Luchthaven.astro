@@ -169,7 +169,7 @@ const paginaUrl = new URL(Astro.url.pathname, MODA.vervoer).href;
       <nav class="nav__links" id="navLinks" aria-label="Hoofdmenu">
         <a href="/diensten/" aria-current={actief === "diensten" ? "page" : undefined}>Diensten</a>
         <a href="/vloot/" aria-current={actief === "vloot" ? "page" : undefined}>Onze vloot</a>
-        <a href="/reviews/" aria-current={actief === "reviews" ? "page" : undefined}>Reviews</a>
+        <a href="/#reviews" aria-current={actief === "reviews" ? "page" : undefined}>Reviews</a>
         <a href="/prijs/" aria-current={actief === "prijs" ? "page" : undefined}>Prijs berekenen</a>
         <a href="/reserveren/" aria-current={actief === "reserveren" ? "page" : undefined}>Contact</a>
         <a href="/reserveren/" class="btn btn--sm btn--primary nav__cta">Reserveer</a>
@@ -231,7 +231,7 @@ const paginaUrl = new URL(Astro.url.pathname, MODA.vervoer).href;
         <ul>
           <li><a href="/diensten/">Onze diensten</a></li>
           <li><a href="/vloot/">Onze vloot</a></li>
-          <li><a href="/reviews/">Reviews</a></li>
+          <li><a href="/#reviews">Reviews</a></li>
           <li><a href="/prijs/">Prijs berekenen</a></li>
           <li><a href="/diensten/">Over ons</a></li>
           <li><a href="/reserveren/">Reserveren</a></li>

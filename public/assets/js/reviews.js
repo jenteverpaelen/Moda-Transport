@@ -162,8 +162,11 @@ const MODA_REVIEWS = [
    Hieronder hoef je niks meer aan te passen.
    ========================================================= */
 (function initReviews() {
-  const track = document.getElementById("reviews-track");
-  if (!track) return;
+  /* Eén of meer lopende rijen. Elke rij met [data-reviews-track] wordt gevuld;
+     data-richting="terug" laat er een de andere kant op lopen, en data-vanaf
+     bepaalt met welke review de rij begint zodat twee rijen niet hetzelfde tonen. */
+  const tracks = [...document.querySelectorAll("[data-reviews-track]")];
+  if (!tracks.length) return;
 
   const palette = ["#e11d2a", "#c9a24b", "#3b6fb3", "#2f9e6f", "#8256c4", "#c56b2f"];
 
@@ -199,16 +202,21 @@ const MODA_REVIEWS = [
   }
 
   function render(list) {
-    track.classList.remove("is-animated");
-    track.style.removeProperty("--marquee-distance");
-    track.style.removeProperty("--marquee-dur");
-    track.innerHTML = list.map(cardHTML).join("");
-    // Laat de rij automatisch lopen (naadloze, oneindige marquee).
-    setupMarquee(list.length);
+    tracks.forEach((track) => {
+      // Elke rij begint op een ander punt, zodat ze niet gelijk lopen.
+      const vanaf = Number(track.dataset.vanaf || 0) % (list.length || 1);
+      const eigen = list.slice(vanaf).concat(list.slice(0, vanaf));
+
+      track.classList.remove("is-animated");
+      track.style.removeProperty("--marquee-distance");
+      track.style.removeProperty("--marquee-dur");
+      track.innerHTML = eigen.map(cardHTML).join("");
+      setupMarquee(track, eigen.length);
+    });
   }
 
   /* -- Kaarten dupliceren voor een naadloos lopende rij -- */
-  function setupMarquee(count) {
+  function setupMarquee(track, count) {
     // Bij te weinig kaarten heeft rondlopen geen zin.
     if (count < 3) return;
 

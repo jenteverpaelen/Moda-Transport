@@ -316,6 +316,8 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.12; font-weight: 
 }
 .reviews-row { display: flex; gap: 22px; width: max-content; will-change: transform; }
 .reviews-row.is-animated { animation: reviews-scroll var(--marquee-dur, 60s) linear infinite; }
+/* Een rij die de andere kant op loopt, voor een tweede regel eronder. */
+.reviews-row--terug.is-animated { animation-direction: reverse; }
 .reviews-marquee:hover .reviews-row.is-animated,
 .reviews-marquee:focus-within .reviews-row.is-animated { animation-play-state: paused; }
 @keyframes reviews-scroll {

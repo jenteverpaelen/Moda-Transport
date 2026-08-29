@@ -8,101 +8,129 @@
    ========================================================= */
 
 /* ---------------------------------------------------------
-   1. HERO
-   Donkere foto die naar links in het zwart wegloopt, tekst
-   erop, en onderaan een smalle balk met vier feiten.
+   1. HERO — half bleed
+   Tekst links in het zwart, foto rechts die tot tegen de rand
+   van het scherm doorloopt. De hero is bewust niet schermhoog:
+   zo zie je meteen dat er nog iets onder staat.
    --------------------------------------------------------- */
-.lhero {
+.lhero { position: relative; background: #08080a; overflow: hidden; }
+
+.lhero__grid {
   position: relative;
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .88fr);
+  align-items: center;
+  min-height: min(84svh, 860px);
+}
+
+.lhero__tekst { position: relative; z-index: 2; padding: 150px 56px 56px 0; }
+
+/* De fotokolom loopt door tot tegen de rechterrand van het venster. */
+.lhero__beeld {
+  position: relative; align-self: stretch;
+  margin-right: calc(50% - 50vw);
   overflow: hidden;
-  background: #08080a;
 }
-
-.lhero__beeld { position: absolute; inset: 0; z-index: 0; }
-.lhero__beeld img { width: 100%; height: 100%; object-fit: cover; object-position: 62% 50%; display: block; }
-
-/* Twee lagen: één die naar links dicht loopt zodat de tekst leesbaar
-   blijft, en één die de onderkant naar het zwart trekt voor de balk. */
-.lhero__waas {
-  position: absolute; inset: 0; z-index: 1;
-  background:
-    linear-gradient(100deg, rgba(6,6,8,.96) 0%, rgba(6,6,8,.88) 38%, rgba(6,6,8,.42) 64%, rgba(6,6,8,.16) 100%),
-    linear-gradient(to top, rgba(6,6,8,.96) 0%, rgba(6,6,8,.45) 26%, transparent 55%);
+.lhero__beeld img { width: 100%; height: 100%; object-fit: cover; object-position: 42% 50%; display: block; }
+/* De linkerrand van de foto vervaagt in het zwart, zodat er geen harde naad zit. */
+.lhero__beeld::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, #08080a 0%, rgba(8,8,10,.72) 16%, rgba(8,8,10,.12) 46%, transparent 70%);
 }
-
-.lhero__inhoud {
-  position: relative; z-index: 2;
-  width: 100%;
-  padding: 190px 0 46px;
-}
-.lhero__tekst { max-width: 54rem; }
 
 .lhero__merk {
   display: inline-flex; align-items: center; gap: 9px;
-  font-family: var(--font-head); font-size: .78rem; font-weight: 600;
-  letter-spacing: .16em; text-transform: uppercase;
-  color: rgba(255,255,255,.86);
-  background: rgba(255,255,255,.07);
-  border: 1px solid rgba(255,255,255,.16);
-  border-radius: 100px; padding: 8px 16px 8px 12px;
-  backdrop-filter: blur(6px);
-  margin-bottom: 30px;
+  font-family: var(--font-head); font-size: .72rem; font-weight: 700;
+  letter-spacing: .22em; text-transform: uppercase;
+  color: rgba(255,255,255,.9);
+  margin-bottom: 34px;
 }
 .lhero__merk svg { flex: none; color: var(--red); }
+.lhero__merk::before {
+  content: ""; width: 34px; height: 1px; background: var(--red); flex: none;
+}
 
 .lhero__titel {
   font-family: var(--font-head);
-  font-size: clamp(2.6rem, 6.4vw, 4.8rem);
+  font-size: clamp(3rem, 8.4vw, 7.2rem);
   font-weight: 800;
-  line-height: 1.0;
-  letter-spacing: -0.04em;
+  line-height: .88;
+  letter-spacing: -0.055em;
   color: #fff;
-  margin: 0 0 26px;
-  text-wrap: balance;
+  margin: 0 0 30px;
+  text-transform: uppercase;
 }
-.lhero__titel em { font-style: normal; color: var(--red); }
+.lhero__titel em { font-style: normal; display: block; color: var(--red); }
+.lhero__titel small {
+  display: block; margin-top: .22em;
+  font-size: .28em; font-weight: 600; letter-spacing: -0.02em;
+  text-transform: none; color: rgba(255,255,255,.72);
+}
 
 .lhero__lead {
-  font-size: clamp(1.02rem, 1.5vw, 1.22rem);
-  line-height: 1.65;
-  color: rgba(255,255,255,.80);
-  max-width: 34rem;
-  margin: 0 0 36px;
+  font-size: clamp(1rem, 1.35vw, 1.14rem);
+  line-height: 1.68;
+  color: rgba(255,255,255,.72);
+  max-width: 30rem;
+  margin: 0 0 34px;
 }
 
 .lhero__knoppen { display: flex; flex-wrap: wrap; gap: 13px; }
-/* De hero staat altijd op een donkere foto, ook in het lichte thema.
-   De doorzichtige knop moet daar wit-op-donker zijn. */
+
+/* De hero staat altijd op een donkere ondergrond, ook in het lichte thema. */
 .lhero .btn--ghost {
-  background: rgba(255,255,255,.10);
-  color: #fff;
-  border-color: rgba(255,255,255,.30);
-  backdrop-filter: blur(6px);
+  background: rgba(255,255,255,.10); color: #fff;
+  border-color: rgba(255,255,255,.30); backdrop-filter: blur(6px);
 }
 .lhero .btn--ghost:hover { background: rgba(255,255,255,.19); border-color: rgba(255,255,255,.44); }
 
 /* -- de vier feiten onder de hero -- */
 .lhero__balk {
   position: relative; z-index: 2;
+  background: #08080a;
   border-top: 1px solid rgba(255,255,255,.13);
-  padding: 26px 0 34px;
+  padding: 26px 0 30px;
 }
-.lhero__feiten {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
-}
+.lhero__feiten { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
 .lhero__feit { padding: 0 30px; border-left: 1px solid rgba(255,255,255,.13); }
 .lhero__feit:first-child { padding-left: 0; border-left: 0; }
 .lhero__feit dt {
   font-family: var(--font-head); font-weight: 600;
-  font-size: .95rem; color: #fff; margin-bottom: 5px;
-  letter-spacing: -0.01em;
+  font-size: .95rem; color: #fff; margin-bottom: 5px; letter-spacing: -0.01em;
 }
 .lhero__feit dd { margin: 0; font-size: .84rem; line-height: 1.5; color: rgba(255,255,255,.58); }
 .lhero__sterren { color: var(--gold); letter-spacing: .14em; font-size: .9rem; }
+
+/* ---------------------------------------------------------
+   1b. LOPENDE BAND — de luchthavens waar we rijden
+   --------------------------------------------------------- */
+.lband {
+  background: #08080a; overflow: hidden;
+  border-top: 1px solid rgba(255,255,255,.10);
+  border-bottom: 1px solid rgba(255,255,255,.10);
+  padding: clamp(18px, 2.4vw, 30px) 0;
+}
+.lband__rij {
+  display: flex; align-items: center; width: max-content;
+  animation: lband-loop 34s linear infinite;
+}
+.lband__item {
+  font-family: var(--font-head); font-weight: 800;
+  font-size: clamp(1.7rem, 4.6vw, 3.4rem);
+  letter-spacing: -0.04em; text-transform: uppercase;
+  color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,.30);
+  padding: 0 .34em; white-space: nowrap;
+}
+.lband__ster {
+  color: var(--red); -webkit-text-stroke: 0;
+  font-size: clamp(.7rem, 1.5vw, 1.05rem); padding: 0 .2em;
+}
+@keyframes lband-loop {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lband__rij { animation: none; }
+}
 
 /* ---------------------------------------------------------
    2. BELOFTE — hun eigen drie woorden, groot uitgeschreven
@@ -110,10 +138,10 @@
 .belofte { padding: clamp(84px, 11vw, 150px) 0; }
 .belofte__kop {
   font-family: var(--font-head);
-  font-size: clamp(2.1rem, 5.2vw, 4rem);
-  font-weight: 800; line-height: 1.03; letter-spacing: -0.04em;
+  font-size: clamp(2.4rem, 6.6vw, 5.4rem);
+  font-weight: 800; line-height: .98; letter-spacing: -0.05em;
   color: var(--text-strong);
-  max-width: 22ch; margin: 0 0 clamp(48px, 6vw, 78px);
+  max-width: 20ch; margin: 0 0 clamp(48px, 6vw, 84px);
 }
 .belofte__kop span { color: var(--muted); }
 
@@ -278,3 +306,133 @@
 
 /* Knop onder de reviews netjes in het midden. */
 .zeg__meer { text-align: center; margin-top: clamp(38px, 5vw, 54px); }
+
+/* ---------------------------------------------------------
+   Grotere koppen: de pagina mag luider spreken.
+   --------------------------------------------------------- */
+.lhero ~ * .section__title,
+.werkwijze .section__title,
+.vloot2 .section__title,
+.googlewall .section__title {
+  font-size: clamp(2.2rem, 5.6vw, 4.2rem);
+  font-weight: 800; line-height: 1.0; letter-spacing: -0.045em;
+}
+
+/* ---------------------------------------------------------
+   REVIEWS — twee rijen over de volle breedte
+   --------------------------------------------------------- */
+.googlewall { padding: clamp(80px, 10vw, 130px) 0; background: var(--surface-soft); overflow: hidden; }
+.googlewall__kop { text-align: center; margin-bottom: clamp(34px, 4vw, 52px); }
+.googlewall__score {
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 9px 18px; border-radius: 100px;
+  border: 1px solid var(--line); background: var(--surface-2);
+  font-size: .88rem; color: var(--muted); margin-bottom: 20px;
+}
+.googlewall__score b { color: var(--gold); letter-spacing: .12em; }
+.googlewall__score span { color: var(--text-strong); font-weight: 600; }
+
+/* De rijen lopen van rand tot rand, niet binnen de container. */
+.googlewall__rijen { display: grid; gap: 22px; }
+.googlewall .reviews-marquee { width: 100vw; margin-left: calc(50% - 50vw); }
+.googlewall__meer { text-align: center; margin-top: clamp(34px, 4vw, 50px); }
+
+/* ---------------------------------------------------------
+   SLOT — met foto in plaats van een zwart vlak
+   --------------------------------------------------------- */
+.slot__doos { background: #0a0a0c; }
+.slot__foto { position: absolute; inset: 0; z-index: 0; }
+.slot__foto img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 58%; display: block; }
+.slot__foto::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(8,8,10,.62) 0%, rgba(8,8,10,.82) 55%, rgba(8,8,10,.92) 100%);
+}
+
+@media (max-width: 1024px) {
+  .lhero__grid { grid-template-columns: 1fr; min-height: 0; }
+  .lhero__tekst { padding: 140px 0 34px; }
+  .lhero__beeld { margin: 0 calc(50% - 50vw); height: 46svh; min-height: 280px; }
+  .lhero__beeld::after {
+    background: linear-gradient(180deg, rgba(8,8,10,.55) 0%, rgba(8,8,10,.10) 40%, rgba(8,8,10,.85) 100%);
+  }
+}
+
+/* ---------------------------------------------------------
+   TARIEVEN — de echte prijzen, meteen op de startpagina
+   --------------------------------------------------------- */
+.tarieven { padding: clamp(80px, 10vw, 130px) 0; }
+.tarieven__grid { display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); gap: clamp(30px, 5vw, 70px); align-items: start; }
+.tarieven__intro { position: sticky; top: 118px; }
+.tarieven__lijst { list-style: none; margin: 0; padding: 0; }
+.tarieven__lijst li {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 20px;
+  padding: clamp(14px, 1.8vw, 20px) 0;
+  border-top: 1px solid var(--line);
+}
+.tarieven__lijst li:last-child { border-bottom: 1px solid var(--line); }
+.tarieven__naam { font-family: var(--font-head); font-weight: 600; font-size: clamp(1rem, 1.7vw, 1.2rem); color: var(--text-strong); letter-spacing: -0.015em; }
+.tarieven__prijs {
+  font-family: var(--font-head); font-weight: 800;
+  font-size: clamp(1.3rem, 2.4vw, 1.9rem); letter-spacing: -0.03em;
+  color: var(--text-strong); font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.tarieven__prijs sup { font-size: .52em; font-weight: 600; color: var(--muted); vertical-align: super; margin-left: .2em; }
+.tarieven__noot { margin-top: 26px; color: var(--muted); font-size: .9rem; line-height: 1.7; }
+.tarieven__regels { list-style: none; margin: 22px 0 30px; padding: 0; }
+.tarieven__regels li { display: flex; gap: 11px; padding: 7px 0; color: var(--muted); font-size: .95rem; line-height: 1.6; }
+.tarieven__regels b { color: var(--text-strong); font-weight: 600; }
+.tarieven__vink { color: var(--red); flex: none; font-weight: 700; }
+
+/* ---------------------------------------------------------
+   VERGELIJKING — met Moda of zelf rijden
+   --------------------------------------------------------- */
+.vergelijk { padding: clamp(80px, 10vw, 130px) 0; background: var(--surface-soft); }
+.vergelijk__tabel { display: grid; grid-template-columns: 1.3fr 1fr 1fr; }
+.vergelijk__tabel > * { padding: clamp(14px, 1.9vw, 20px) clamp(12px, 1.8vw, 22px); border-bottom: 1px solid var(--line); }
+.vergelijk__hoofd {
+  font-family: var(--font-head); font-weight: 700; font-size: .95rem;
+  color: var(--text-strong); border-bottom: 1px solid var(--faint) !important;
+}
+.vergelijk__hoofd--moda { color: var(--red); }
+.vergelijk__cel { color: var(--muted); font-size: .95rem; line-height: 1.55; }
+.vergelijk__cel--moda { color: var(--text); background: var(--surface-2); }
+.vergelijk__rij { color: var(--text-strong); font-weight: 500; font-size: .95rem; }
+.vergelijk__ja { color: #2f9e6f; font-weight: 700; margin-right: 7px; }
+.vergelijk__nee { color: var(--red); font-weight: 700; margin-right: 7px; }
+
+/* ---------------------------------------------------------
+   VEELGESTELDE VRAGEN
+   --------------------------------------------------------- */
+.vragen { padding: clamp(80px, 10vw, 130px) 0; }
+.vragen__grid { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(30px, 5vw, 70px); align-items: start; }
+.vraag { border-top: 1px solid var(--line); }
+.vraag:last-of-type { border-bottom: 1px solid var(--line); }
+.vraag summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  padding: clamp(18px, 2.2vw, 24px) 0; cursor: pointer; list-style: none;
+  font-family: var(--font-head); font-weight: 600;
+  font-size: clamp(1rem, 1.8vw, 1.18rem); letter-spacing: -0.015em; color: var(--text-strong);
+  transition: color .25s;
+}
+.vraag summary::-webkit-details-marker { display: none; }
+.vraag summary:hover { color: var(--red); }
+.vraag summary::after {
+  content: "+"; flex: none; font-size: 1.5rem; font-weight: 400; line-height: 1;
+  color: var(--red); transition: transform .3s var(--ease);
+}
+.vraag[open] summary::after { transform: rotate(45deg); }
+.vraag__antwoord { color: var(--muted); line-height: 1.78; margin: 0 0 clamp(18px, 2.2vw, 24px); max-width: 46rem; }
+.vraag__antwoord strong { color: var(--text); font-weight: 600; }
+
+@media (max-width: 900px) {
+  .tarieven__grid, .vragen__grid { grid-template-columns: 1fr; }
+  .tarieven__intro { position: static; }
+  .vergelijk__tabel { grid-template-columns: 1fr; }
+  .vergelijk__tabel > * { border-bottom: none; padding: 6px 0; }
+  .vergelijk__rij { border-top: 1px solid var(--line) !important; padding-top: 18px; font-weight: 700; }
+  .vergelijk__cel { padding-bottom: 14px; }
+  .vergelijk__cel--moda { background: none; }
+  .vergelijk__hoofd { display: none; }
+  .vergelijk__cel--moda::before { content: "Met Moda — "; color: var(--red); font-weight: 600; }
+  .vergelijk__cel--zelf::before { content: "Zelf rijden — "; color: var(--muted); font-weight: 600; }
+}
