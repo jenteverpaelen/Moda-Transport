@@ -5,6 +5,9 @@ import prijzen from "../../public/content/prices.json";
 import vlootFoto from "../assets/luchthaven/vloot.jpg";
 import interieurFoto from "../assets/luchthaven/interieur.jpg";
 import stuurFoto from "../assets/luchthaven/stuur.jpg";
+import vleugelFoto from "../assets/luchthaven/vleugel.jpg";
+import stuurNachtFoto from "../assets/luchthaven/stuur-nacht.jpg";
+import vertrekbordFoto from "../assets/luchthaven/vertrekbord.jpg";
 
 /* De luchthavens en tarieven komen uit public/content/prices.json, hetzelfde
    bestand als de prijsberekenaar. Pas je de prijzen daar aan, dan verandert
@@ -74,37 +77,36 @@ const vragen = [
 
   <!-- ===================== HERO ===================== -->
   <section class="lhero" id="home">
-    <!-- De foto beslaat de bovenste helft, over de volle breedte. -->
-    <div class="lhero__beeld">
-      <Image src={vlootFoto} alt="De Mercedes-wagens van Moda" width={2200} loading="eager" fetchpriority="high" />
-    </div>
+    <div class="container">
+      <p class="lhero__merk">Moda · Luchthavenvervoer sinds jaar en dag</p>
 
-    <div class="lhero__tekst">
-      <div class="container">
-        <p class="lhero__merk">Persoonlijk · Transparant · Vertrouwd</p>
+      <!-- De opening is een zin, geen foto. Grijs, met in inkt
+           de woorden waar het werkelijk om draait. -->
+      <h1 class="lhero__zin">Waar anderen u <b>een taxi</b> sturen, brengen wij u <b>zonder één zorg</b> naar de luchthaven — aan een prijs die <b>vooraf vaststaat</b>.</h1>
 
-        <h1 class="lhero__titel">
-          Zonder <em>zorgen</em>
-          <small>naar elke luchthaven, aan een prijs die vooraf vaststaat.</small>
-        </h1>
-
-        <div class="lhero__onder">
-          <p class="lhero__lead">
-            Wij halen u thuis op in Heusden-Zolder en heel Limburg, en brengen u met
-            een luxe Mercedes naar Zaventem, Charleroi, Schiphol, Eindhoven of
-            Düsseldorf.
-          </p>
-
-          <div class="lhero__knoppen">
-            <a href="/reserveren/" class="btn btn--primary btn--lg">Reserveer uw rit</a>
-            <a href="/prijs/" class="btn btn--ghost btn--lg">Bereken uw prijs</a>
-          </div>
-        </div>
+      <div class="lhero__knoppen">
+        <a href="/reserveren/" class="btn btn--primary btn--lg">Reserveer uw rit</a>
+        <a href="/prijs/" class="btn btn--ghost btn--lg">Bereken uw prijs</a>
       </div>
-    </div>
 
-    <div class="lhero__balk">
-      <div class="container">
+      <div class="lhero__beelden">
+        <figure class="lhero__beeld lhero__beeld--groot">
+          <Image src={vlootFoto} width={1400} loading="eager" fetchpriority="high"
+                 alt="De Mercedes-wagens van Moda" />
+          <figcaption class="lhero__bijschrift">
+            <span>Onze vloot</span><span>Heusden-Zolder</span>
+          </figcaption>
+        </figure>
+
+        <figure class="lhero__beeld lhero__beeld--klein">
+          <Image src={vleugelFoto} width={800} alt="Een vliegtuigvleugel boven de wolken" />
+          <figcaption class="lhero__bijschrift">
+            <span>Zaventem · Charleroi · Schiphol</span><span>24/7</span>
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="lhero__balk">
         <dl class="lhero__feiten">
           {feiten.map((f) => (
             <div class="lhero__feit">
@@ -319,7 +321,7 @@ const vragen = [
     <div class="container">
       <div class="slot__doos reveal">
         <div class="slot__foto" aria-hidden="true">
-          <Image src={stuurFoto} width={1600} alt="" />
+          <Image src={stuurNachtFoto} width={1600} alt="" />
         </div>
         <h2 class="slot__titel">Wanneer moet u vertrekken?</h2>
         <p class="slot__lead">

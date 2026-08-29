@@ -1,137 +1,182 @@
 /* =========================================================
    MODA — Luchthavenvervoer
    ---------------------------------------------------------
-   Alles wat enkel op de luchthavenpagina's staat. Wordt na
-   style.css geladen, zodat de gedeelde onderdelen (knoppen,
-   menu, footer) gewoon blijven werken en het transportgedeelte
-   niets van deze regels ziet.
+   Licht ontwerp. Dit bestand zet eerst het hele kleur- en
+   letterschema om (de gedeelde style.css is donker opgezet),
+   en beschrijft daarna de onderdelen van de pagina's zelf.
+   Wordt enkel op de luchthavenpagina's geladen, dus het
+   transportgedeelte ziet hier niets van.
    ========================================================= */
 
 /* ---------------------------------------------------------
-   1. HERO — half bleed van boven naar onder
-   De foto beslaat de bovenste helft over de volle breedte;
-   de grote tekst staat eronder op het zwart. Zo is de kop
-   meteen leesbaar en zie je dat er nog iets onder komt.
+   0. HET SYSTEEM — kleur, letter en vorm
+   Warm gebroken wit met inktzwarte tekst. Rood blijft de
+   kleur van het merk, maar enkel in het logo en als fijn
+   accentlijntje; knoppen zijn inkt, niet rood. Kleine
+   hoekstraal in plaats van pillen: strak in plaats van vlot.
    --------------------------------------------------------- */
-.lhero { position: relative; background: #08080a; }
+:root,
+:root[data-theme="light"],
+:root[data-theme="dark"] {
+  --font-head: 'Instrument Sans', system-ui, sans-serif;
+  --font-body: 'Instrument Sans', system-ui, sans-serif;
 
-/* De fotoband loopt van rand tot rand van het venster. */
-.lhero__beeld {
-  position: relative;
-  height: clamp(240px, 46svh, 520px);
-  overflow: hidden;
-}
-.lhero__beeld img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; display: block; }
-/* Onderaan vervaagt de foto in het zwart, zodat er geen harde naad zit
-   tussen het beeld en de tekst eronder. */
-.lhero__beeld::after {
-  content: ""; position: absolute; inset: auto 0 0 0; height: 46%;
-  background: linear-gradient(to top, #08080a 0%, rgba(8,8,10,.72) 34%, transparent 100%);
-}
-/* Bovenaan een donkere waas, anders staat het menu op een lichte lucht
-   en is het niet te lezen. */
-.lhero__beeld::before {
-  content: ""; position: absolute; inset: 0 0 auto 0; height: 190px; z-index: 1;
-  background: linear-gradient(to bottom, rgba(8,8,10,.78) 0%, rgba(8,8,10,.34) 52%, transparent 100%);
+  --bg:            #F2EFE9;
+  --surface:       #EAE6DE;
+  --surface-2:     #FFFFFF;
+  --surface-3:     #FFFFFF;
+  --surface-soft:  #EDE9E1;
+  --footer-bg:     #E7E2D9;
+  --section-dark:  none;
+
+  --text:          #4C463D;
+  --text-strong:   #15130F;
+  --muted:         #8B8478;
+  --line:          rgba(21, 19, 15, 0.14);
+  --faint:         rgba(21, 19, 15, 0.10);
+  --input-bg:      #FFFFFF;
+
+  --ghost-bg:       transparent;
+  --ghost-bg-hover: rgba(21, 19, 15, 0.06);
+  --ghost-text:     #15130F;
+
+  --inkt:      #15130F;
+  --radius:    6px;
+  --radius-sm: 4px;
+  --shadow:    0 30px 70px rgba(21, 19, 15, 0.10);
+  --shadow-sm: 0 12px 30px rgba(21, 19, 15, 0.06);
+  --maxw:      1240px;
 }
 
-.lhero__tekst { padding: clamp(30px, 4vw, 52px) 0 clamp(34px, 4.5vw, 56px); }
+body { background: var(--bg); color: var(--text); }
+
+/* -- Knoppen: inkt in plaats van rood, hoekig in plaats van pillen -- */
+.btn {
+  border-radius: var(--radius-sm);
+  font-weight: 600; letter-spacing: -0.005em;
+  box-shadow: none;
+}
+.btn--primary { background: var(--inkt); color: #fff; border-color: var(--inkt); }
+.btn--primary:hover { background: #2b2721; border-color: #2b2721; box-shadow: none; transform: none; }
+.btn--ghost { background: transparent; color: var(--inkt); border: 1px solid var(--line); }
+.btn--ghost:hover { background: rgba(21,19,15,.05); border-color: rgba(21,19,15,.3); }
+.btn--lg { padding: 15px 26px; font-size: .98rem; }
+
+/* -- Menu: kaal, zonder pillen -- */
+.nav { background: rgba(242,239,233,.86); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+.nav.is-scrolled { background: rgba(242,239,233,.96); }
+.nav__links a { color: var(--text); font-size: .92rem; font-weight: 500; }
+.nav__links a:hover { color: var(--inkt); }
+.nav__cta {
+  background: var(--inkt) !important; color: #fff !important;
+  border: 1px solid var(--inkt) !important; border-radius: var(--radius-sm) !important;
+  box-shadow: none !important;
+}
+.nav__switch {
+  background: transparent !important; color: var(--muted) !important;
+  border: 1px solid var(--line) !important; border-radius: var(--radius-sm) !important;
+  font-weight: 500 !important;
+}
+.nav__switch:hover { color: var(--inkt) !important; border-color: rgba(21,19,15,.3) !important; }
+
+/* -- Secties: rustiger koppen, meer lucht -- */
+.section__eyebrow {
+  color: var(--muted); font-size: .7rem; letter-spacing: .22em;
+  font-weight: 600; margin-bottom: 18px;
+}
+.section__title {
+  font-size: clamp(2rem, 4.6vw, 3.4rem); font-weight: 600;
+  letter-spacing: -0.035em; line-height: 1.04; color: var(--text-strong);
+}
+.text-accent { color: var(--muted); }
+.section__lead { color: var(--muted); }
+
+/* -- Footer -- */
+.footer { background: var(--footer-bg); border-top: 1px solid var(--line); }
+
+/* ---------------------------------------------------------
+   1. HERO — een zin, geen foto
+   De pagina opent met één uitgeschreven zin in grijs, waarin
+   de woorden die ertoe doen in inkt staan. Daaronder twee
+   foto's met een bijschrift, zoals in een portfolio.
+   --------------------------------------------------------- */
+.lhero { padding: clamp(140px, 15vw, 200px) 0 clamp(50px, 6vw, 80px); }
 
 .lhero__merk {
-  display: inline-flex; align-items: center; gap: 14px;
-  font-family: var(--font-head); font-size: .72rem; font-weight: 700;
+  display: flex; align-items: center; gap: 14px;
+  font-size: .7rem; font-weight: 600;
   letter-spacing: .22em; text-transform: uppercase;
-  color: rgba(255,255,255,.9);
-  margin-bottom: 26px;
+  color: var(--muted); margin: 0 0 clamp(26px, 3.4vw, 42px);
 }
-.lhero__merk::before { content: ""; width: 34px; height: 1px; background: var(--red); flex: none; }
+.lhero__merk::before { content: ""; width: 40px; height: 1px; background: var(--red); flex: none; }
 
-.lhero__titel {
-  font-family: var(--font-head);
-  font-size: clamp(2.9rem, 9.6vw, 8.4rem);
-  font-weight: 800;
-  line-height: .86;
-  letter-spacing: -0.055em;
-  color: #fff;
-  margin: 0 0 28px;
-  text-transform: uppercase;
+.lhero__zin {
+  font-size: clamp(1.75rem, 4.4vw, 3.9rem);
+  font-weight: 500; line-height: 1.14; letter-spacing: -0.038em;
+  color: var(--muted); margin: 0 0 clamp(34px, 4.4vw, 58px);
+  max-width: 30ch; text-wrap: balance;
 }
-.lhero__titel em { font-style: normal; color: var(--red); }
-.lhero__titel small {
-  display: block; margin-top: .34em;
-  /* Eigen maat in plaats van een deel van de kop: op een smal scherm werd
-     die anders onleesbaar klein. */
-  font-size: clamp(1rem, 2.4vw, 1.7rem); line-height: 1.32;
-  font-weight: 600; letter-spacing: -0.015em;
-  text-transform: none; color: rgba(255,255,255,.74);
+.lhero__zin b { color: var(--text-strong); font-weight: 600; }
+
+.lhero__knoppen { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: clamp(48px, 6vw, 82px); }
+
+/* -- twee foto's, de kleine iets lager, met bijschrift -- */
+.lhero__beelden {
+  display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, .6fr);
+  gap: clamp(20px, 3.4vw, 46px); align-items: start;
+}
+.lhero__beeld { margin: 0; }
+.lhero__beeld--klein { padding-top: clamp(28px, 5vw, 72px); }
+.lhero__beeld img {
+  width: 100%; height: auto; display: block;
+  border-radius: var(--radius-sm); background: var(--surface);
+}
+.lhero__beeld--groot img { aspect-ratio: 16 / 10; object-fit: cover; }
+.lhero__beeld--klein img { aspect-ratio: 4 / 5; object-fit: cover; }
+.lhero__bijschrift {
+  display: flex; justify-content: space-between; gap: 16px;
+  margin-top: 11px; font-size: .7rem; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--muted); font-weight: 500;
 }
 
-/* Tekst en knoppen naast elkaar, zodat de kop de volle breedte krijgt. */
-.lhero__onder {
-  display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
-  gap: clamp(24px, 4vw, 60px); align-items: end;
-}
-.lhero__lead {
-  font-size: clamp(1rem, 1.35vw, 1.14rem);
-  line-height: 1.68; color: rgba(255,255,255,.72);
-  max-width: 34rem; margin: 0;
-}
-.lhero__knoppen { display: flex; flex-wrap: wrap; gap: 13px; justify-content: flex-end; }
-
-/* De hero staat altijd op een donkere ondergrond, ook in het lichte thema. */
-.lhero .btn--ghost {
-  background: rgba(255,255,255,.10); color: #fff;
-  border-color: rgba(255,255,255,.30); backdrop-filter: blur(6px);
-}
-.lhero .btn--ghost:hover { background: rgba(255,255,255,.19); border-color: rgba(255,255,255,.44); }
-
-/* -- de vier feiten onder de hero -- */
-.lhero__balk {
-  background: #08080a;
-  border-top: 1px solid rgba(255,255,255,.13);
-  padding: 26px 0 30px;
-}
+/* -- de vier feiten, als haarlijnrij -- */
+.lhero__balk { border-top: 1px solid var(--line); margin-top: clamp(48px, 6vw, 84px); padding-top: 30px; }
 .lhero__feiten { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
-.lhero__feit { padding: 0 30px; border-left: 1px solid rgba(255,255,255,.13); }
+.lhero__feit { padding: 0 28px; border-left: 1px solid var(--line); }
 .lhero__feit:first-child { padding-left: 0; border-left: 0; }
 .lhero__feit dt {
   font-family: var(--font-head); font-weight: 600;
-  font-size: .95rem; color: #fff; margin-bottom: 5px; letter-spacing: -0.01em;
+  font-size: .94rem; color: var(--text-strong); margin-bottom: 6px; letter-spacing: -0.015em;
 }
-.lhero__feit dd { margin: 0; font-size: .84rem; line-height: 1.5; color: rgba(255,255,255,.58); }
-.lhero__sterren { color: var(--gold); letter-spacing: .14em; font-size: .9rem; }
+.lhero__feit dd { margin: 0; font-size: .84rem; line-height: 1.55; color: var(--muted); }
+.lhero__sterren { color: var(--red); letter-spacing: .14em; font-size: .88rem; }
 
 /* ---------------------------------------------------------
    1b. LOPENDE BAND — de luchthavens waar we rijden
    --------------------------------------------------------- */
 .lband {
-  background: #08080a; overflow: hidden;
-  border-top: 1px solid rgba(255,255,255,.10);
-  border-bottom: 1px solid rgba(255,255,255,.10);
-  padding: clamp(18px, 2.4vw, 30px) 0;
+  overflow: hidden;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: clamp(16px, 2.2vw, 26px) 0;
 }
-.lband__rij {
-  display: flex; align-items: center; width: max-content;
-  animation: lband-loop 34s linear infinite;
-}
+.lband__rij { display: flex; align-items: center; width: max-content; animation: lband-loop 38s linear infinite; }
 .lband__item {
-  font-family: var(--font-head); font-weight: 800;
-  font-size: clamp(1.7rem, 4.6vw, 3.4rem);
-  letter-spacing: -0.04em; text-transform: uppercase;
-  color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,.30);
+  font-family: var(--font-head); font-weight: 600;
+  font-size: clamp(1.4rem, 3.6vw, 2.6rem);
+  letter-spacing: -0.035em; text-transform: uppercase;
+  color: transparent; -webkit-text-stroke: 1px rgba(21,19,15,.30);
   padding: 0 .34em; white-space: nowrap;
 }
 .lband__ster {
   color: var(--red); -webkit-text-stroke: 0;
-  font-size: clamp(.7rem, 1.5vw, 1.05rem); padding: 0 .2em;
+  font-size: clamp(.6rem, 1.2vw, .9rem); padding: 0 .2em;
 }
 @keyframes lband-loop {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
-@media (prefers-reduced-motion: reduce) {
-  .lband__rij { animation: none; }
-}
+@media (prefers-reduced-motion: reduce) { .lband__rij { animation: none; } }
 
 /* ---------------------------------------------------------
    2. BELOFTE — hun eigen drie woorden, groot uitgeschreven
@@ -203,7 +248,7 @@
   transition: transform .45s var(--ease), border-color .45s var(--ease);
 }
 .wagen:hover { transform: translateY(-4px); border-color: rgba(225,29,42,.34); }
-.wagen__beeld { aspect-ratio: 16 / 10; overflow: hidden; background: #101014; }
+.wagen__beeld { aspect-ratio: 16 / 10; overflow: hidden; background: var(--surface); }
 .wagen__beeld img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .8s var(--ease); }
 .wagen:hover .wagen__beeld img { transform: scale(1.045); }
 .wagen__body { padding: 26px 26px 28px; display: flex; flex-direction: column; flex: 1; }
@@ -350,9 +395,9 @@
 }
 
 @media (max-width: 860px) {
-  .lhero__beeld { height: clamp(200px, 34svh, 330px); }
-  .lhero__onder { grid-template-columns: 1fr; align-items: start; }
-  .lhero__knoppen { justify-content: flex-start; }
+  .lhero__beelden { grid-template-columns: 1fr; }
+  .lhero__beeld--klein { padding-top: 0; }
+  .lhero__beeld--klein img { aspect-ratio: 16 / 10; }
   .lhero__knoppen .btn { width: 100%; justify-content: center; }
 }
 
@@ -445,7 +490,8 @@
   font-size: clamp(2.6rem, 7vw, 5.4rem); line-height: .96; letter-spacing: -0.05em;
   color: var(--text-strong); margin: 0 0 20px; text-transform: uppercase;
 }
-.pkop__titel em { font-style: normal; color: var(--red); display: block; }
+/* Grijs in plaats van rood: het rood is voortaan een klein accent, geen kop. */
+.pkop__titel em { font-style: normal; color: var(--muted); display: block; }
 .pkop__lead { color: var(--muted); font-size: clamp(1rem, 1.6vw, 1.14rem); line-height: 1.72; max-width: 38rem; margin: 0; }
 
 /* ---------------------------------------------------------
