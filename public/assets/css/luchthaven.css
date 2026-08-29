@@ -8,73 +8,75 @@
    ========================================================= */
 
 /* ---------------------------------------------------------
-   1. HERO — half bleed
-   Tekst links in het zwart, foto rechts die tot tegen de rand
-   van het scherm doorloopt. De hero is bewust niet schermhoog:
-   zo zie je meteen dat er nog iets onder staat.
+   1. HERO — half bleed van boven naar onder
+   De foto beslaat de bovenste helft over de volle breedte;
+   de grote tekst staat eronder op het zwart. Zo is de kop
+   meteen leesbaar en zie je dat er nog iets onder komt.
    --------------------------------------------------------- */
-.lhero { position: relative; background: #08080a; overflow: hidden; }
+.lhero { position: relative; background: #08080a; }
 
-.lhero__grid {
-  position: relative;
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .88fr);
-  align-items: center;
-  min-height: min(84svh, 860px);
-}
-
-.lhero__tekst { position: relative; z-index: 2; padding: 150px 56px 56px 0; }
-
-/* De fotokolom loopt door tot tegen de rechterrand van het venster. */
+/* De fotoband loopt van rand tot rand van het venster. */
 .lhero__beeld {
-  position: relative; align-self: stretch;
-  margin-right: calc(50% - 50vw);
+  position: relative;
+  height: clamp(240px, 46svh, 520px);
   overflow: hidden;
 }
-.lhero__beeld img { width: 100%; height: 100%; object-fit: cover; object-position: 42% 50%; display: block; }
-/* De linkerrand van de foto vervaagt in het zwart, zodat er geen harde naad zit. */
+.lhero__beeld img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; display: block; }
+/* Onderaan vervaagt de foto in het zwart, zodat er geen harde naad zit
+   tussen het beeld en de tekst eronder. */
 .lhero__beeld::after {
-  content: ""; position: absolute; inset: 0;
-  background: linear-gradient(90deg, #08080a 0%, rgba(8,8,10,.72) 16%, rgba(8,8,10,.12) 46%, transparent 70%);
+  content: ""; position: absolute; inset: auto 0 0 0; height: 46%;
+  background: linear-gradient(to top, #08080a 0%, rgba(8,8,10,.72) 34%, transparent 100%);
+}
+/* Bovenaan een donkere waas, anders staat het menu op een lichte lucht
+   en is het niet te lezen. */
+.lhero__beeld::before {
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 190px; z-index: 1;
+  background: linear-gradient(to bottom, rgba(8,8,10,.78) 0%, rgba(8,8,10,.34) 52%, transparent 100%);
 }
 
+.lhero__tekst { padding: clamp(30px, 4vw, 52px) 0 clamp(34px, 4.5vw, 56px); }
+
 .lhero__merk {
-  display: inline-flex; align-items: center; gap: 9px;
+  display: inline-flex; align-items: center; gap: 14px;
   font-family: var(--font-head); font-size: .72rem; font-weight: 700;
   letter-spacing: .22em; text-transform: uppercase;
   color: rgba(255,255,255,.9);
-  margin-bottom: 34px;
+  margin-bottom: 26px;
 }
-.lhero__merk svg { flex: none; color: var(--red); }
-.lhero__merk::before {
-  content: ""; width: 34px; height: 1px; background: var(--red); flex: none;
-}
+.lhero__merk::before { content: ""; width: 34px; height: 1px; background: var(--red); flex: none; }
 
 .lhero__titel {
   font-family: var(--font-head);
-  font-size: clamp(3rem, 8.4vw, 7.2rem);
+  font-size: clamp(2.9rem, 9.6vw, 8.4rem);
   font-weight: 800;
-  line-height: .88;
+  line-height: .86;
   letter-spacing: -0.055em;
   color: #fff;
-  margin: 0 0 30px;
+  margin: 0 0 28px;
   text-transform: uppercase;
 }
-.lhero__titel em { font-style: normal; display: block; color: var(--red); }
+.lhero__titel em { font-style: normal; color: var(--red); }
 .lhero__titel small {
-  display: block; margin-top: .22em;
-  font-size: .28em; font-weight: 600; letter-spacing: -0.02em;
-  text-transform: none; color: rgba(255,255,255,.72);
+  display: block; margin-top: .34em;
+  /* Eigen maat in plaats van een deel van de kop: op een smal scherm werd
+     die anders onleesbaar klein. */
+  font-size: clamp(1rem, 2.4vw, 1.7rem); line-height: 1.32;
+  font-weight: 600; letter-spacing: -0.015em;
+  text-transform: none; color: rgba(255,255,255,.74);
 }
 
+/* Tekst en knoppen naast elkaar, zodat de kop de volle breedte krijgt. */
+.lhero__onder {
+  display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
+  gap: clamp(24px, 4vw, 60px); align-items: end;
+}
 .lhero__lead {
   font-size: clamp(1rem, 1.35vw, 1.14rem);
-  line-height: 1.68;
-  color: rgba(255,255,255,.72);
-  max-width: 30rem;
-  margin: 0 0 34px;
+  line-height: 1.68; color: rgba(255,255,255,.72);
+  max-width: 34rem; margin: 0;
 }
-
-.lhero__knoppen { display: flex; flex-wrap: wrap; gap: 13px; }
+.lhero__knoppen { display: flex; flex-wrap: wrap; gap: 13px; justify-content: flex-end; }
 
 /* De hero staat altijd op een donkere ondergrond, ook in het lichte thema. */
 .lhero .btn--ghost {
@@ -85,7 +87,6 @@
 
 /* -- de vier feiten onder de hero -- */
 .lhero__balk {
-  position: relative; z-index: 2;
   background: #08080a;
   border-top: 1px solid rgba(255,255,255,.13);
   padding: 26px 0 30px;
@@ -348,13 +349,11 @@
   background: linear-gradient(180deg, rgba(8,8,10,.62) 0%, rgba(8,8,10,.82) 55%, rgba(8,8,10,.92) 100%);
 }
 
-@media (max-width: 1024px) {
-  .lhero__grid { grid-template-columns: 1fr; min-height: 0; }
-  .lhero__tekst { padding: 140px 0 34px; }
-  .lhero__beeld { margin: 0 calc(50% - 50vw); height: 46svh; min-height: 280px; }
-  .lhero__beeld::after {
-    background: linear-gradient(180deg, rgba(8,8,10,.55) 0%, rgba(8,8,10,.10) 40%, rgba(8,8,10,.85) 100%);
-  }
+@media (max-width: 860px) {
+  .lhero__beeld { height: clamp(200px, 34svh, 330px); }
+  .lhero__onder { grid-template-columns: 1fr; align-items: start; }
+  .lhero__knoppen { justify-content: flex-start; }
+  .lhero__knoppen .btn { width: 100%; justify-content: center; }
 }
 
 /* ---------------------------------------------------------

@@ -74,29 +74,32 @@ const vragen = [
 
   <!-- ===================== HERO ===================== -->
   <section class="lhero" id="home">
-    <div class="container lhero__grid">
-      <div class="lhero__tekst">
+    <!-- De foto beslaat de bovenste helft, over de volle breedte. -->
+    <div class="lhero__beeld">
+      <Image src={vlootFoto} alt="De Mercedes-wagens van Moda" width={2200} loading="eager" fetchpriority="high" />
+    </div>
+
+    <div class="lhero__tekst">
+      <div class="container">
         <p class="lhero__merk">Persoonlijk · Transparant · Vertrouwd</p>
 
         <h1 class="lhero__titel">
-          Zonder<br /><em>zorgen</em>
-          <small>naar elke luchthaven, aan een vaste prijs.</small>
+          Zonder <em>zorgen</em>
+          <small>naar elke luchthaven, aan een prijs die vooraf vaststaat.</small>
         </h1>
 
-        <p class="lhero__lead">
-          Wij halen u thuis op in Heusden-Zolder en heel Limburg, en brengen u met
-          een luxe Mercedes naar Zaventem, Charleroi, Schiphol, Eindhoven of
-          Düsseldorf.
-        </p>
+        <div class="lhero__onder">
+          <p class="lhero__lead">
+            Wij halen u thuis op in Heusden-Zolder en heel Limburg, en brengen u met
+            een luxe Mercedes naar Zaventem, Charleroi, Schiphol, Eindhoven of
+            Düsseldorf.
+          </p>
 
-        <div class="lhero__knoppen">
-          <a href="/reserveren/" class="btn btn--primary btn--lg">Reserveer uw rit</a>
-          <a href="/prijs/" class="btn btn--ghost btn--lg">Bereken uw prijs</a>
+          <div class="lhero__knoppen">
+            <a href="/reserveren/" class="btn btn--primary btn--lg">Reserveer uw rit</a>
+            <a href="/prijs/" class="btn btn--ghost btn--lg">Bereken uw prijs</a>
+          </div>
         </div>
-      </div>
-
-      <div class="lhero__beeld">
-        <Image src={vlootFoto} alt="De Mercedes-wagens van Moda" width={1600} loading="eager" fetchpriority="high" />
       </div>
     </div>
 
